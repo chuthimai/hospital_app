@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_app/features/appointment/presentation/widgets/appointmenst_view.dart';
 
 class ViewAppointmentsScreen extends StatelessWidget {
   const ViewAppointmentsScreen({super.key});
@@ -9,8 +10,9 @@ class ViewAppointmentsScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('ViewAppointmentsScreen'),
+          title: const Text('Lịch khám đã đặt'),
         ),
+        body: const AppointmentsView(),
       ),
     );
   }

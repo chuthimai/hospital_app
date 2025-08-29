@@ -14,7 +14,7 @@ class ServiceItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 128.w,
+      width: 110.w,
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 12.sp, horizontal: 16.sp),
         child: Column(

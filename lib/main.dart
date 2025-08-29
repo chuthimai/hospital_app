@@ -12,8 +12,8 @@ import 'package:hospital_app/features/setting/data/repositories/theme_repository
 import 'package:hospital_app/features/setting/domain/repositories/theme_repository.dart';
 import 'package:hospital_app/features/setting/presentation/cubit/theme_cubit.dart';
 import 'package:hospital_app/share/navigation/router.dart';
-import 'package:hospital_app/splash_screen.dart';
 import 'share/themes/app_theme.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,6 +65,15 @@ class MyApp extends StatelessWidget {
       darkTheme: AppTheme.dark,
       themeMode: themeMode,
       routerConfig: router,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', 'US'),
+        Locale('vi', 'VN'),
+      ],
     );
   }
 }
