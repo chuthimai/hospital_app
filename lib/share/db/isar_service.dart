@@ -1,3 +1,6 @@
+import 'package:hospital_app/features/view_prescription/data/models/medication_db_model.dart';
+import 'package:hospital_app/features/view_prescription/data/models/prescribed_medication_db_model.dart';
+import 'package:hospital_app/features/view_prescription/data/models/prescription_db_model.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -9,8 +12,9 @@ class IsarService {
     final dir = await getApplicationDocumentsDirectory();
     _isar = await Isar.open(
       [
-        // HospitalDbModelSchema,
-        // SmartContractDbModelSchema,
+        PrescriptionDbModelSchema,
+        PrescribedMedicationDbModelSchema,
+        MedicationDbModelSchema,
       ],
       directory: dir.path,
       inspector: true,
