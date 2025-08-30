@@ -18,6 +18,7 @@ import 'package:hospital_app/features/view_invoice/presentation/view/view_invoic
 import 'package:hospital_app/features/view_invoice/presentation/view/view_invoices_screen.dart';
 import 'package:hospital_app/features/view_medical_record/presentation/view/view_medical_record_detail_screen.dart';
 import 'package:hospital_app/features/view_medical_record/presentation/view/view_medical_records_screen.dart';
+import 'package:hospital_app/features/view_prescription/domain/entities/prescription.dart';
 import 'package:hospital_app/features/view_prescription/presentation/view/view_prescription_detail_screen.dart';
 import 'package:hospital_app/features/view_prescription/presentation/view/view_prescriptions_screen.dart';
 import 'package:hospital_app/features/view_service/presentation/view/view_services_screen.dart';
@@ -115,8 +116,8 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/prescriptions/:id',
       builder: (context, state) {
-        final prescriptionId = state.pathParameters['id']!;
-        return const ViewPrescriptionDetailScreen();
+        final prescription = state.extra as Prescription;
+        return ViewPrescriptionDetailScreen(prescription);
       },
     ),
     GoRoute(
