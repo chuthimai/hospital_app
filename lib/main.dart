@@ -10,6 +10,7 @@ import 'package:hospital_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:hospital_app/features/notification/data/datasource/notification_local_data_source.dart';
 import 'package:hospital_app/features/notification/data/repositories/notification_repository_impl.dart';
 import 'package:hospital_app/features/notification/domain/repositories/notification_repository.dart';
+import 'package:hospital_app/features/notification/presentation/cubit/dot_notification_cubit.dart';
 import 'package:hospital_app/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:hospital_app/features/setting/data/datasources/theme_local_data_source.dart';
 import 'package:hospital_app/features/setting/data/repositories/theme_repository_impl.dart';
@@ -43,6 +44,7 @@ void main() async {
   final AuthRepository authRepository = AuthRepositoryImpl(
     remoteDataSource: AuthRemoteDataSourceImpl(),
     localDataSource: AuthLocalDataSourceImpl(),
+    notificationLocalDataSource: NotificationLocalDataSourceImpl(),
   );
 
   // Theme
@@ -51,9 +53,8 @@ void main() async {
   );
 
   // Notification
-  final NotificationRepository notificationRepository = NotificationRepositoryImpl(
-    NotificationLocalDataSourceImpl()
-  );
+  final NotificationRepository notificationRepository =
+      NotificationRepositoryImpl(NotificationLocalDataSourceImpl());
 
   // Bọc State toàn app
   runApp(MultiBlocProvider(
@@ -64,7 +65,12 @@ void main() async {
       BlocProvider(
         create: (context) => ThemeCubit(themeRepository)..getCurrentTheme(),
       ),
-      BlocProvider(create: (context) => NotificationCubit(notificationRepository))
+      BlocProvider(
+          create: (context) =>
+              NotificationCubit(notificationRepository)),
+      BlocProvider(
+          create: (context) =>
+              DotNotificationCubit(notificationRepository)),
     ],
     child: ScreenUtilInit(
       designSize: const Size(430, 932), // màn hình iphone 14 pro

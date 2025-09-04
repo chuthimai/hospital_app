@@ -1,5 +1,6 @@
 import 'package:hospital_app/features/auth/data/models/register_request.dart';
 import 'package:hospital_app/features/auth/domain/entities/register_params.dart';
+import 'package:hospital_app/features/notification/data/datasource/notification_local_data_source.dart';
 import 'package:hospital_app/share/utils/app_logger.dart';
 
 import '../../domain/entities/login_params.dart';
@@ -12,12 +13,15 @@ import '../models/login_request.dart';
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _remoteDataSource;
   final AuthLocalDataSource _localDataSource;
+  final NotificationLocalDataSource _notificationLocalDataSource;
 
   AuthRepositoryImpl({
     required AuthRemoteDataSource remoteDataSource,
     required AuthLocalDataSource localDataSource,
+    required NotificationLocalDataSource notificationLocalDataSource,
   })  : _localDataSource = localDataSource,
-        _remoteDataSource = remoteDataSource;
+        _remoteDataSource = remoteDataSource,
+        _notificationLocalDataSource = notificationLocalDataSource;
 
   @override
   Future<User> login(LoginParams loginParams) async {
@@ -35,6 +39,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> logout() async {
     await _localDataSource.deleteUser();
+    await _notificationLocalDataSource.deleteAllNotifications();
   }
 
   @override
@@ -45,6 +50,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> register(RegisterParams registerParams) async {
-    await _remoteDataSource.register(RegisterRequest.fromParams(registerParams));
+    await _remoteDataSource
+        .register(RegisterRequest.fromParams(registerParams));
   }
 }
