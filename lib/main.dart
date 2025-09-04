@@ -7,16 +7,34 @@ import 'package:hospital_app/features/auth/data/datasources/auth_remote_data_sou
 import 'package:hospital_app/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:hospital_app/features/auth/domain/repositories/auth_repository.dart';
 import 'package:hospital_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:hospital_app/features/notification/data/datasource/notification_local_data_source.dart';
+import 'package:hospital_app/features/notification/data/repositories/notification_repository_impl.dart';
+import 'package:hospital_app/features/notification/domain/repositories/notification_repository.dart';
+import 'package:hospital_app/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:hospital_app/features/setting/data/datasources/theme_local_data_source.dart';
 import 'package:hospital_app/features/setting/data/repositories/theme_repository_impl.dart';
 import 'package:hospital_app/features/setting/domain/repositories/theme_repository.dart';
 import 'package:hospital_app/features/setting/presentation/cubit/theme_cubit.dart';
 import 'package:hospital_app/share/navigation/router.dart';
+import 'package:hospital_app/share/notification/local_notification_service.dart';
+import 'package:hospital_app/share/notification/push_notification_service.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 import 'share/themes/app_theme.dart';
+import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Khởi tạo Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // Khởi tạo Push Notification ở local
+  await LocalNotificationService.init();
+
+  // Chỉ có thể ở chiều đứng
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
@@ -32,6 +50,11 @@ void main() async {
     dataSource: ThemeLocalDataSourceImpl(),
   );
 
+  // Notification
+  final NotificationRepository notificationRepository = NotificationRepositoryImpl(
+    NotificationLocalDataSourceImpl()
+  );
+
   // Bọc State toàn app
   runApp(MultiBlocProvider(
     providers: [
@@ -41,11 +64,17 @@ void main() async {
       BlocProvider(
         create: (context) => ThemeCubit(themeRepository)..getCurrentTheme(),
       ),
+      BlocProvider(create: (context) => NotificationCubit(notificationRepository))
     ],
     child: ScreenUtilInit(
       designSize: const Size(430, 932), // màn hình iphone 14 pro
       minTextAdapt: true,
       builder: (context, child) {
+        // Khởi tạo Push Notification trước khi mở app
+        PushNotificationService.init(
+          context: context,
+          repository: notificationRepository,
+        );
         return const MyApp();
       },
     ),

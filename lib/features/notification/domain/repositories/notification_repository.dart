@@ -1,6 +1,10 @@
-import 'package:hospital_app/features/notification/domain/entities/notification.dart';
+import '../entities/app_notification.dart';
 
 abstract class NotificationRepository {
-  Future<List<Notification>> getAllNotifications();
-  Future<void> updateNotification(Notification notification);
+  Stream<List<AppNotification>> getAllNotifications();
+  Future<void> saveNotification(AppNotification notification);
+  Future<void> markReadNotifications();
+  Future<void> markReadNotification(AppNotification notification);
+  Future<void> deleteAllNotifications();
+  Future<bool> hasNotReadNotification();
 }

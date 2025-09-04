@@ -71,7 +71,10 @@ final ThemeData lightTheme = ThemeData(
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
       foregroundColor: AppColors.primaryLight,
-      textStyle: AppTextStyles.body,
+      textStyle: TextStyle(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w600,
+      ),
     ),
   ),
 
@@ -124,4 +127,5 @@ final ThemeData lightTheme = ThemeData(
     selectedItemColor: AppColors.subtextLight,
     unselectedItemColor: AppColors.borderLight,
   ),
+
 );

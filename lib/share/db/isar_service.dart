@@ -1,3 +1,4 @@
+import 'package:hospital_app/features/notification/data/models/notification_db_model.dart';
 import 'package:hospital_app/features/view_prescription/data/models/medication_db_model.dart';
 import 'package:hospital_app/features/view_prescription/data/models/prescribed_medication_db_model.dart';
 import 'package:hospital_app/features/view_prescription/data/models/prescription_db_model.dart';
@@ -15,6 +16,7 @@ class IsarService {
         PrescriptionDbModelSchema,
         PrescribedMedicationDbModelSchema,
         MedicationDbModelSchema,
+        NotificationDbModelSchema,
       ],
       directory: dir.path,
       inspector: true,
