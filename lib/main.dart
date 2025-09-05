@@ -12,9 +12,13 @@ import 'package:hospital_app/features/notification/data/repositories/notificatio
 import 'package:hospital_app/features/notification/domain/repositories/notification_repository.dart';
 import 'package:hospital_app/features/notification/presentation/cubit/dot_notification_cubit.dart';
 import 'package:hospital_app/features/notification/presentation/cubit/notification_cubit.dart';
+import 'package:hospital_app/features/setting/data/datasources/notification_setting_local_data_source.dart';
 import 'package:hospital_app/features/setting/data/datasources/theme_local_data_source.dart';
+import 'package:hospital_app/features/setting/data/repositories/notification_setting_repository_impl.dart';
 import 'package:hospital_app/features/setting/data/repositories/theme_repository_impl.dart';
+import 'package:hospital_app/features/setting/domain/repositories/notification_setting_repository.dart';
 import 'package:hospital_app/features/setting/domain/repositories/theme_repository.dart';
+import 'package:hospital_app/features/setting/presentation/cubit/notification_setting_cubit.dart';
 import 'package:hospital_app/features/setting/presentation/cubit/theme_cubit.dart';
 import 'package:hospital_app/share/navigation/router.dart';
 import 'package:hospital_app/share/notification/local_notification_service.dart';
@@ -54,16 +58,24 @@ void main() async {
 
   // Notification
   final NotificationRepository notificationRepository =
-      NotificationRepositoryImpl(NotificationLocalDataSourceImpl());
+  NotificationRepositoryImpl(NotificationLocalDataSourceImpl());
+  final NotificationSettingRepository notificationSettingRepository =
+  NotificationSettingRepositoryImpl(
+      NotificationSettingLocalDataSourceImpl()
+  );
 
   // Bọc State toàn app
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
-        create: (context) => AuthCubit(authRepository)..getCurrentUser(),
+        create: (context) =>
+        AuthCubit(authRepository)
+          ..getCurrentUser(),
       ),
       BlocProvider(
-        create: (context) => ThemeCubit(themeRepository)..getCurrentTheme(),
+        create: (context) =>
+        ThemeCubit(themeRepository)
+          ..getCurrentTheme(),
       ),
       BlocProvider(
           create: (context) =>
@@ -71,6 +83,9 @@ void main() async {
       BlocProvider(
           create: (context) =>
               DotNotificationCubit(notificationRepository)),
+      BlocProvider(
+          create: (context) =>
+              NotificationSettingCubit(notificationSettingRepository)),
     ],
     child: ScreenUtilInit(
       designSize: const Size(430, 932), // màn hình iphone 14 pro
@@ -78,8 +93,9 @@ void main() async {
       builder: (context, child) {
         // Khởi tạo Push Notification trước khi mở app
         PushNotificationService.init(
-          context: context,
-          repository: notificationRepository,
+            context: context,
+            notificationRepository: notificationRepository,
+            notificationSettingRepository: notificationSettingRepository,
         );
         return const MyApp();
       },
@@ -92,7 +108,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = context.watch<ThemeCubit>().state;
+    final themeMode = context
+        .watch<ThemeCubit>()
+        .state;
 
     return MaterialApp.router(
       title: "Ứng dụng viện A",
