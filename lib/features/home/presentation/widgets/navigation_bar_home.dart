@@ -17,25 +17,29 @@ class NavigationBarHome extends StatelessWidget {
       onTap: onItemSelected,
       items: const [
         BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home),
             label: "Trang chủ",
             tooltip: 'Trang chủ'
         ),
 
         BottomNavigationBarItem(
             icon: Icon(Icons.medical_services_outlined),
+            activeIcon: Icon(Icons.medical_services),
             label: "Dịch vụ",
             tooltip: 'Dịch vụ'
         ),
 
         BottomNavigationBarItem(
-            icon: Icon(Icons.folder_shared),
+            icon: Icon(Icons.folder_shared_outlined),
+            activeIcon: Icon(Icons.folder_shared),
             label: "Hồ sơ sức khoẻ",
             tooltip: 'Hồ sơ sức khoẻ'
         ),
 
         BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.settings_outlined),
+            activeIcon: Icon(Icons.settings),
             label: "Cài đặt",
             tooltip: 'Cài đặt'
         ),

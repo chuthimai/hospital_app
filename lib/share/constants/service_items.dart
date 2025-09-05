@@ -16,7 +16,7 @@ class ServiceItem {
 final List<ServiceItem> serviceExaminationItems = [
   ServiceItem(
     label: "Đặt lịch",
-    iconData: Icons.calendar_month,
+    iconData: Icons.calendar_month_outlined,
     onTap: (BuildContext context) {
       context.push("/book-appointment");
     },
@@ -37,7 +37,7 @@ final List<ServiceItem> serviceExaminationItems = [
   ),
   ServiceItem(
     label: "Đơn thuốc",
-    iconData: Icons.medication,
+    iconData: Icons.medication_outlined,
     onTap: (BuildContext context) {
       context.push("/prescriptions");
     },
@@ -47,21 +47,21 @@ final List<ServiceItem> serviceExaminationItems = [
 final List<ServiceItem> medicalDocumentsItems = [
   ServiceItem(
     label: "Hồ sơ sức khoẻ",
-    iconData: Icons.folder_shared,
+    iconData: Icons.folder_shared_outlined,
     onTap: (BuildContext context) {
       context.push("/medical-records");
     },
   ),
   ServiceItem(
     label: "Phiếu tái khám",
-    iconData: Icons.event,
+    iconData: Icons.event_outlined,
     onTap: (BuildContext context) {
       context.push("/followup-appointments");
     },
   ),
   ServiceItem(
     label: "Giấy chuyển viện",
-    iconData: Icons.article,
+    iconData: Icons.article_outlined,
     onTap: (BuildContext context) {
       context.push("/transfer-letters");
     },
@@ -71,7 +71,7 @@ final List<ServiceItem> medicalDocumentsItems = [
 final List<ServiceItem> paymentItems = [
   ServiceItem(
     label: "Hoá đơn",
-    iconData: Icons.attach_money,
+    iconData: Icons.attach_money_outlined,
     onTap: (BuildContext context) {
       context.push("/invoices");
     },
@@ -81,7 +81,7 @@ final List<ServiceItem> paymentItems = [
 final List<ServiceItem> infoItems = [
   ServiceItem(
     label: "Bác sĩ",
-    iconData: Icons.person,
+    iconData: Icons.person_outline,
     onTap: (BuildContext context) {
       context.push("/doctors");
     },
