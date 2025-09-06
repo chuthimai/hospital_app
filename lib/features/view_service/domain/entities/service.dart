@@ -4,14 +4,14 @@ class Service {
   final int id;
   final String name;
   String? detailDescription;
-  Location? location;
-  double? price;
+  Location location;
+  final bool isCompleted;
 
   Service({
     required this.id,
     required this.name,
     this.detailDescription,
-    this.location,
-    this.price,
+    required this.location,
+    this.isCompleted = true,
   });
 }

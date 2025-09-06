@@ -5,7 +5,7 @@ class Qualification {
   final String issuer;
   final String type;
   final DateTime effectiveDate;
-  final DateTime? expriedDate;
+  final DateTime? expiredDate;
 
   Qualification({
     required this.id,
@@ -14,6 +14,6 @@ class Qualification {
     required this.issuer,
     required this.type,
     required this.effectiveDate,
-    required this.expriedDate,
+    this.expiredDate,
   });
 }

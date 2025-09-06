@@ -10,7 +10,7 @@ class ProfileScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('ProfileScreen'),
+          title: const Text('Thông tin cá nhân'),
         ),
         body: const ProfileView(),
       ),

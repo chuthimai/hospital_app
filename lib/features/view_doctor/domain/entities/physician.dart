@@ -1,7 +1,7 @@
 import 'qualification.dart';
 import 'specialty.dart';
 
-class Doctor {
+class Physician {
   final int id;
   final String name;
   final bool gender;
@@ -9,7 +9,7 @@ class Doctor {
   final Specialty specialty;
   final List<Qualification> qualifications;
 
-  Doctor({
+  Physician({
     required this.id,
     required this.name,
     required this.gender,
