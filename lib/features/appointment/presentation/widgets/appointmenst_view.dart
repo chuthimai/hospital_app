@@ -25,7 +25,7 @@ class AppointmentsView extends StatelessWidget {
             children: [
               Expanded(
                 child: ListTile(
-                  leading: const Icon(Icons.calendar_today),
+                  leading: const Icon(Icons.calendar_today_outlined),
                   title: Text("Ngày: ${appt["date"]}"),
                   subtitle:
                       Text("Bác sĩ: ${appt["doctor"]}, Ca: ${appt["shift"]}"),
@@ -39,7 +39,10 @@ class AppointmentsView extends StatelessWidget {
                     _onClickDeleteIcon(context);
                   },
                   iconSize: 32.sp,
-                  icon: const Icon(Icons.delete_outlined),
+                  icon: Icon(
+                    Icons.delete_forever_outlined,
+                    color: Colors.pink.withOpacity(0.6),
+                  ),
                   color: Theme.of(context).unselectedWidgetColor,
                 ),
               )
@@ -51,8 +54,14 @@ class AppointmentsView extends StatelessWidget {
   }
 
   void _onClickDeleteIcon(BuildContext context) {
-    showDialog(context: context, builder: (ctx) {
-      return ConfirmDeleteDialog(onConfirm: () {});
-    });
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return ConfirmDeleteDialog(
+              title: "Xác nhận huỷ",
+              message: "Bạn có chắc chắn muốn huỷ lịch hẹn này không?",
+              textConfirm: "Xác nhận",
+              onConfirm: () {});
+        });
   }
 }

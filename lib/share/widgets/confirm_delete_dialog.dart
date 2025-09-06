@@ -5,6 +5,7 @@ class ConfirmDeleteDialog extends StatelessWidget {
   final String message;
   final VoidCallback onConfirm;
   final VoidCallback? onCancel;
+  final String textConfirm;
 
   const ConfirmDeleteDialog({
     super.key,
@@ -12,6 +13,7 @@ class ConfirmDeleteDialog extends StatelessWidget {
     this.message = "Bạn có chắc chắn muốn xoá mục này không?",
     required this.onConfirm,
     this.onCancel,
+    this.textConfirm = "Xoá"
   });
 
   @override
@@ -32,7 +34,7 @@ class ConfirmDeleteDialog extends StatelessWidget {
             Navigator.of(context).pop();
             onConfirm();
           },
-          child: const Text("Xoá"),
+          child: Text(textConfirm),
         ),
       ],
     );
