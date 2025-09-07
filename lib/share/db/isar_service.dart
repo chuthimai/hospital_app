@@ -2,6 +2,8 @@ import 'package:hospital_app/features/notification/data/models/notification_db_m
 import 'package:hospital_app/features/view_prescription/data/models/medication_db_model.dart';
 import 'package:hospital_app/features/view_prescription/data/models/prescribed_medication_db_model.dart';
 import 'package:hospital_app/features/view_prescription/data/models/prescription_db_model.dart';
+import 'package:hospital_app/features/view_service/data/models/location_db_model.dart';
+import 'package:hospital_app/features/view_service/data/models/service_db_model.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -17,6 +19,8 @@ class IsarService {
         PrescribedMedicationDbModelSchema,
         MedicationDbModelSchema,
         NotificationDbModelSchema,
+        LocationDbModelSchema,
+        ServiceDbModelSchema,
       ],
       directory: dir.path,
       inspector: true,
