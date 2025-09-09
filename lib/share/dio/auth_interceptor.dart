@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:hospital_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:hospital_app/share/navigation/router.dart';
 
 import 'token_manager.dart';
 
@@ -7,15 +9,24 @@ import 'token_manager.dart';
 class AuthInterceptor extends Interceptor {
   final Dio _dio;
   final TokenManager _tokenManager;
+  final AuthCubit _authCubit;
 
   bool _isRefreshing = false;
+
   // Queue để đặt các request khi đang refresh token
   final List<Function(String)> _waitQueue = [];
 
-  AuthInterceptor(this._dio, this._tokenManager);
+  AuthInterceptor({
+    required dio,
+    required tokenManager,
+    required authCubit,
+  })  : _dio = dio,
+        _tokenManager = tokenManager,
+        _authCubit = authCubit;
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+  void onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
     final token = await _tokenManager.getAccessToken();
     if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
@@ -46,7 +57,13 @@ class AuthInterceptor extends Interceptor {
           final response = await _retryWithNewToken(requestOptions, newToken);
           handler.resolve(response);
         } else {
+          // Xử lý khi token hết hạn và ko có refresh token
           await _tokenManager.clearTokens();
+          _authCubit.logout();
+          rootNavigatorKey.currentState?.pushNamedAndRemoveUntil(
+            '/login',
+            (route) => false,
+          );
           handler.next(err);
         }
       } finally {
@@ -58,7 +75,8 @@ class AuthInterceptor extends Interceptor {
     handler.next(err);
   }
 
-  Future<Response> _retryWithNewToken(RequestOptions requestOptions, String token) async {
+  Future<Response> _retryWithNewToken(
+      RequestOptions requestOptions, String token) async {
     requestOptions.headers['Authorization'] = 'Bearer $token';
     final response = await _retry(requestOptions);
 
@@ -72,7 +90,8 @@ class AuthInterceptor extends Interceptor {
 
   Future<Response> _retry(RequestOptions requestOptions) {
     return _dio.fetch(
-      Options(method: requestOptions.method, headers: requestOptions.headers).compose(
+      Options(method: requestOptions.method, headers: requestOptions.headers)
+          .compose(
         _dio.options,
         requestOptions.path,
         data: requestOptions.data,

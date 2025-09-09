@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hospital_app/features/appointment/presentation/view/booking_appointment_screen.dart';
 import 'package:hospital_app/features/appointment/presentation/view/view_appointments_screen.dart';
@@ -25,7 +26,10 @@ import 'package:hospital_app/features/view_service/presentation/view/view_servic
 import 'package:hospital_app/features/view_transfer_letter/presentation/view/view_transfer_letters_screen.dart';
 import 'package:hospital_app/splash_screen.dart';
 
+final rootNavigatorKey = GlobalKey<NavigatorState>();
+
 final GoRouter router = GoRouter(
+  navigatorKey: rootNavigatorKey,
   initialLocation: '/',
   routes: [
     GoRoute(

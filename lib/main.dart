@@ -20,6 +20,7 @@ import 'package:hospital_app/features/setting/domain/repositories/notification_s
 import 'package:hospital_app/features/setting/domain/repositories/theme_repository.dart';
 import 'package:hospital_app/features/setting/presentation/cubit/notification_setting_cubit.dart';
 import 'package:hospital_app/features/setting/presentation/cubit/theme_cubit.dart';
+import 'package:hospital_app/share/dio/remote_service.dart';
 import 'package:hospital_app/share/navigation/router.dart';
 import 'package:hospital_app/share/notification/local_notification_service.dart';
 import 'package:hospital_app/share/notification/push_notification_service.dart';
@@ -50,6 +51,7 @@ void main() async {
     localDataSource: AuthLocalDataSourceImpl(),
     notificationLocalDataSource: NotificationLocalDataSourceImpl(),
   );
+  final AuthCubit authCubit = AuthCubit(authRepository);
 
   // Theme
   final ThemeRepository themeRepository = ThemeRepositoryImpl(
@@ -64,13 +66,14 @@ void main() async {
       NotificationSettingLocalDataSourceImpl()
   );
 
+  // Tạo RemoteService
+  RemoteService(authCubit: authCubit);
+
   // Bọc State toàn app
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
-        create: (context) =>
-        AuthCubit(authRepository)
-          ..getCurrentUser(),
+        create: (context) => authCubit..getCurrentUser(),
       ),
       BlocProvider(
         create: (context) =>
