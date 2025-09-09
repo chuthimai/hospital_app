@@ -1,6 +1,7 @@
 import 'package:hospital_app/features/auth/data/models/register_request.dart';
 import 'package:hospital_app/features/auth/domain/entities/register_params.dart';
 import 'package:hospital_app/features/notification/data/datasource/notification_local_data_source.dart';
+import 'package:hospital_app/share/db/secure_token_storage.dart';
 import 'package:hospital_app/share/utils/app_logger.dart';
 
 import '../../domain/entities/login_params.dart';
@@ -40,6 +41,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> logout() async {
     await _localDataSource.deleteUser();
     await _notificationLocalDataSource.deleteAllNotifications();
+    await SecureTokenStorage().deleteTokens();
   }
 
   @override

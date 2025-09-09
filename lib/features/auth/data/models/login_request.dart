@@ -6,13 +6,13 @@ part 'login_request.g.dart';
 
 @JsonSerializable()
 class LoginRequest {
-  final int id;
+  final int identifier;
   final String password;
 
-  LoginRequest({required this.id, required this.password});
+  LoginRequest({required this.identifier, required this.password});
 
   factory LoginRequest.fromParams(LoginParams params) {
-    return LoginRequest(id: params.id, password: params.password);
+    return LoginRequest(identifier: params.id, password: params.password);
   }
 
   factory LoginRequest.fromJson(Map<String, dynamic> json) =>

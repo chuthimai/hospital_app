@@ -27,6 +27,7 @@ class AppBarHome extends StatelessWidget {
                 context.push("/profile")
               },
               child: CircleAvatar(
+                backgroundColor: Theme.of(context).cardColor,
                 backgroundImage: NetworkImage(user.photo),
                 radius: 24.sp,
               ),

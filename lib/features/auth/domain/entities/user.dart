@@ -4,10 +4,10 @@ class User {
   final String? email;
   final String role;
   final String photo;
-  final String telecom;
+  final String? telecom;
   final bool gender;
   final DateTime birthDate;
-  final String address;
+  final String? address;
 
   const User({
     required this.id,
@@ -15,9 +15,9 @@ class User {
     required this.email,
     required this.role,
     required this.photo,
-    required this.telecom,
+    this.telecom,
     required this.gender,
     required this.birthDate,
-    required this.address,
+    this.address,
   });
 }

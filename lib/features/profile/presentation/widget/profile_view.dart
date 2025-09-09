@@ -41,13 +41,13 @@ class ProfileView extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Thông tin chung
-          InfoRow(label: "Số điện thoại", value: user.telecom),
+          InfoRow(label: "Số điện thoại", value: user.telecom ?? "Không có thông tin"),
           InfoRow(label: "Giới tính", value: user.gender ? "Nam" : "Nữ"),
           InfoRow(
             label: "Ngày sinh",
             value: DateFormatter.format(user.birthDate),
           ),
-          InfoRow(label: "Địa chỉ", value: user.address),
+          InfoRow(label: "Địa chỉ", value: user.address ?? "Không có thông tin"),
         ],
       ),
     );
