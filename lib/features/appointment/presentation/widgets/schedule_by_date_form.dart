@@ -20,7 +20,7 @@ class ScheduleByDateForm extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(width: 8), // khoảng cách giữa 2 field
+            const SizedBox(width: 8),
             Expanded(
               flex: 1,
               child: DropdownButtonFormField<String>(

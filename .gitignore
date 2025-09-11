@@ -41,3 +41,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# App config: API root
+lib/share/constants/app_config.dart
+lib/share/constants/path_api.dart

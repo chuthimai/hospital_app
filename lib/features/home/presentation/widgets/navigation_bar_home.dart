@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_app/share/widgets/custom_navigation_bar/custom_navigation_bar.dart';
 
 class NavigationBarHome extends StatelessWidget {
   final int selectedIndex;
@@ -12,36 +13,44 @@ class NavigationBarHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
+    return CustomBottomNavigationBar(
       currentIndex: selectedIndex,
       onTap: onItemSelected,
-      items: const [
+      items: [
         BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: "Trang chủ",
-            tooltip: 'Trang chủ'
+          icon: const Icon(Icons.home_outlined),
+          activeIcon: Icon(
+            Icons.home,
+            size: Theme.of(context).iconTheme.size! * 1.15,
+          ),
+          label: "Trang chủ",
+          tooltip: 'Trang chủ',
         ),
-
         BottomNavigationBarItem(
-            icon: Icon(Icons.medical_services_outlined),
-            activeIcon: Icon(Icons.medical_services),
-            label: "Dịch vụ",
-            tooltip: 'Dịch vụ'
+          icon: const Icon(Icons.medical_services_outlined),
+          activeIcon: Icon(
+            Icons.medical_services,
+            size: Theme.of(context).iconTheme.size! * 1.15,
+          ),
+          label: "Dịch vụ",
+          tooltip: 'Dịch vụ',
         ),
-
         BottomNavigationBarItem(
-            icon: Icon(Icons.folder_shared_outlined),
-            activeIcon: Icon(Icons.folder_shared),
+            icon: const Icon(Icons.folder_shared_outlined),
+            activeIcon: Icon(
+              Icons.folder_shared,
+              size: Theme.of(context).iconTheme.size! * 1.15,
+            ),
             label: "Hồ sơ sức khoẻ",
-            tooltip: 'Hồ sơ sức khoẻ'
-        ),
-
+            tooltip: 'Hồ sơ sức khoẻ'),
         BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined),
-            activeIcon: Icon(Icons.settings),
-            label: "Cài đặt",
-            tooltip: 'Cài đặt'
+          icon: const Icon(Icons.settings_outlined),
+          activeIcon: Icon(
+            Icons.settings,
+            size: Theme.of(context).iconTheme.size! * 1.15,
+          ),
+          label: "Cài đặt",
+          tooltip: 'Cài đặt',
         ),
       ],
     );

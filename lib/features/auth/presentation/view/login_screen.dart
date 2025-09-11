@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: 32.sp,
-                      vertical: 16.sp,
+                      vertical: 24.sp,
                     ),
                     child: Form(
                       key: _formKey,
@@ -91,10 +91,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             prefixIcon: const Icon(Icons.vpn_key),
                             isPassword: true,
                             validator: (value) {
-                              if (value == null || value.isEmpty)
+                              if (value == null || value.isEmpty) {
                                 return "Vui lòng nhập mật khẩu";
-                              if (value.length < 8)
+                              }
+                              if (value.length < 8) {
                                 return "Mật khẩu tối thiểu 8 ký tự";
+                              }
                               return null;
                             },
                             onSaved: (value) => _password = value!,
@@ -108,11 +110,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               CustomTextButton(
                                 text: "Quên mật khẩu?",
+                                padding: EdgeInsets.only(top: 12.sp),
+                                fontSize: 14.sp,
                                 onPressed: () => context.pushReplacement("/forgot-password"),
                               ),
                               const Spacer(),
                               CustomTextButton(
                                 text: "Đăng ký",
+                                padding: EdgeInsets.only(top: 12.sp),
+                                fontSize: 14.sp,
                                 onPressed: () => context.pushReplacement("/register"),
                               ),
                             ],

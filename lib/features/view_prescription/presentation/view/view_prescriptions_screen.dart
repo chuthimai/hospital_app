@@ -15,7 +15,7 @@ class ViewPrescriptionsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Prescriptions'),
+        title: const Text('Đơn thuốc'),
       ),
       body: SafeArea(
         child: ListView.builder(

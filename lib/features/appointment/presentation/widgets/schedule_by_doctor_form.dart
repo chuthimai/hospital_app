@@ -19,6 +19,11 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
     Doctor(id: 4, fullName: "BS. Phạm Thị D", specialty: "Sản phụ khoa"),
     Doctor(id: 5, fullName: "BS. Hoàng Văn E", specialty: "Tim mạch"),
   ];
+  final allowedDates = [
+    DateTime(2025, 9, 15),
+    DateTime(2025, 9, 18),
+    DateTime(2025, 9, 25),
+  ];
   Doctor? _selectedDoctor;
 
   @override
@@ -60,6 +65,7 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
               flex: 1,
               child: DatePickerField(
                 label: "Chọn ngày",
+                allowedDates: allowedDates,
                 onDateSelected: (date) {
                   print("Ngày được chọn: $date");
                 },

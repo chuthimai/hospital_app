@@ -25,7 +25,17 @@ class _BookingAppointmentViewState extends State<BookingAppointmentView> {
               ChoiceChip(
                 label: const Text("Khám theo lịch"),
                 selected: _selectedTab == 0,
-                selectedColor: Theme.of(context).cardColor,
+                color: MaterialStateProperty.resolveWith<Color?>(
+                      (states) {
+                    if (states.contains(MaterialState.selected)) {
+                      return Theme.of(context).cardColor;
+                    }
+                    if (states.contains(MaterialState.pressed)) {
+                      return Theme.of(context).splashColor;
+                    }
+                    return Theme.of(context).scaffoldBackgroundColor;
+                  },
+                ),
                 onSelected: (val) {
                   setState(() => _selectedTab = 0);
                 },
@@ -33,7 +43,17 @@ class _BookingAppointmentViewState extends State<BookingAppointmentView> {
               ChoiceChip(
                 label: const Text("Khám theo bác sĩ"),
                 selected: _selectedTab == 1,
-                selectedColor: Theme.of(context).cardColor,
+                color: MaterialStateProperty.resolveWith<Color?>(
+                      (states) {
+                    if (states.contains(MaterialState.selected)) {
+                      return Theme.of(context).cardColor;
+                    }
+                    if (states.contains(MaterialState.pressed)) {
+                      return Theme.of(context).splashColor;
+                    }
+                    return Theme.of(context).scaffoldBackgroundColor;
+                  },
+                ),
                 onSelected: (val) {
                   setState(() => _selectedTab = 1);
                 },

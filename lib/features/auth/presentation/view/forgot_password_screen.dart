@@ -21,7 +21,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 32.sp,
-                    vertical: 16.sp,
+                    vertical: 24.sp,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,9 +47,16 @@ class ForgotPasswordScreen extends StatelessWidget {
                         text: "Nhận mã OTP về điện thoại",
                         onPressed: () => context.push("/otp-code"),
                       ),
-                      CustomTextButton(
-                        text: "Đăng nhập?",
-                        onPressed: () => context.pushReplacement("/login"),
+                      Row(
+                        children: [
+                          const Spacer(),
+                          CustomTextButton(
+                            text: "Đăng nhập?",
+                            padding: EdgeInsets.only(top: 12.sp),
+                            fontSize: 14.sp,
+                            onPressed: () => context.pushReplacement("/login"),
+                          ),
+                        ],
                       )
                     ],
                   ),

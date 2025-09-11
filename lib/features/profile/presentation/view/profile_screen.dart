@@ -7,13 +7,11 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Thông tin cá nhân'),
-        ),
-        body: const ProfileView(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Thông tin cá nhân'),
       ),
+      body: const SafeArea(child: ProfileView()),
     );
   }
 }

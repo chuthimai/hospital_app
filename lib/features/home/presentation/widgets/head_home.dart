@@ -7,17 +7,8 @@ class HeadHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor, boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.3), // màu bóng
-          spreadRadius: 2,
-          blurRadius: 10,
-          offset: const Offset(0, 1),
-        )
-      ]),
       child: Padding(
         padding: EdgeInsets.fromLTRB(16.sp, 8.sp, 16.sp, 0.sp),
         child: Column(

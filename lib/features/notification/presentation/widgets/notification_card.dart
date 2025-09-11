@@ -37,9 +37,9 @@ class _NotificationCardState extends State<NotificationCard> {
             title: Text(
               notification.title,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                fontSize: 16.sp,
-              ),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.sp,
+                  ),
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,25 +48,27 @@ class _NotificationCardState extends State<NotificationCard> {
                   notification.body,
                   maxLines: _expanded ? null : 1,
                   overflow:
-                  _expanded ? TextOverflow.visible : TextOverflow.ellipsis,
+                      _expanded ? TextOverflow.visible : TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontSize: 14.sp,
-                  ),
+                        fontSize: 14.sp,
+                      ),
                 ),
-                const SizedBox(height: 4),
 
                 // Nút Xem thêm / Thu gọn
                 CustomTextButton(
-                    text: _expanded ? "Thu gọn" : "Xem thêm",
+                    text: _expanded
+                        ? "----- Thu gọn -----"
+                        : "----- Xem thêm -----",
+                    fontSize: 13.sp,
                     onPressed: () {
                       setState(() {
                         _expanded = !_expanded;
                       });
 
-                      if (!_expanded) return; // chỉ mark read khi mở rộng
+                      // mark read khi mở rộng
+                      if (!_expanded) return;
                       context.read<NotificationCubit>().markRead(notification);
-                    }
-                )
+                    })
               ],
             ),
           ),
@@ -76,8 +78,7 @@ class _NotificationCardState extends State<NotificationCard> {
             right: 8,
             top: 8,
             child: Container(
-              padding:
-              const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
                 color: notification.isRead
                     ? Colors.transparent

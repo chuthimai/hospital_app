@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 class DatePickerField extends StatefulWidget {
   final String label;
   final void Function(DateTime)? onDateSelected;
+  final DateTime? start;
+  final DateTime? end;
+  final List<DateTime> allowedDates;
 
   const DatePickerField({
     super.key,
     required this.label,
     this.onDateSelected,
+    this.start,
+    this.end,
+    this.allowedDates = const [],
   });
 
   @override
@@ -16,25 +22,6 @@ class DatePickerField extends StatefulWidget {
 
 class _DatePickerFieldState extends State<DatePickerField> {
   DateTime? _selectedDate;
-
-  Future<void> _pickDate() async {
-    final now = DateTime.now();
-    final nextMonth = DateTime(now.year, now.month + 1, now.day);
-    final lastDate = DateTime(nextMonth.year, nextMonth.month, nextMonth.day);
-
-    final picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ?? now,
-      firstDate: now,
-      lastDate: lastDate, // tới 1 năm sau
-      locale: const Locale("vi", "VN"), // để hiển thị tiếng Việt
-    );
-
-    if (picked != null) {
-      setState(() => _selectedDate = picked);
-      widget.onDateSelected?.call(picked);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,5 +39,79 @@ class _DatePickerFieldState extends State<DatePickerField> {
       ),
       onTap: _pickDate,
     );
+  }
+
+  Future<void> _pickDate() async {
+    late DateTime? picked;
+    if (widget.allowedDates.isNotEmpty) {
+      picked = await _pickDateHasAllowedDates(allowedDates: widget.allowedDates);
+    } else {
+      picked = await _pickDateHasStartEndDate(start: widget.start, end: widget.end);
+    }
+
+    if (picked != null) {
+      setState(() => _selectedDate = picked);
+      widget.onDateSelected?.call(picked);
+    }
+  }
+
+  Future<DateTime?> _pickDateHasAllowedDates(
+      {required List<DateTime> allowedDates}) async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? allowedDates.first,
+      firstDate: allowedDates.first,
+      lastDate: allowedDates.last,
+      selectableDayPredicate: (day) {
+        return allowedDates.any((d) =>
+            d.year == day.year && d.month == day.month && d.day == day.day);
+      },
+      locale: const Locale("vi", "VN"),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: Theme.of(context).textTheme.bodyLarge!.color,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    return picked;
+  }
+
+  Future<DateTime?> _pickDateHasStartEndDate(
+      {required DateTime? start, required DateTime? end}) async {
+    start ??= DateTime.now();
+    if (end == null) {
+      final nextMonth = DateTime(start.year, start.month + 1, start.day);
+      end = DateTime(nextMonth.year, nextMonth.month, nextMonth.day);
+    }
+
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? start,
+      firstDate: start,
+      lastDate: end,
+      locale: const Locale("vi", "VN"),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: Theme.of(context).textTheme.bodyLarge!.color,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    return picked;
   }
 }
