@@ -10,9 +10,10 @@ import 'local_notification_service.dart';
 
 class PushNotificationService {
   static final FirebaseMessaging _messaging = FirebaseMessaging.instance;
-  static late BuildContext _context;
+  static BuildContext? _context;
   static late NotificationRepository _notificationRepository;
   static late NotificationSettingRepository _notificationSettingRepository;
+  static bool _initialized = false;
 
   /// Hàm khởi tạo service
   static Future<void> init({
@@ -20,6 +21,9 @@ class PushNotificationService {
     required NotificationRepository notificationRepository,
     required NotificationSettingRepository notificationSettingRepository,
   }) async {
+    if (_initialized) return;
+    _initialized = true;
+
     _context = context;
     _notificationRepository = notificationRepository;
     _notificationSettingRepository = notificationSettingRepository;
@@ -32,6 +36,8 @@ class PushNotificationService {
       return;
     }
 
+    AppLogger().info("PushNotificationService initialized");
+
     await _setupListeners();
     await _handleInitialMessage();
   }
@@ -43,21 +49,22 @@ class PushNotificationService {
     AppLogger().info("FCM Token: $token");
 
     // Foreground messages
-    FirebaseMessaging.onMessage.listen((message) {
+    FirebaseMessaging.onMessage.listen((message) async {
       final notification = message.notification;
       if (notification != null) {
-        LocalNotificationService.showNotification(
+        await LocalNotificationService.showNotification(
           title: notification.title ?? "Thông báo",
           body: notification.body ?? "",
         );
-        _saveMessageToLocal(message);
+        AppLogger().info("Notification received");
+        await _saveMessageToLocal(message);
       }
     });
 
     // Khi user click vào notification
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      _saveMessageToLocal(message);
-      _navigateToNotification();
+    FirebaseMessaging.onMessageOpenedApp.listen((message) async {
+      AppLogger().warn("User tapped notification");
+      await _navigateToNotification();
     });
   }
 
@@ -65,12 +72,37 @@ class PushNotificationService {
   static Future<void> _handleInitialMessage() async {
     final initialMessage = await _messaging.getInitialMessage();
     if (initialMessage != null) {
-      _saveMessageToLocal(initialMessage);
-      _navigateToNotification();
+      AppLogger().warn("[initialMessage] app opened from terminated state");
+      await _navigateToNotification();
     }
   }
 
-  /// Tắt nhận thông báo (không tự động tạo token nữa)
+  /// Background handler
+  static Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+    await _saveMessageToLocal(message);
+  }
+
+  /// Điều hướng tới màn hình thông báo
+  static Future<void> _navigateToNotification() async {
+    if (_context == null) return;
+    _context!.push("/notifications");
+  }
+
+  /// Lưu message xuống local
+  static Future<void> _saveMessageToLocal(RemoteMessage message) async {
+    final notification = message.notification;
+    if (notification != null) {
+      final newNotification = AppNotification(
+        title: notification.title ?? "Thông báo",
+        body: notification.body ?? "",
+        timestamp: DateTime.now(),
+        isRead: false,
+      );
+      await _notificationRepository.saveNotification(newNotification);
+    }
+  }
+
+  /// Tắt nhận thông báo
   static Future<void> disableNotifications() async {
     await _messaging.setAutoInitEnabled(false);
     AppLogger().info("Notifications disabled");
@@ -81,31 +113,6 @@ class PushNotificationService {
     await _messaging.setAutoInitEnabled(true);
     final token = await _messaging.getToken();
     AppLogger().info("Notifications enabled. FCM Token: $token");
-  }
-
-  /// Background handler
-  static Future<void> _firebaseMessagingBackgroundHandler(
-      RemoteMessage message) async {
-    AppLogger().info("Background message: ${message.messageId}");
-    _saveMessageToLocal(message);
-  }
-
-  /// Điều hướng tới màn hình thông báo
-  static void _navigateToNotification() {
-    _context.push("/notifications");
-  }
-
-  static void _saveMessageToLocal(RemoteMessage message) {
-    final notification = message.notification;
-    if (notification != null) {
-      final newNotification = AppNotification(
-        title: notification.title ?? "Thông báo",
-        body: notification.body ?? "",
-        timestamp: DateTime.now(),
-        isRead: false,
-      );
-      _notificationRepository.saveNotification(newNotification);
-    }
   }
 
   /// Lấy token

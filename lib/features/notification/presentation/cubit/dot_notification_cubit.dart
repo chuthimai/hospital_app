@@ -11,9 +11,16 @@ class DotNotificationCubit extends Cubit<DotNotificationState> {
 
   Future<void> checkUnread() async {
     try {
-      final hasUnread = await repository.hasNotReadNotification();
-      AppLogger().info("Has unread notification: $hasUnread");
-      emit(DotNotificationUnreadState(hasUnread));
+      emit(DotNotificationLoading());
+      repository.hasNotReadNotification().listen(
+            (hasUnread) {
+          AppLogger().info("Has unread notification: $hasUnread");
+          emit(DotNotificationUnreadState(hasUnread));
+        },
+        onError: (e) {
+          emit(DotNotificationError(e.toString()));
+        },
+      );
     } catch (e) {
       emit(DotNotificationError(e.toString()));
     }

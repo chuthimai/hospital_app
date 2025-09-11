@@ -28,8 +28,8 @@ class _NotificationCardState extends State<NotificationCard> {
       key: Key(notification.id.toString()),
       margin: EdgeInsets.symmetric(horizontal: 12.sp, vertical: 6.sp),
       color: notification.isRead
-          ? null
-          : Theme.of(context).colorScheme.surfaceVariant,
+          ? Theme.of(context).cardColor.withOpacity(0.8)
+          : Theme.of(context).cardColor,
       child: Stack(
         children: [
           // Nội dung chính
