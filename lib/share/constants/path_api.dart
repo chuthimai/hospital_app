@@ -1,3 +1,3 @@
 class PathApi {
-  static const login = "/auth/login/patient";
+  static const login = "/auth/login?role=PATIENT";
 }
