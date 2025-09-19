@@ -27,22 +27,13 @@ class NavigationBarHome extends StatelessWidget {
           tooltip: 'Trang chủ',
         ),
         BottomNavigationBarItem(
-          icon: const Icon(Icons.medical_services_outlined),
-          activeIcon: Icon(
-            Icons.medical_services,
-            size: Theme.of(context).iconTheme.size! * 1.15,
-          ),
-          label: "Dịch vụ",
-          tooltip: 'Dịch vụ',
-        ),
-        BottomNavigationBarItem(
-            icon: const Icon(Icons.folder_shared_outlined),
+            icon: const Icon(Icons.person_outline),
             activeIcon: Icon(
-              Icons.folder_shared,
+              Icons.person,
               size: Theme.of(context).iconTheme.size! * 1.15,
             ),
-            label: "Hồ sơ sức khoẻ",
-            tooltip: 'Hồ sơ sức khoẻ'),
+            label: "Cá nhân",
+            tooltip: 'Cá nhân'),
         BottomNavigationBarItem(
           icon: const Icon(Icons.settings_outlined),
           activeIcon: Icon(

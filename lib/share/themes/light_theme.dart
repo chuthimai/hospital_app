@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   primaryColor: AppColors.primaryLight,
+  secondaryHeaderColor: AppColors.secondaryLight,
   scaffoldBackgroundColor: AppColors.backgroundLight,
   splashColor: AppColors.splashLight,
   highlightColor: AppColors.splashLight,

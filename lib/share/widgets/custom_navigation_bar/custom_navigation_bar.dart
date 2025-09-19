@@ -28,7 +28,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
             return Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).cardColor.withOpacity(0.8),
+                color: Theme.of(context).cardColor.withOpacity(0.9),
                 borderRadius: BorderRadius.circular(16.r),
                 boxShadow: [
                   BoxShadow(

@@ -13,7 +13,7 @@ class UserModel {
   final String role;
   final String? photo;
   final String? telecom;
-  final int gender;
+  final String gender;
   final String birthDate;
   final String? address;
 
@@ -43,7 +43,7 @@ class UserModel {
       role: role,
       photo: photo ?? "https://thumb.ac-illust.com/51/51e1c1fc6f50743937e62fca9b942694_t.jpeg",
       telecom: telecom,
-      gender: gender == 1,
+      gender: gender == "1",
       birthDate: format.parse(birthDate),
       address: address,
     );

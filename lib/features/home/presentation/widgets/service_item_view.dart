@@ -17,48 +17,40 @@ class ServiceItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
     return SizedBox(
-      width: width.w,
-      height: height.h,
-      child: InkWell(
-        onTap: () => serviceItem.onTap(context),
-        borderRadius: BorderRadius.circular(12.r),
-        splashColor: Theme.of(context).hoverColor.withOpacity(0.2),
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 16.sp, horizontal: 12.sp),
-          decoration: BoxDecoration(
-            color: isDarkMode
-                ? Colors.white.withOpacity(0.2)
-                : Colors.white.withOpacity(0.8),
-            borderRadius: BorderRadius.circular(16.r),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                spreadRadius: 1,
-                blurRadius: 6,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              Icon(
-                serviceItem.iconData,
-                size: 36.sp,
-                color:
+      width: 100.w,
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 12.sp, horizontal: 4.sp),
+        child: Column(
+          children: [
+            Material(
+              color: Colors.white.withOpacity(0),
+              shape: const CircleBorder(),
+              child: InkWell(
+                onTap: () => {
+                  serviceItem.onTap(context)
+                },
+                splashColor: Theme.of(context).hoverColor.withOpacity(0.3),
+                customBorder: const CircleBorder(),
+                child: Padding(
+                  padding: EdgeInsets.all(12.sp),
+                  child: Icon(
+                    serviceItem.iconData,
+                    size: 36.sp,
+                    color:
                     isDarkMode ? Theme.of(context).cardColor : Theme.of(context).primaryColor,
-              ),
-              SizedBox(width: 8.sp),
-              Expanded(
-                child: Text(
-                  serviceItem.label,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  softWrap: true,
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+            SizedBox(height: 8.sp),
+            Text(
+              serviceItem.label,
+              style: Theme.of(context).textTheme.bodySmall,
+              textAlign: TextAlign.center,
+              softWrap: true,
+            ),
+          ],
         ),
       ),
     );

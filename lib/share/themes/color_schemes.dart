@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // ===== PRIMARY COLORS =====
-  static const Color primaryLight = Color(0xFF8FA31E);
+  // ===== PRIMARY/SECONDARY COLORS =====
+  static const Color primaryLight = Color.fromRGBO(63, 119, 73, 1);
+  static const Color secondaryLight = Color.fromRGBO(121, 171, 79, 1);
   static const Color primaryDark = Color(0xFF556B2F);
+  static const Color secondaryDark = Color.fromRGBO(121, 171, 79, 1);
+
   // ===== BACKGROUND COLORS =====
   static const Color backgroundLight = Color(0xFFEFEFEF);
   static const Color backgroundDark = Color(0xFF040303);
@@ -17,11 +20,11 @@ class AppColors {
   static const Color subtextDark = Color(0xFFCCCCCC);
 
   // ===== CARD / SURFACE COLORS =====
-  static const Color cardLight = Color(0xFFC6D870);
+  static const Color cardLight = Color.fromRGBO(188, 215, 150, 1);
   static const Color cardDark = Color(0xFF8FA31E);
 
   // ===== Splash Color  =======
-  static const Color splashLight = Color(0x80C6D870);
+  static const Color splashLight = Color.fromRGBO(150, 177, 95, 1);
   static const Color splashDark = Color(0x808FA31E);
 
   // ===== BORDER COLORS =====

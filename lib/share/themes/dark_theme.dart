@@ -6,6 +6,7 @@ import 'text_styles.dart';
 final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   primaryColor: AppColors.primaryDark,
+  secondaryHeaderColor: AppColors.secondaryDark,
   scaffoldBackgroundColor: AppColors.backgroundDark,
   splashColor: AppColors.splashDark,
   highlightColor: AppColors.splashDark,

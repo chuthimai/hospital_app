@@ -22,13 +22,6 @@ final List<ServiceItem> serviceExaminationItems = [
     },
   ),
   ServiceItem(
-    label: "Lịch sử đặt lịch",
-    iconData: Icons.calendar_view_month_outlined,
-    onTap: (BuildContext context) {
-      context.push("/appointments-history");
-    },
-  ),
-  ServiceItem(
     label: "Dịch vụ cần làm",
     iconData: Icons.medical_services_outlined,
     onTap: (BuildContext context) {
@@ -81,10 +74,15 @@ final List<ServiceItem> paymentItems = [
 final List<ServiceItem> infoItems = [
   ServiceItem(
     label: "Bác sĩ",
-    iconData: Icons.person_outline,
+    iconData: Icons.group_outlined,
     onTap: (BuildContext context) {
       context.push("/doctors");
     },
   ),
 ];
 
+final List<ServiceItem> serviceItems = [
+  ...serviceExaminationItems,
+  ...medicalDocumentsItems,
+  ...infoItems,
+];

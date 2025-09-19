@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'schedule_by_date_form.dart';
 import 'schedule_by_doctor_form.dart';
 
@@ -23,10 +24,13 @@ class _BookingAppointmentViewState extends State<BookingAppointmentView> {
             spacing: 8,
             children: [
               ChoiceChip(
-                label: const Text("Khám theo lịch"),
+                label: Text(
+                  "Khám theo lịch",
+                  style: TextStyle(fontSize: 13.sp),
+                ),
                 selected: _selectedTab == 0,
                 color: MaterialStateProperty.resolveWith<Color?>(
-                      (states) {
+                  (states) {
                     if (states.contains(MaterialState.selected)) {
                       return Theme.of(context).cardColor;
                     }
@@ -41,10 +45,13 @@ class _BookingAppointmentViewState extends State<BookingAppointmentView> {
                 },
               ),
               ChoiceChip(
-                label: const Text("Khám theo bác sĩ"),
+                label: Text(
+                  "Khám theo bác sĩ",
+                  style: TextStyle(fontSize: 13.sp),
+                ),
                 selected: _selectedTab == 1,
                 color: MaterialStateProperty.resolveWith<Color?>(
-                      (states) {
+                  (states) {
                     if (states.contains(MaterialState.selected)) {
                       return Theme.of(context).cardColor;
                     }
@@ -66,11 +73,12 @@ class _BookingAppointmentViewState extends State<BookingAppointmentView> {
 
         /// Form thay đổi theo chip
         Expanded(
-            child: SingleChildScrollView(
-          child: _selectedTab == 0
-              ? const ScheduleByDateForm()
-              : const ScheduleByDoctorForm(),
-        ),),
+          child: SingleChildScrollView(
+            child: _selectedTab == 0
+                ? const ScheduleByDateForm()
+                : const ScheduleByDoctorForm(),
+          ),
+        ),
       ],
     );
   }
