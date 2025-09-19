@@ -24,7 +24,7 @@ class LocationApiModel {
     return Location(
       id: id,
       name: name,
-      partOfLocation: partOfLocation?.toEntity(),
+      partOf: partOfLocation?.toEntity(),
     );
   }
 
@@ -32,8 +32,8 @@ class LocationApiModel {
     return LocationApiModel(
       id: entity.id,
       name: entity.name,
-      partOfLocation: entity.partOfLocation != null
-          ? LocationApiModel.fromEntity(entity.partOfLocation!)
+      partOfLocation: entity.partOf != null
+          ? LocationApiModel.fromEntity(entity.partOf!)
           : null,
     );
   }

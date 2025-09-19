@@ -3,13 +3,13 @@ class ImageStudy {
   final String endpoint;
   final String? comment;
   final String? modality;
-  final DateTime receivedTime;
+  final DateTime? receivedTime;
 
   ImageStudy({
     required this.id,
     required this.endpoint,
     this.comment,
     this.modality,
-    required this.receivedTime,
+    this.receivedTime,
   });
 }

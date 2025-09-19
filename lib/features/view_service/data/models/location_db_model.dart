@@ -16,7 +16,7 @@ class LocationDbModel {
     return Location(
       id: id,
       name: name,
-      partOfLocation: partOfLocation.value?.toEntity(),
+      partOf: partOfLocation.value?.toEntity(),
     );
   }
 
@@ -25,8 +25,8 @@ class LocationDbModel {
       ..id = entity.id
       ..name = entity.name;
 
-    if (entity.partOfLocation != null) {
-      model.partOfLocation.value = LocationDbModel.fromEntity(entity.partOfLocation!);
+    if (entity.partOf != null) {
+      model.partOfLocation.value = LocationDbModel.fromEntity(entity.partOf!);
     }
 
     return model;

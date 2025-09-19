@@ -1,11 +1,11 @@
 class AssessmentCategory {
   final int id;
   final String name;
-  final AssessmentCategory? assessmentCategory;
+  final AssessmentCategory? parentCategory;
 
   AssessmentCategory({
     required this.id,
     required this.name,
-    this.assessmentCategory,
+    this.parentCategory,
   });
 }

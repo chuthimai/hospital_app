@@ -10,7 +10,7 @@ ServiceApiModel _$ServiceApiModelFromJson(Map<String, dynamic> json) =>
     ServiceApiModel(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
-      detailDescription: json['detailDescription'] as String?,
+      extraDetails: json['detailDescription'] as String?,
       location:
           LocationApiModel.fromJson(json['location'] as Map<String, dynamic>),
       isCompleted: json['isCompleted'] as bool? ?? true,
@@ -20,7 +20,7 @@ Map<String, dynamic> _$ServiceApiModelToJson(ServiceApiModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'detailDescription': instance.detailDescription,
+      'detailDescription': instance.extraDetails,
       'location': instance.location.toJson(),
       'isCompleted': instance.isCompleted,
     };

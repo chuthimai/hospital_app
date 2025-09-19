@@ -2,12 +2,13 @@ import 'package:hospital_app/features/view_doctor/domain/entities/physician.dart
 import 'package:hospital_app/features/view_service/domain/entities/service.dart';
 
 import 'assessment_result.dart';
+import 'enum/observation_status.dart';
 
 class ServiceReport {
   final int id;
   final String category;
   final String method;
-  final String status;
+  final ObservationStatus status;
   final DateTime? effectiveTime;
   final Service service;
   final Physician requester;
@@ -18,7 +19,7 @@ class ServiceReport {
     required this.id,
     required this.category,
     required this.method,
-    required this.status,
+    this.status = ObservationStatus.final_,
     this.effectiveTime,
     required this.service,
     required this.requester,

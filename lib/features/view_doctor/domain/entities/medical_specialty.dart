@@ -1,8 +1,8 @@
-class Specialty {
+class MedicalSpecialty {
   final int id;
   final String name;
 
-  Specialty({
+  MedicalSpecialty({
     required this.id,
     required this.name,
   });

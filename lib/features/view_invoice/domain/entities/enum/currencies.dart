@@ -1,0 +1,4 @@
+enum Currencies {
+  VND,
+  USD
+}

@@ -8,14 +8,14 @@ part 'service_api_model.g.dart';
 class ServiceApiModel {
   final int id;
   final String name;
-  final String? detailDescription;
+  final String? extraDetails;
   final LocationApiModel location;
   final bool isCompleted;
 
   ServiceApiModel({
     required this.id,
     required this.name,
-    this.detailDescription,
+    this.extraDetails,
     required this.location,
     this.isCompleted = true,
   });
@@ -31,7 +31,7 @@ class ServiceApiModel {
     return Service(
       id: id,
       name: name,
-      detailDescription: detailDescription,
+      extraDetails: extraDetails,
       location: location.toEntity(),
       isCompleted: isCompleted,
     );
@@ -41,7 +41,7 @@ class ServiceApiModel {
     return ServiceApiModel(
       id: entity.id,
       name: entity.name,
-      detailDescription: entity.detailDescription,
+      extraDetails: entity.extraDetails,
       location: LocationApiModel.fromEntity(entity.location),
       isCompleted: entity.isCompleted,
     );

@@ -4,7 +4,6 @@ import 'image_study.dart';
 
 class ImagingReport extends ServiceReport {
   final String focus;
-  final String interpretation;
   final List<ImageStudy> imageStudies;
 
   ImagingReport({
@@ -18,7 +17,6 @@ class ImagingReport extends ServiceReport {
     super.assessmentResults,
     super.effectiveTime,
     required this.focus,
-    required this.interpretation,
     this.imageStudies = const [],
   });
 }

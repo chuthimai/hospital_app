@@ -1,12 +1,12 @@
 class Location {
   final int id;
   final String name;
-  final Location? partOfLocation;
+  final Location? partOf;
 
   Location({
     required this.id,
     required this.name,
-    this.partOfLocation,
+    this.partOf,
   });
 
   String get fullAddress {
@@ -18,7 +18,7 @@ class Location {
         buffer.write(', ');
       }
       buffer.write(current.name);
-      current = current.partOfLocation;
+      current = current.partOf;
     }
 
     return buffer.toString();

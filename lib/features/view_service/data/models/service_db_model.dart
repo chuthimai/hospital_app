@@ -18,7 +18,7 @@ class ServiceDbModel {
     return Service(
       id: id,
       name: name,
-      detailDescription: detailDescription,
+      extraDetails: detailDescription,
       location: location.value!.toEntity(),
       isCompleted: isCompleted,
     );
@@ -28,7 +28,7 @@ class ServiceDbModel {
     final model = ServiceDbModel()
       ..id = entity.id
       ..name = entity.name
-      ..detailDescription = entity.detailDescription
+      ..detailDescription = entity.extraDetails
       ..isCompleted = entity.isCompleted;
 
     model.location.value = LocationDbModel.fromEntity(entity.location);

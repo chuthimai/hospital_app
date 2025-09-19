@@ -1,6 +1,6 @@
 import 'package:hospital_app/features/view_doctor/domain/entities/physician.dart';
 
-import 'appointment_status.dart';
+import 'enum/appointment_status.dart';
 import 'work_schedule.dart';
 
 class Appointment {
