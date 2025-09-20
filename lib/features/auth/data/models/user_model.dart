@@ -1,3 +1,4 @@
+import 'package:hospital_app/share/constants/app_default.dart';
 import 'package:intl/intl.dart';
 
 import '../../domain/entities/user.dart';
@@ -41,7 +42,7 @@ class UserModel {
       name: name,
       email: email,
       role: role,
-      photo: photo ?? "https://thumb.ac-illust.com/51/51e1c1fc6f50743937e62fca9b942694_t.jpeg",
+      photo: photo ?? AppDefault.imageLink,
       telecom: telecom,
       gender: gender == "1",
       birthDate: format.parse(birthDate),
