@@ -84,5 +84,6 @@ final List<ServiceItem> infoItems = [
 final List<ServiceItem> serviceItems = [
   ...serviceExaminationItems,
   ...medicalDocumentsItems,
+  ...paymentItems,
   ...infoItems,
 ];
