@@ -8,16 +8,18 @@ part of 'physician_api_model.dart';
 
 PhysicianApiModel _$PhysicianApiModelFromJson(Map<String, dynamic> json) =>
     PhysicianApiModel(
-      id: (json['id'] as num).toInt(),
+      identifier: (json['identifier'] as num).toInt(),
       name: json['name'] as String,
-      gender: json['gender'] as bool,
-      role: json['role'] as String,
+      gender: json['gender'] as bool?,
+      role: json['role'] as String?,
       birthDate: json['birthDate'] == null
           ? null
           : DateTime.parse(json['birthDate'] as String),
       photo: json['photo'] as String?,
-      specialty: MedicalSpecialtyApiModel.fromJson(
-          json['specialty'] as Map<String, dynamic>),
+      specialty: json['specialty'] == null
+          ? null
+          : MedicalSpecialtyApiModel.fromJson(
+              json['specialty'] as Map<String, dynamic>),
       qualifications: (json['qualifications'] as List<dynamic>?)
               ?.map((e) =>
                   QualificationApiModel.fromJson(e as Map<String, dynamic>))
@@ -27,7 +29,7 @@ PhysicianApiModel _$PhysicianApiModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$PhysicianApiModelToJson(PhysicianApiModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'identifier': instance.identifier,
       'name': instance.name,
       'gender': instance.gender,
       'role': instance.role,

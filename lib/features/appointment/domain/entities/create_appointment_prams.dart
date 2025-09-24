@@ -1,9 +1,11 @@
-import 'staff_work_schedule.dart';
+class CreateAppointmentParams {
+  final int workScheduleIdentifier;
+  final int? physicianIdentifier;
+  final int userIdentifier;
 
-class CreateAppointmentPrams {
-  final StaffWorkSchedule staffWorkSchedule;
-
-  CreateAppointmentPrams({
-    required this.staffWorkSchedule,
+  CreateAppointmentParams({
+    required this.workScheduleIdentifier,
+    this.physicianIdentifier,
+    required this.userIdentifier,
   });
 }

@@ -8,23 +8,23 @@ part 'physician_api_model.g.dart';
 
 @JsonSerializable()
 class PhysicianApiModel {
-  final int id;
+  final int identifier;
   final String name;
-  final bool gender;
-  final String role;
+  final bool? gender;
+  final String? role;
   final DateTime? birthDate;
   final String? photo;
-  final MedicalSpecialtyApiModel specialty;
+  final MedicalSpecialtyApiModel? specialty;
   final List<QualificationApiModel> qualifications;
 
   PhysicianApiModel({
-    required this.id,
+    required this.identifier,
     required this.name,
-    required this.gender,
-    required this.role,
+    this.gender,
+    this.role,
     this.birthDate,
     this.photo,
-    required this.specialty,
+    this.specialty,
     this.qualifications = const [],
   });
 
@@ -34,13 +34,28 @@ class PhysicianApiModel {
   Map<String, dynamic> toJson() => _$PhysicianApiModelToJson(this);
 
   Physician toEntity() => Physician(
-    id: id,
-    name: name,
-    gender: gender,
-    role: Roles.physician,
-    birthDate: birthDate,
-    photo: photo,
-    specialty: specialty.toEntity(),
-    qualifications: qualifications.map((q) => q.toEntity()).toList(),
-  );
+        id: identifier,
+        name: name,
+        gender: gender,
+        role: Roles.physician,
+        birthDate: birthDate,
+        photo: photo,
+        specialty: specialty?.toEntity(),
+        qualifications: qualifications.map((q) => q.toEntity()).toList(),
+      );
+
+  factory PhysicianApiModel.fromEntity(Physician entity) => PhysicianApiModel(
+        identifier: entity.id,
+        name: entity.name,
+        gender: entity.gender ?? true,
+        role: entity.role.name,
+        birthDate: entity.birthDate,
+        photo: entity.photo,
+        specialty: entity.specialty != null
+            ? MedicalSpecialtyApiModel.fromEntity(entity.specialty!)
+            : null,
+        qualifications: entity.qualifications
+            .map((q) => QualificationApiModel.fromEntity(q))
+            .toList(),
+      );
 }

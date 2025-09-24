@@ -9,13 +9,13 @@ part of 'medical_specialty_api_model.dart';
 MedicalSpecialtyApiModel _$MedicalSpecialtyApiModelFromJson(
         Map<String, dynamic> json) =>
     MedicalSpecialtyApiModel(
-      id: (json['id'] as num).toInt(),
+      identifier: (json['identifier'] as num).toInt(),
       name: json['name'] as String,
     );
 
 Map<String, dynamic> _$MedicalSpecialtyApiModelToJson(
         MedicalSpecialtyApiModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'identifier': instance.identifier,
       'name': instance.name,
     };

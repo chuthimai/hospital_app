@@ -37,4 +37,16 @@ class QualificationApiModel {
     effectiveDate: effectiveDate,
     expiredDate: expiredDate,
   );
+
+  factory QualificationApiModel.fromEntity(Qualification entity) {
+    return QualificationApiModel(
+      id: entity.id,
+      name: entity.name,
+      specialty: entity.specialty,
+      issuer: entity.issuer,
+      type: entity.type,
+      effectiveDate: entity.effectiveDate,
+      expiredDate: entity.expiredDate,
+    );
+  }
 }

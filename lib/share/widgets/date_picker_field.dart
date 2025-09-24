@@ -6,6 +6,7 @@ class DatePickerField extends StatefulWidget {
   final DateTime? start;
   final DateTime? end;
   final List<DateTime> allowedDates;
+  final bool enabled;
 
   const DatePickerField({
     super.key,
@@ -14,6 +15,7 @@ class DatePickerField extends StatefulWidget {
     this.start,
     this.end,
     this.allowedDates = const [],
+    this.enabled = true,
   });
 
   @override
@@ -27,6 +29,7 @@ class _DatePickerFieldState extends State<DatePickerField> {
   Widget build(BuildContext context) {
     return TextField(
       readOnly: true,
+      enabled: widget.enabled,
       controller: TextEditingController(
         text: _selectedDate != null
             ? "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}"
@@ -37,7 +40,7 @@ class _DatePickerFieldState extends State<DatePickerField> {
         border: const OutlineInputBorder(),
         suffixIcon: const Icon(Icons.calendar_today),
       ),
-      onTap: _pickDate,
+      onTap: widget.enabled ? _pickDate : null,
     );
   }
 
@@ -57,14 +60,14 @@ class _DatePickerFieldState extends State<DatePickerField> {
 
   Future<DateTime?> _pickDateHasAllowedDates(
       {required List<DateTime> allowedDates}) async {
-    final picked = await showDatePicker(
+    return await showDatePicker(
       context: context,
       initialDate: _selectedDate ?? allowedDates.first,
       firstDate: allowedDates.first,
       lastDate: allowedDates.last,
       selectableDayPredicate: (day) {
         return allowedDates.any((d) =>
-            d.year == day.year && d.month == day.month && d.day == day.day);
+        d.year == day.year && d.month == day.month && d.day == day.day);
       },
       locale: const Locale("vi", "VN"),
       builder: (context, child) {
@@ -80,8 +83,6 @@ class _DatePickerFieldState extends State<DatePickerField> {
         );
       },
     );
-
-    return picked;
   }
 
   Future<DateTime?> _pickDateHasStartEndDate(
@@ -92,7 +93,7 @@ class _DatePickerFieldState extends State<DatePickerField> {
       end = DateTime(nextMonth.year, nextMonth.month, nextMonth.day);
     }
 
-    final picked = await showDatePicker(
+    return await showDatePicker(
       context: context,
       initialDate: _selectedDate ?? start,
       firstDate: start,
@@ -111,7 +112,5 @@ class _DatePickerFieldState extends State<DatePickerField> {
         );
       },
     );
-
-    return picked;
   }
 }

@@ -41,8 +41,8 @@ class SpecialtyRepositoryImpl implements SpecialtyRepository {
   @override
   Future<List<MedicalSpecialty>> getAllSpecialties() async {
     try {
-      final specialties = await getAllNewSpecialties();
-      await saveSpecialties(specialties);
+      final specialtiesApi = await _remoteDataSource.getAllSpecialties();
+      await saveSpecialties(specialtiesApi.map((e) => e.toEntity()).toList());
       final specialtiesDb = await _localDataSource.getAllSpecialties();
       return specialtiesDb.map((e) => e.toEntity()).toList();
     } catch (e) {

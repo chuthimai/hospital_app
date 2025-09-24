@@ -18,3 +18,18 @@ extension AppointmentStatusVi on AppointmentStatus {
     }
   }
 }
+
+extension AppointmentStatusExchange on AppointmentStatus {
+  static AppointmentStatus fromString(String value) {
+    switch (value) {
+      case 'booked':
+        return AppointmentStatus.booked;
+      case 'cancelled':
+        return AppointmentStatus.cancelled;
+      case 'checkedIn':
+        return AppointmentStatus.checkedIn;
+      default:
+        return AppointmentStatus.booked;
+    }
+  }
+}

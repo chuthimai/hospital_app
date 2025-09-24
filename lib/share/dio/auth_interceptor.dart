@@ -60,10 +60,7 @@ class AuthInterceptor extends Interceptor {
           // Xử lý khi token hết hạn và ko có refresh token
           await _tokenManager.clearTokens();
           _authCubit.logout();
-          rootNavigatorKey.currentState?.pushNamedAndRemoveUntil(
-            '/login',
-            (route) => false,
-          );
+          router.go("/login");
           handler.next(err);
         }
       } finally {

@@ -13,6 +13,7 @@ import 'token_manager.dart';
     final _remote = RemoteService();
     final response = await _remote.post("/users", data: data);
  */
+
 ///
 
 class RemoteService {
@@ -68,12 +69,14 @@ class RemoteService {
   Future<Response<T>> get<T>(
     String path, {
     Map<String, dynamic>? queryParameters,
+    dynamic data,
     Options? options,
     CancelToken? cancelToken,
   }) =>
       _dio.get<T>(path,
           queryParameters: queryParameters,
           options: options,
+          data: data,
           cancelToken: cancelToken);
 
   Future<Response<T>> post<T>(

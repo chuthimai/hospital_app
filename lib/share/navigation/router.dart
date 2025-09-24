@@ -83,7 +83,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/book-appointment',
       builder: (context, state) {
-        return const BookingAppointmentScreen();
+        return BookingAppointmentScreen();
       },
     ),
     GoRoute(

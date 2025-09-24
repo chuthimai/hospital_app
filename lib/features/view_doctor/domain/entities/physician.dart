@@ -5,21 +5,21 @@ import 'medical_specialty.dart';
 class Physician {
   final int id;
   final String name;
-  final bool gender;
+  final bool? gender;
   final Roles role;
   final DateTime? birthDate;
   final String? photo;
-  final MedicalSpecialty specialty;
+  final MedicalSpecialty? specialty;
   final List<Qualification> qualifications;
 
   Physician({
     required this.id,
     required this.name,
-    required this.gender,
+    this.gender,
     this.birthDate,
     this.photo,
     this.role = Roles.physician,
-    required this.specialty,
+    this.specialty,
     this.qualifications = const [],
   });
 }

@@ -31,12 +31,14 @@ class PhysicianDbModel {
     final dbModel = PhysicianDbModel(
       id: physician.id,
       name: physician.name,
-      gender: physician.gender,
+      gender: physician.gender ?? true,
       role: physician.role.toString().split('.').last,
       birthDate: physician.birthDate,
       photo: physician.photo,
     );
-    dbModel.specialty.value = MedicalSpecialtyDbModel.fromEntity(physician.specialty);
+    dbModel.specialty.value = physician.specialty != null
+        ? MedicalSpecialtyDbModel.fromEntity(physician.specialty!)
+        : null;
 
     return dbModel;
   }

@@ -5,11 +5,11 @@ part 'medical_specialty_api_model.g.dart';
 
 @JsonSerializable()
 class MedicalSpecialtyApiModel {
-  final int id;
+  final int identifier;
   final String name;
 
   MedicalSpecialtyApiModel({
-    required this.id,
+    required this.identifier,
     required this.name,
   });
 
@@ -18,5 +18,11 @@ class MedicalSpecialtyApiModel {
 
   Map<String, dynamic> toJson() => _$MedicalSpecialtyApiModelToJson(this);
 
-  MedicalSpecialty toEntity() => MedicalSpecialty(id: id, name: name);
+  MedicalSpecialty toEntity() => MedicalSpecialty(id: identifier, name: name);
+
+  factory MedicalSpecialtyApiModel.fromEntity(MedicalSpecialty entity) =>
+      MedicalSpecialtyApiModel(
+        identifier: entity.id,
+        name: entity.name,
+      );
 }
