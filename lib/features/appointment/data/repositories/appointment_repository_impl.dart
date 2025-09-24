@@ -29,6 +29,7 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
     try {
       final appointmentApi = await _remoteDataSource
           .createAppointment(CreateAppointmentParamsRequest.fromParams(params));
+
       final appointment = appointmentApi.toEntity();
       await saveAppointment(appointment);
       return appointment;

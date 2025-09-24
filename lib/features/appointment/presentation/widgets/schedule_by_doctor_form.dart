@@ -161,9 +161,9 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
                     return DropdownButtonFormField<Shift>(
                       items: _workSchedules
                           .map((e) => DropdownMenuItem(
-                              key: Key(e.shift.id.toString()),
+                              key: Key(e.shift!.id.toString()),
                               value: e.shift,
-                              child: Text(e.shift.name ?? "Không có")))
+                              child: Text(e.shift!.name ?? "Không có")))
                           .toList(),
                       decoration: const InputDecoration(
                         labelText: "Chọn ca",
@@ -172,7 +172,7 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
                       onChanged: (val) {
                         if (val != null) {
                           _selectedWorkSchedule = _workSchedules
-                              .firstWhere((e) => e.shift.id == val.id);
+                              .firstWhere((e) => e.shift!.id == val.id);
                         }
                       },
                     );

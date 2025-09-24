@@ -19,4 +19,16 @@ class Appointment {
     required this.workSchedule,
     this.physician,
   });
+
+  @override
+  String toString() {
+    return 'Appointment{\n'
+        'id: $id,\n'
+        'status: $status,\n'
+        'reason: $reason,\n'
+        'cancellationDate: $cancellationDate,\n'
+        'workSchedule: $workSchedule,\n'
+        'physician: $physician\n'
+        '}';
+  }
 }

@@ -22,7 +22,7 @@ class WorkScheduleDbModel {
     return WorkSchedule(
       id: id,
       date: date,
-      shift: shift.value!.toEntity(),
+      shift: shift.value?.toEntity(),
     );
   }
 
@@ -31,7 +31,9 @@ class WorkScheduleDbModel {
       id: entity.id,
       date: entity.date,
     );
-    db.shift.value = ShiftDbModel.fromEntity(entity.shift);
+    if (entity.shift != null) {
+      db.shift.value = ShiftDbModel.fromEntity(entity.shift!);
+    }
     return db;
   }
 }

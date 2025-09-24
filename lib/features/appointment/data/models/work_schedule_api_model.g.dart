@@ -11,7 +11,10 @@ WorkScheduleApiModel _$WorkScheduleApiModelFromJson(
     WorkScheduleApiModel(
       identifier: (json['identifier'] as num).toInt(),
       date: DateTime.parse(json['date'] as String),
-      shiftIdentifier: (json['shiftIdentifier'] as num).toInt(),
+      shiftIdentifier: (json['shiftIdentifier'] as num?)?.toInt(),
+      shift: json['shift'] == null
+          ? null
+          : ShiftApiModel.fromJson(json['shift'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$WorkScheduleApiModelToJson(
@@ -20,4 +23,5 @@ Map<String, dynamic> _$WorkScheduleApiModelToJson(
       'identifier': instance.identifier,
       'date': instance.date.toIso8601String(),
       'shiftIdentifier': instance.shiftIdentifier,
+      'shift': instance.shift?.toJson(),
     };

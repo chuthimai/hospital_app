@@ -51,7 +51,7 @@ class WorkScheduleRepositoryImpl implements WorkScheduleRepository {
 
       final workSchedules = await Future.wait(workSchedulesApi.map((e) async {
         final workSchedule = e.toEntity();
-        final shift = await _shiftRepo.getShift(e.shiftIdentifier);
+        final shift = await _shiftRepo.getShift(e.shiftIdentifier!);
         if (shift != null) workSchedule.setShift(shift);
         return workSchedule;
       }).toList());

@@ -3,12 +3,12 @@ import 'shift.dart';
 class WorkSchedule {
   final int id;
   final DateTime date;
-  Shift shift;
+  Shift? shift;
 
   WorkSchedule({
     required this.id,
     required this.date,
-    required this.shift,
+    this.shift,
   });
 
   void setShift(Shift newShift) {
