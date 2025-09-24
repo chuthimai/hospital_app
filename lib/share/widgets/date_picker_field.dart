@@ -27,20 +27,25 @@ class _DatePickerFieldState extends State<DatePickerField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      readOnly: true,
-      enabled: widget.enabled,
-      controller: TextEditingController(
-        text: _selectedDate != null
-            ? "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}"
-            : "",
+    return IgnorePointer(
+      ignoring: !widget.enabled,
+      child: Opacity(
+        opacity: widget.enabled ? 1.0 : 0.6,
+        child: TextField(
+          readOnly: true,
+          controller: TextEditingController(
+            text: _selectedDate != null
+                ? "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}"
+                : "",
+          ),
+          decoration: InputDecoration(
+            labelText: widget.label,
+            border: const OutlineInputBorder(),
+            suffixIcon: const Icon(Icons.calendar_today),
+          ),
+          onTap: _pickDate,
+        ),
       ),
-      decoration: InputDecoration(
-        labelText: widget.label,
-        border: const OutlineInputBorder(),
-        suffixIcon: const Icon(Icons.calendar_today),
-      ),
-      onTap: widget.enabled ? _pickDate : null,
     );
   }
 

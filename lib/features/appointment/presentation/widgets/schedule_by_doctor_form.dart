@@ -31,7 +31,6 @@ class ScheduleByDoctorForm extends StatefulWidget {
 
 class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
   List<WorkSchedule> _workSchedules = [];
-  List<Shift> _shifts = [];
   Physician? _selectedDoctor;
   WorkSchedule? _selectedWorkSchedule;
 
@@ -65,17 +64,18 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
                 border: OutlineInputBorder(),
               ),
               onChanged: (val) {
-                context.read<PhysicianCubit>().setInit();
-                context.read<WorkScheduleCubit>().setInit();
-                _selectedDoctor = null;
-                _selectedWorkSchedule = null;
-                if (val != null) {
-                  _workSchedules = [];
-                  _shifts = [];
-                  context
-                      .read<PhysicianCubit>()
-                      .getAllPhysiciansInSpecialty(val);
-                }
+                setState(() {
+                  context.read<PhysicianCubit>().setInit();
+                  context.read<WorkScheduleCubit>().setInit();
+                  _selectedDoctor = null;
+                  _selectedWorkSchedule = null;
+                  if (val != null) {
+                    _workSchedules = [];
+                    context
+                        .read<PhysicianCubit>()
+                        .getAllPhysiciansInSpecialty(val);
+                  }
+                });
               },
             ),
             SizedBox(height: 8.sp),
@@ -89,7 +89,7 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
                   itemAsString: (d) => d.name,
                   labelText: "Chọn bác sĩ",
                   onChanged: (_) {},
-                  enabled: false, // disable
+                  enabled: false,
                 );
               }
               return CustomDropdownSearch<Physician>(
@@ -100,15 +100,14 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
                 hintText: "Tìm kiếm...",
                 searchHint: "Nhập tên bác sĩ...",
                 onChanged: (doctor) {
-                  context.read<WorkScheduleCubit>().setInit();
                   if (doctor != null) {
-                    context
-                        .read<WorkScheduleCubit>()
-                        .getStaffWorkSchedule(doctor);
                     setState(() {
+                      context.read<WorkScheduleCubit>().setInit();
+                      context
+                          .read<WorkScheduleCubit>()
+                          .getStaffWorkSchedule(doctor);
                       _selectedWorkSchedule = null;
                       _workSchedules = [];
-                      _shifts = [];
                       _selectedDoctor = doctor;
                     });
                   }
@@ -124,11 +123,13 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
                       builder: (context, workScheduleState) {
                     if (workScheduleState is! WorkScheduleDone) {
                       return const DatePickerField(
+                        key: ValueKey("disabled"),
                         label: "Chọn ngày",
                         enabled: false,
                       );
                     }
                     return DatePickerField(
+                      key: const ValueKey("enabled"),
                       label: "Chọn ngày",
                       allowedDates: workScheduleState.workSchedules
                           .map((e) => e.date)
@@ -148,14 +149,19 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
                   flex: 1,
                   child: Builder(builder: (context) {
                     if (_workSchedules.isEmpty) {
-                      return DropdownButtonFormField<Shift>(
-                        items: const [],
-                        onChanged: (val) {},
-                        decoration: const InputDecoration(
-                          labelText: "Chọn ca",
-                          border: OutlineInputBorder(),
+                      return IgnorePointer(
+                        ignoring: true,
+                        child: Opacity(
+                          opacity: 0.6,
+                          child: DropdownButtonFormField<Shift>(
+                            items: const [],
+                            onChanged: (val) {},
+                            decoration: const InputDecoration(
+                              labelText: "Chọn ca",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
                         ),
-                        enableFeedback: false,
                       );
                     }
                     return DropdownButtonFormField<Shift>(
@@ -208,5 +214,14 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
       );
       context.read<AppointmentCubit>().createAppointment(params);
     }
+    reset();
+  }
+
+  void reset() {
+    _workSchedules = [];
+    _selectedDoctor = null;
+    _selectedWorkSchedule = null;
+    context.read<PhysicianCubit>().setInit();
+    context.read<WorkScheduleCubit>().setInit();
   }
 }
