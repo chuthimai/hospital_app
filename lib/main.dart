@@ -96,7 +96,6 @@ void main() async {
       builder: (context, child) {
         // Khởi tạo Push Notification trước khi mở app
         PushNotificationService.init(
-            context: context,
             notificationRepository: notificationRepository,
             notificationSettingRepository: notificationSettingRepository,
         );

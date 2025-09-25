@@ -14,7 +14,6 @@ class DotNotificationCubit extends Cubit<DotNotificationState> {
       emit(DotNotificationLoading());
       repository.hasNotReadNotification().listen(
             (hasUnread) {
-          AppLogger().info("Has unread notification: $hasUnread");
           emit(DotNotificationUnreadState(hasUnread));
         },
         onError: (e) {

@@ -1,30 +1,25 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hospital_app/features/notification/domain/entities/app_notification.dart';
 import 'package:hospital_app/features/notification/domain/repositories/notification_repository.dart';
 import 'package:hospital_app/features/setting/domain/repositories/notification_setting_repository.dart';
+import 'package:hospital_app/share/navigation/router.dart';
 import 'package:hospital_app/share/utils/app_logger.dart';
 
 import 'local_notification_service.dart';
 
 class PushNotificationService {
   static final FirebaseMessaging _messaging = FirebaseMessaging.instance;
-  static BuildContext? _context;
   static late NotificationRepository _notificationRepository;
   static late NotificationSettingRepository _notificationSettingRepository;
   static bool _initialized = false;
 
   /// Hàm khởi tạo service
   static Future<void> init({
-    required BuildContext context,
     required NotificationRepository notificationRepository,
     required NotificationSettingRepository notificationSettingRepository,
   }) async {
     if (_initialized) return;
     _initialized = true;
-
-    _context = context;
     _notificationRepository = notificationRepository;
     _notificationSettingRepository = notificationSettingRepository;
 
@@ -84,8 +79,7 @@ class PushNotificationService {
 
   /// Điều hướng tới màn hình thông báo
   static Future<void> _navigateToNotification() async {
-    if (_context == null) return;
-    _context!.push("/notifications");
+    router.push("/notifications");
   }
 
   /// Lưu message xuống local
