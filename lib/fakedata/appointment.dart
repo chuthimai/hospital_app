@@ -36,6 +36,6 @@ List<Appointment> fakeAppointments = [
       date: DateTime.now(),
       shift: fakeShifts[2],
     ),
-    physician: fakePhysicians[2],
+    // physician: fakePhysicians[2],
   ),
 ];

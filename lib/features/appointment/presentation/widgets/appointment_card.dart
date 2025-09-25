@@ -1,0 +1,82 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hospital_app/features/appointment/domain/entities/enum/appointment_status.dart';
+import 'package:hospital_app/share/utils/app_exception/time_of_day_formatter.dart';
+import 'package:hospital_app/share/utils/date_formatter.dart';
+import 'package:hospital_app/share/widgets/confirm_delete_dialog.dart';
+
+import '../../domain/entities/appointment.dart';
+
+class AppointmentCard extends StatelessWidget {
+  final Appointment appointment;
+
+  const AppointmentCard({required this.appointment, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final subtitle = StringBuffer();
+    if (appointment.physician != null) {
+      subtitle.write("Bác sĩ: ${appointment.physician?.name}\n");
+    }
+    subtitle.write("Ca: ${appointment.workSchedule.shift?.name} "
+        "(${TimeOfDayFormatter.format24h(appointment.workSchedule.shift?.startTime)} - "
+        "${TimeOfDayFormatter.format24h(appointment.workSchedule.shift?.endTime)})\n");
+    subtitle.write("Trạng thái: ${appointment.status.toVietnamese()}");
+    if (appointment.status == AppointmentStatus.cancelled) {
+      subtitle.write(
+          "\nNgày huỷ: ${DateFormatter.format(appointment.cancellationDate!)}");
+      subtitle.write("\nLý do huỷ: ${appointment.reason ?? "Chưa rõ"}");
+    }
+
+    return Card(
+      key: Key(appointment.id.toString()),
+      margin: const EdgeInsets.all(8),
+      color: appointment.status == AppointmentStatus.booked
+          ? Theme.of(context).cardColor
+          : const Color.fromRGBO(209, 211, 212, 0.5),
+      child: Row(
+        children: [
+          Expanded(
+            child: Builder(builder: (context) {
+              return ListTile(
+                leading: const Icon(Icons.calendar_month_outlined),
+                title: Text(
+                    "Ngày: ${DateFormatter.format(appointment.workSchedule.date)}"),
+                subtitle: Text(subtitle.toString()),
+              );
+            }),
+          ),
+          appointment.status == AppointmentStatus.booked
+              ? Padding(
+                  padding: EdgeInsets.all(8.sp),
+                  child: IconButton(
+                    onPressed: () {
+                      _onClickDeleteIcon(context);
+                    },
+                    tooltip: "Huỷ lịch hẹn",
+                    iconSize: 32.sp,
+                    icon: const Icon(
+                      Icons.delete_rounded,
+                      color: Color.fromRGBO(191,49,49, 1),
+                    ),
+                    color: Theme.of(context).unselectedWidgetColor,
+                  ),
+                )
+              : const SizedBox(),
+        ],
+      ),
+    );
+  }
+
+  void _onClickDeleteIcon(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return ConfirmDeleteDialog(
+              title: "Xác nhận huỷ",
+              message: "Bạn có chắc chắn muốn huỷ lịch hẹn này không?",
+              textConfirm: "Xác nhận",
+              onConfirm: () {});
+        });
+  }
+}
