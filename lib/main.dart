@@ -25,94 +25,142 @@ import 'package:hospital_app/share/navigation/router.dart';
 import 'package:hospital_app/share/notification/local_notification_service.dart';
 import 'package:hospital_app/share/notification/push_notification_service.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hospital_app/splash_screen.dart';
 
 import 'share/themes/app_theme.dart';
 import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  // Khởi tạo Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  // Khởi tạo Push Notification ở local
-  await LocalNotificationService.init();
-
-  // Chỉ có thể ở chiều đứng
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
-
-  // Auth
-  final AuthRepository authRepository = AuthRepositoryImpl(
-    remoteDataSource: AuthRemoteDataSourceImpl(),
-    localDataSource: AuthLocalDataSourceImpl(),
-    notificationLocalDataSource: NotificationLocalDataSourceImpl(),
-  );
-  final AuthCubit authCubit = AuthCubit(authRepository);
-
-  // Theme
-  final ThemeRepository themeRepository = ThemeRepositoryImpl(
-    dataSource: ThemeLocalDataSourceImpl(),
-  );
-
-  // Notification
-  final NotificationRepository notificationRepository =
-  NotificationRepositoryImpl(NotificationLocalDataSourceImpl());
-  final NotificationSettingRepository notificationSettingRepository =
-  NotificationSettingRepositoryImpl(
-      NotificationSettingLocalDataSourceImpl()
-  );
-
-  // Tạo RemoteService
-  RemoteService(authCubit: authCubit);
-
-  // Bọc State toàn app
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(
-        create: (context) => authCubit..getCurrentUser(),
-      ),
-      BlocProvider(
-        create: (context) =>
-        ThemeCubit(themeRepository)
-          ..getCurrentTheme(),
-      ),
-      BlocProvider(
-          create: (context) =>
-              NotificationCubit(notificationRepository)),
-      BlocProvider(
-          create: (context) =>
-              DotNotificationCubit(notificationRepository)),
-      BlocProvider(
-          create: (context) =>
-              NotificationSettingCubit(notificationSettingRepository)),
-    ],
-    child: ScreenUtilInit(
-      designSize: const Size(430, 932), // màn hình iphone 14 pro
-      minTextAdapt: true,
-      builder: (context, child) {
-        // Khởi tạo Push Notification trước khi mở app
-        PushNotificationService.init(
-            notificationRepository: notificationRepository,
-            notificationSettingRepository: notificationSettingRepository,
-        );
-        return const MyApp();
-      },
-    ),
-  ));
+  runApp(const InitializerApp());
 }
 
+/// Ứng dụng khởi tạo: Hiện SplashScreen cho đến khi init xong
+class InitializerApp extends StatelessWidget {
+  const InitializerApp({super.key});
+
+  Future<_AppDependencies> _initApp() async {
+    // Auth
+    final AuthRepository authRepository = AuthRepositoryImpl(
+      remoteDataSource: AuthRemoteDataSourceImpl(),
+      localDataSource: AuthLocalDataSourceImpl(),
+      notificationLocalDataSource: NotificationLocalDataSourceImpl(),
+    );
+    final AuthCubit authCubit = AuthCubit(authRepository);
+
+    // Theme
+    final ThemeRepository themeRepository = ThemeRepositoryImpl(
+      dataSource: ThemeLocalDataSourceImpl(),
+    );
+
+    // Notification
+    final NotificationRepository notificationRepository =
+        NotificationRepositoryImpl(NotificationLocalDataSourceImpl());
+    final NotificationSettingRepository notificationSettingRepository =
+        NotificationSettingRepositoryImpl(
+            NotificationSettingLocalDataSourceImpl());
+
+    // Tạo RemoteService
+    RemoteService(authCubit: authCubit);
+    await Future.wait([
+      // Khởi tạo Firebase
+      Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      ),
+
+      // Khởi tạo Push Notification ở local
+      LocalNotificationService.init(),
+
+      // Chỉ có thể ở chiều đứng
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]),
+
+      // Khởi tạo Push Notification trước khi mở app
+      PushNotificationService.init(
+        notificationRepository: notificationRepository,
+        notificationSettingRepository: notificationSettingRepository,
+      ),
+    ]);
+
+    return _AppDependencies(
+      authCubit: authCubit,
+      themeRepository: themeRepository,
+      notificationRepository: notificationRepository,
+      notificationSettingRepository: notificationSettingRepository,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<_AppDependencies>(
+      future: _initApp(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const MaterialApp(
+            home: SplashScreen(),
+          );
+        }
+
+        final dependency = snapshot.data!;
+
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) {
+              final cubit = dependency.authCubit;
+              Future.microtask(() => cubit.getCurrentUser());
+              return cubit;
+            }),
+            BlocProvider(
+              create: (context) =>
+                  ThemeCubit(dependency.themeRepository)..getCurrentTheme(),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  NotificationCubit(dependency.notificationRepository),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  DotNotificationCubit(dependency.notificationRepository),
+            ),
+            BlocProvider(
+              create: (context) => NotificationSettingCubit(
+                  dependency.notificationSettingRepository),
+            ),
+          ],
+          child: ScreenUtilInit(
+            designSize: const Size(430, 932), // màn hình iphone 14 pro
+            minTextAdapt: true,
+            builder: (context, child) => const MyApp(),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _AppDependencies {
+  final AuthCubit authCubit;
+  final ThemeRepository themeRepository;
+  final NotificationRepository notificationRepository;
+  final NotificationSettingRepository notificationSettingRepository;
+
+  _AppDependencies({
+    required this.authCubit,
+    required this.themeRepository,
+    required this.notificationRepository,
+    required this.notificationSettingRepository,
+  });
+}
+
+/// App chính sau khi init xong
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = context
-        .watch<ThemeCubit>()
-        .state;
+    final themeMode = context.watch<ThemeCubit>().state;
 
     return MaterialApp.router(
       title: "Ứng dụng viện A",

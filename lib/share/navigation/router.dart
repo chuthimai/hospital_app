@@ -24,6 +24,7 @@ import 'package:hospital_app/features/view_prescription/presentation/view/view_p
 import 'package:hospital_app/features/view_prescription/presentation/view/view_prescriptions_screen.dart';
 import 'package:hospital_app/features/view_service/presentation/view/view_services_screen.dart';
 import 'package:hospital_app/features/view_transfer_letter/presentation/view/view_transfer_letters_screen.dart';
+import 'package:hospital_app/main_screen.dart';
 import 'package:hospital_app/splash_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -34,7 +35,7 @@ final GoRouter router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const SplashScreen(),
+      builder: (context, state) => const MainScreen(),
     ),
     GoRoute(
       path: '/home',
