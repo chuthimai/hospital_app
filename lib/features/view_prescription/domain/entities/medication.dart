@@ -1,7 +1,9 @@
+import 'enum/snomedct_form_codes.dart';
+
 class Medication {
   final int id;
   final String name;
-  final String doseForm;
+  final SNOMEDCTFormCodes doseForm;
 
   Medication({
     required this.id,

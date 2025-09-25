@@ -40,3 +40,34 @@ extension SNOMEDCTFormCodesVi on SNOMEDCTFormCodes {
     }
   }
 }
+
+/// Parse từ chuỗi tiếng Anh (code) sang enum
+extension SNOMEDCTFormCodesParser on SNOMEDCTFormCodes {
+  static SNOMEDCTFormCodes fromCode(String? code) {
+    switch (code) {
+      case "tablet":
+        return SNOMEDCTFormCodes.tablet;
+      case "chewableTablet":
+        return SNOMEDCTFormCodes.chewableTablet;
+      case "capsule":
+        return SNOMEDCTFormCodes.capsule;
+      case "oralSolution":
+        return SNOMEDCTFormCodes.oralSolution;
+      case "oralSuspension":
+        return SNOMEDCTFormCodes.oralSuspension;
+      case "oralDrops":
+        return SNOMEDCTFormCodes.oralDrops;
+      case "injectionSolution":
+        return SNOMEDCTFormCodes.injectionSolution;
+      case "cream":
+        return SNOMEDCTFormCodes.cream;
+      case "ointment":
+        return SNOMEDCTFormCodes.ointment;
+      case "inhalationPowder":
+        return SNOMEDCTFormCodes.inhalationPowder;
+      default:
+        return SNOMEDCTFormCodes.tablet;
+    }
+  }
+}
+

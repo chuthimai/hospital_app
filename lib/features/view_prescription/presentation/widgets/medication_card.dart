@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_app/features/view_prescription/domain/entities/enum/snomedct_form_codes.dart';
 
 import '../../domain/entities/prescribed_medication.dart';
 
@@ -19,7 +20,7 @@ class MedicationCard extends StatelessWidget {
         leading: const Icon(Icons.medication),
         title: Text(prescribedMedication.medication.name),
         subtitle: Text(
-          "Dạng đóng gói: ${prescribedMedication.medication.doseForm}\n"
+          "Dạng đóng gói: ${prescribedMedication.medication.doseForm.toVietnamese()}\n"
               "Số lượng: ${prescribedMedication.quantity}\n"
               "Cách dùng thuốc: ${prescribedMedication.dosageInstruction}"
               "${prescribedMedication.note != null ? "\nGhi chú: ${prescribedMedication.note}" : ""}",

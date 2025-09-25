@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hospital_app/share/utils/date_formatter.dart';
 
 import '../../domain/entities/prescription.dart';
 import '../widgets/medication_card.dart';
@@ -13,17 +13,7 @@ class ViewPrescriptionDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Đơn thuốc #${prescription.id}"),
-            Text("Ngày tạo: ${prescription.createTime.toLocal().toString().split(' ')[0]}",
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                color: Colors.white.withOpacity(0.8),
-              ),
-            ),
-          ],
-        ),
+        title: const Text("Đơn thuốc chi tiết"),
       ),
       body: SafeArea(
         child: Padding(
@@ -31,25 +21,26 @@ class ViewPrescriptionDetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // // Thông tin chung
-              // Card(
-              //   elevation: 2,
-              //   margin: const EdgeInsets.only(bottom: 12),
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(12),
-              //   ),
-              //   child: ListTile(
-              //     leading: const Icon(Icons.description),
-              //     title: Text(
-              //       "Mã đơn thuốc: ${prescription.id}",
-              //       style: const TextStyle(fontWeight: FontWeight.bold),
-              //     ),
-              //     subtitle: Text(
-              //       "Ngày tạo: ${prescription.createTime.toLocal().toString().split(' ')[0]}",
-              //     ),
-              //   ),
-              // ),
-              // const SizedBox(height: 8),
+              // Thông tin chung
+              Card(
+                elevation: 2,
+                margin: const EdgeInsets.only(bottom: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: ListTile(
+                  leading: const Icon(Icons.description),
+                  title: Text(
+                    "Đơn thuốc khám ${prescription.performer?.specialty?.name}",
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    "Bác sỹ kê đơn: ${prescription.performer?.name}\n"
+                        "Ngày tạo: ${DateFormatter.format(prescription.createTime)}",
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
 
               const Text(
                 "Danh sách thuốc",

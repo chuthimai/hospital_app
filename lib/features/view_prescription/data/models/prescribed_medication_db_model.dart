@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import '../../domain/entities/enum/snomedct_form_codes.dart';
 import '../../domain/entities/prescribed_medication.dart';
 import '../../domain/entities/medication.dart';
 import 'medication_db_model.dart';
@@ -37,7 +38,7 @@ class PrescribedMedicationDbModel {
     return PrescribedMedication(
       id: id,
       medication: medication.value?.toEntity() ??
-          Medication(id: 0, name: '', doseForm: ''), // fallback tránh null
+          Medication(id: 0, name: '', doseForm: SNOMEDCTFormCodes.tablet), // fallback tránh null
       quantity: quantity,
       dosageInstruction: dosageInstruction,
       note: note,

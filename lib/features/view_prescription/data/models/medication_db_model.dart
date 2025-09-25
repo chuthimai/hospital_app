@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import '../../domain/entities/enum/snomedct_form_codes.dart';
 import '../../domain/entities/medication.dart';
 
 part 'medication_db_model.g.dart';
@@ -19,12 +20,12 @@ class MedicationDbModel {
       MedicationDbModel(
         id: medication.id,
         name: medication.name,
-        doseForm: medication.doseForm,
+        doseForm: medication.doseForm.name,
       );
 
   Medication toEntity() => Medication(
     id: id,
     name: name,
-    doseForm: doseForm,
+    doseForm: SNOMEDCTFormCodesParser.fromCode(doseForm),
   );
 }

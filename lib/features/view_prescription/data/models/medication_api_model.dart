@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import '../../domain/entities/enum/snomedct_form_codes.dart';
 import '../../domain/entities/medication.dart';
 
 part 'medication_api_model.g.dart';
@@ -24,12 +25,12 @@ class MedicationApiModel {
       MedicationApiModel(
         id: medication.id,
         name: medication.name,
-        doseForm: medication.doseForm,
+        doseForm: medication.doseForm.name,
       );
 
   Medication toEntity() => Medication(
     id: id,
     name: name,
-    doseForm: doseForm,
+    doseForm: SNOMEDCTFormCodesParser.fromCode(doseForm),
   );
 }

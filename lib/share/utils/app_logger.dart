@@ -14,7 +14,7 @@ class AppLogger {
 
   AppLogger() {
     _logger = Logger(
-      // printer: SimplePrinter()
+      printer: SimplePrinter()
     );
 
     if (kDebugMode) {

@@ -1,11 +1,13 @@
 class DateFormatter {
   static String format(DateTime d) {
+    d = d.toLocal();
     return '${d.day.toString().padLeft(2, '0')}/'
         '${d.month.toString().padLeft(2, '0')}/'
         '${d.year}';
   }
 
   static String formatFull(DateTime d) {
+    d = d.toLocal();
     return '${d.day.toString().padLeft(2, '0')}/'
         '${d.month.toString().padLeft(2, '0')}/'
         '${d.year} '
@@ -15,6 +17,7 @@ class DateFormatter {
   }
 
   static String formatForOrCode(DateTime d) {
+    d = d.toLocal();
     return '${d.day.toString().padLeft(2, '0')}'
         '${d.month.toString().padLeft(2, '0')}'
         '${d.year}';
