@@ -19,24 +19,27 @@ class NavBarItem extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16.r),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            isSelected ? item.activeIcon : item.icon,
-            SizedBox(height: 4.sp),
-            isSelected ? Expanded(
-              child: Text(
-                item.label ?? '',
-                style: TextStyle(
-                  fontSize: isSelected ? 13.sp : 12.sp,
-                  fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
-                  color: isSelected
-                      ? Theme.of(context).colorScheme.inverseSurface
-                      : Colors.grey,
+        child: Padding(
+          padding: EdgeInsets.all(4.sp),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              isSelected ? item.activeIcon : item.icon,
+              SizedBox(height: 4.sp),
+              isSelected ? Expanded(
+                child: Text(
+                  item.label ?? '',
+                  style: TextStyle(
+                    fontSize: isSelected ? 13.sp : 12.sp,
+                    fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
+                    color: isSelected
+                        ? Theme.of(context).colorScheme.inverseSurface
+                        : Colors.grey,
+                  ),
                 ),
-              ),
-            ): const SizedBox(),
-          ],
+              ): const SizedBox(),
+            ],
+          ),
         ),
       ),
     );

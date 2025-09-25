@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hospital_app/features/home/presentation/widgets/floating_action_button_create_appointment.dart';
 import 'package:hospital_app/features/home/presentation/widgets/navigation_bar_home.dart';
 import 'package:hospital_app/features/profile/presentation/widget/profile_view.dart';
 import 'package:hospital_app/features/setting/presentation/widgets/settings.dart';
@@ -31,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // backgroundColor: Theme.of(context).primaryColor,
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -74,13 +74,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       left: 0,
                       right: 0,
                       bottom: 0,
-                      child: NavigationBarHome(
-                        selectedIndex: _selectedIndex,
-                        onItemSelected: (index) {
-                          setState(() {
-                            _selectedIndex = index;
-                          });
-                        },
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: NavigationBarHome(
+                              selectedIndex: _selectedIndex,
+                              onItemSelected: (index) {
+                                setState(() {
+                                  _selectedIndex = index;
+                                });
+                              },
+                            ),
+                          ),
+                          const FloatingActionButtonCreateAppointment(),
+                        ],
                       ),
                     )
                   ],

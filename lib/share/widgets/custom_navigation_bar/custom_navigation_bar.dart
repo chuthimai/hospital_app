@@ -19,7 +19,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
     const navBarHeight = kBottomNavigationBarHeight;
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(16.sp, 0, 16.sp, 16.sp),
+      padding: EdgeInsets.fromLTRB(32.sp, 0, 8.sp, 24.sp),
       child: SizedBox(
         height: navBarHeight,
         child: LayoutBuilder(
