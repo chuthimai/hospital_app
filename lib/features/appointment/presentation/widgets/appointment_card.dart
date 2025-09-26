@@ -41,7 +41,11 @@ class AppointmentCard extends StatelessWidget {
               return ListTile(
                 leading: const Icon(Icons.calendar_month_outlined),
                 title: Text(
-                    "Ngày: ${DateFormatter.format(appointment.workSchedule.date)}"),
+                  "Ngày: ${DateFormatter.format(appointment.workSchedule.date)}",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 subtitle: Text(subtitle.toString()),
               );
             }),
@@ -57,7 +61,7 @@ class AppointmentCard extends StatelessWidget {
                     iconSize: 32.sp,
                     icon: const Icon(
                       Icons.delete_rounded,
-                      color: Color.fromRGBO(191,49,49, 1),
+                      color: Color.fromRGBO(191, 49, 49, 1),
                     ),
                     color: Theme.of(context).unselectedWidgetColor,
                   ),

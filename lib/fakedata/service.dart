@@ -14,6 +14,7 @@ List<Service> fakeServices = [
     name: "Khám nội tổng quát",
     price: 150000.0,
     location: khoaKhamBenh,
+    isCompleted: false,
   ),
   Service(
     id: 2,
@@ -39,6 +40,7 @@ List<Service> fakeServices = [
     name: "Xét nghiệm nước tiểu",
     price: 100000.0,
     location: khoaXetNghiem,
+    isCompleted: false,
   ),
   Service(
     id: 6,
@@ -63,6 +65,7 @@ List<Service> fakeServices = [
     name: "Siêu âm bụng tổng quát",
     price: 400000.0,
     location: khoaChanDoanHinhAnh,
+    isCompleted: false,
   ),
   Service(
     id: 10,

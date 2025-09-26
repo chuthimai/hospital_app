@@ -4,16 +4,13 @@ import 'package:hospital_app/features/view_service/presentation/widgets/services
 class ViewServicesScreen extends StatelessWidget {
   const ViewServicesScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('ViewServicesScreen'),
-        ),
-        body: const ServicesView(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Dịch vụ cần làm'),
       ),
+      body: SafeArea(child: ServicesView()),
     );
   }
 }

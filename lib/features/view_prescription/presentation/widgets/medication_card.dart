@@ -18,16 +18,20 @@ class MedicationCard extends StatelessWidget {
       elevation: 1,
       child: ListTile(
         leading: const Icon(Icons.medication),
-        title: Text(prescribedMedication.medication.name),
+        title: Text(
+          prescribedMedication.medication.name,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         subtitle: Text(
           "Dạng đóng gói: ${prescribedMedication.medication.doseForm.toVietnamese()}\n"
-              "Số lượng: ${prescribedMedication.quantity}\n"
-              "Cách dùng thuốc: ${prescribedMedication.dosageInstruction}"
-              "${prescribedMedication.note != null ? "\nGhi chú: ${prescribedMedication.note}" : ""}",
+          "Số lượng: ${prescribedMedication.quantity}\n"
+          "Cách dùng thuốc: ${prescribedMedication.dosageInstruction}"
+          "${prescribedMedication.note != null ? "\nGhi chú: ${prescribedMedication.note}" : ""}",
         ),
         isThreeLine: true,
       ),
     );
   }
-  
 }
