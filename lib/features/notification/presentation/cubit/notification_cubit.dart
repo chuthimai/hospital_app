@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hospital_app/features/notification/domain/repositories/notification_repository.dart';
 
@@ -6,10 +8,12 @@ import 'notification_state.dart';
 
 class NotificationCubit extends Cubit<NotificationState> {
   final NotificationRepository repository;
+  StreamSubscription<bool>? _subscription;
 
   NotificationCubit(this.repository) : super(NotificationLoading());
 
-  void loadNotifications() {
+  Future<void> loadNotifications() async {
+    await _subscription?.cancel();
     emit(NotificationLoading());
     repository.getAllNotifications().listen(
           (notifications) {
@@ -27,5 +31,11 @@ class NotificationCubit extends Cubit<NotificationState> {
 
   Future<void> markReadAll() async {
     await repository.markReadNotifications();
+  }
+
+  @override
+  Future<void> close() async {
+    await _subscription?.cancel();
+    return super.close();
   }
 }
