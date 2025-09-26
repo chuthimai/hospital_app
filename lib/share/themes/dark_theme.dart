@@ -10,6 +10,7 @@ final ThemeData darkTheme = ThemeData(
   scaffoldBackgroundColor: AppColors.backgroundDark,
   splashColor: AppColors.splashDark,
   highlightColor: AppColors.splashDark,
+  disabledColor: AppColors.disabledDark,
 
   appBarTheme: AppBarTheme(
     backgroundColor: AppColors.primaryDark,

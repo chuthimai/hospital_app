@@ -33,7 +33,7 @@ class AppointmentCard extends StatelessWidget {
       margin: const EdgeInsets.all(8),
       color: appointment.status == AppointmentStatus.booked
           ? Theme.of(context).cardColor
-          : const Color.fromRGBO(209, 211, 212, 0.5),
+          : Theme.of(context).disabledColor,
       child: Row(
         children: [
           Expanded(

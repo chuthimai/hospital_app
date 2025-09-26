@@ -36,8 +36,8 @@ class AppColors {
   static const Color iconDark = Color(0xFFFFFFFF);
 
   // ===== DISABLED COLORS =====
-  static const Color disabledLight = Color(0xFFBBBBBB);
-  static const Color disabledDark = Color(0xFF666666);
+  static const Color disabledLight = Color.fromRGBO(209, 211, 212, 0.5);
+  static const Color disabledDark = Color.fromRGBO(209, 211, 212, 0.5);
 
   // ===== SHADOW / ELEVATION COLORS =====
   static const Color shadowLight = Color(0x1F000000); // 12% opacity black

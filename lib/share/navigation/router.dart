@@ -15,6 +15,8 @@ import 'package:hospital_app/features/view_doctor/presentation/view/view_doctor_
 import 'package:hospital_app/features/view_doctor/presentation/view/view_doctors_screen.dart';
 import 'package:hospital_app/features/view_followup_appointment/presentation/view/view_followup_appointment_detail_screen.dart';
 import 'package:hospital_app/features/view_followup_appointment/presentation/view/view_followup_appointments_screen.dart';
+import 'package:hospital_app/features/view_invoice/domain/entities/invoice.dart';
+import 'package:hospital_app/features/view_invoice/presentation/view/qr_code_payment_screen.dart';
 import 'package:hospital_app/features/view_invoice/presentation/view/view_invoice_detail_screen.dart';
 import 'package:hospital_app/features/view_invoice/presentation/view/view_invoices_screen.dart';
 import 'package:hospital_app/features/view_medical_record/presentation/view/view_medical_record_detail_screen.dart';
@@ -25,7 +27,6 @@ import 'package:hospital_app/features/view_prescription/presentation/view/view_p
 import 'package:hospital_app/features/view_service/presentation/view/view_services_screen.dart';
 import 'package:hospital_app/features/view_transfer_letter/presentation/view/view_transfer_letters_screen.dart';
 import 'package:hospital_app/main_screen.dart';
-import 'package:hospital_app/splash_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -147,8 +148,15 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/invoices/:id',
       builder: (context, state) {
-        final invoiceId = state.pathParameters['id']!;
-        return const ViewInvoiceDetailScreen();
+        final invoice = state.extra as Invoice;
+        return ViewInvoiceDetailScreen(invoice);
+      },
+    ),
+    GoRoute(
+      path: '/invoices/:id/qr_code',
+      builder: (context, state) {
+        final invoice = state.extra as Invoice;
+        return QrCodePaymentScreen(invoice);
       },
     ),
     GoRoute(
