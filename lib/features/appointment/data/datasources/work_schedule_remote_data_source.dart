@@ -11,7 +11,7 @@ class WorkScheduleRemoteDataSourceImpl implements WorkScheduleRemoteDataSource {
   Future<List<WorkScheduleApiModel>> getStaffWordSchedule(int doctorId) async {
     try {
       final remote = RemoteService();
-      final response = await remote.get(
+      final response = await remote.post(
         PathApi.workSchedulesByPhysician,
         data: {"physicianIdentifier": doctorId},
       );

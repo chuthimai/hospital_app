@@ -85,11 +85,11 @@ class _BookingAppointmentViewState extends State<BookingAppointmentView> {
 
         /// Form thay đổi theo chip
         Expanded(
-          child: SingleChildScrollView(
-            child: _selectedTab == 0
-                ? const ScheduleByDateForm()
-                : ScheduleByDoctorForm(doctor: widget.doctor,),
-          ),
+          child: _selectedTab == 0
+              ? const ScheduleByDateForm()
+              : ScheduleByDoctorForm(
+                  doctor: widget.doctor,
+                ),
         ),
       ],
     );

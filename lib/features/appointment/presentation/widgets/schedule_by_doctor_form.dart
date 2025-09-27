@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -75,161 +76,164 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
         if (shiftState is! ShiftDone || specialtyState is! SpecialtyDone) {
           return const Center(child: CircularProgressIndicator());
         }
-        return Column(
-          children: [
-            SizedBox(height: 8.sp),
-            DropdownButtonFormField<int>(
-              value: _selectedSpecialtyId,
-              hint: const Text("Chọn chuyên khoa"),
-              items: specialtyState.specialties
-                  .map((e) => DropdownMenuItem(
-                      key: Key(e.id.toString()),
-                      value: e.id,
-                      child: Text(e.name)))
-                  .toList(),
-              decoration: const InputDecoration(
-                labelText: "Chuyên khoa",
-                border: OutlineInputBorder(),
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 8.sp),
+              DropdownButtonFormField<int>(
+                value: _selectedSpecialtyId,
+                hint: const Text("Chọn chuyên khoa"),
+                items: specialtyState.specialties
+                    .map((e) => DropdownMenuItem(
+                        key: Key(e.id.toString()),
+                        value: e.id,
+                        child: Text(e.name)))
+                    .toList(),
+                decoration: const InputDecoration(
+                  labelText: "Chuyên khoa",
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (val) {
+                  setState(() {
+                    context.read<PhysicianCubit>().setInit();
+                    context.read<WorkScheduleCubit>().setInit();
+                    _selectedDoctor = null;
+                    _selectedWorkSchedule = null;
+                    _selectedSpecialtyId = val;
+                    if (val != null) {
+                      _workSchedules = [];
+                      context
+                          .read<PhysicianCubit>()
+                          .getAllPhysiciansInSpecialty(val);
+                    }
+                  });
+                },
               ),
-              onChanged: (val) {
-                setState(() {
-                  context.read<PhysicianCubit>().setInit();
-                  context.read<WorkScheduleCubit>().setInit();
-                  _selectedDoctor = null;
-                  _selectedWorkSchedule = null;
-                  _selectedSpecialtyId = val;
-                  if (val != null) {
-                    _workSchedules = [];
-                    context
-                        .read<PhysicianCubit>()
-                        .getAllPhysiciansInSpecialty(val);
-                  }
-                });
-              },
-            ),
-            SizedBox(height: 8.sp),
-            BlocBuilder<PhysicianCubit, PhysicianState>(
-                builder: (context, physicianState) {
-              if (physicianState is! PhysicianDone ||
-                  physicianState.physicians.isEmpty) {
+              SizedBox(height: 8.sp),
+              BlocBuilder<PhysicianCubit, PhysicianState>(
+                  builder: (context, physicianState) {
+                if (physicianState is! PhysicianDone ||
+                    physicianState.physicians.isEmpty) {
+                  return CustomDropdownSearch<Physician>(
+                    items: const [],
+                    selectedItem: null,
+                    itemAsString: (d) => d.name,
+                    labelText: "Bác sĩ",
+                    onChanged: (_) {},
+                    enabled: false,
+                  );
+                }
                 return CustomDropdownSearch<Physician>(
-                  items: const [],
-                  selectedItem: null,
+                  items: physicianState.physicians,
+                  selectedItem: _selectedDoctor,
                   itemAsString: (d) => d.name,
                   labelText: "Bác sĩ",
-                  onChanged: (_) {},
-                  enabled: false,
-                );
-              }
-              return CustomDropdownSearch<Physician>(
-                items: physicianState.physicians,
-                selectedItem: _selectedDoctor,
-                itemAsString: (d) => d.name,
-                labelText: "Bác sĩ",
-                hintText: "Tìm kiếm...",
-                searchHint: "Nhập tên bác sĩ...",
-                onChanged: (doctor) {
-                  if (doctor != null) {
-                    setState(() {
-                      context.read<WorkScheduleCubit>().setInit();
-                      context
-                          .read<WorkScheduleCubit>()
-                          .getStaffWorkSchedule(doctor);
-                      _selectedWorkSchedule = null;
-                      _workSchedules = [];
-                      _selectedDoctor = doctor;
-                    });
-                  }
-                },
-              );
-            }),
-            SizedBox(height: 8.sp),
-            Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: BlocBuilder<WorkScheduleCubit, WorkScheduleState>(
-                      builder: (context, workScheduleState) {
-                    if (workScheduleState is! WorkScheduleDone) {
-                      return const DatePickerField(
-                        key: ValueKey("disabled"),
-                        label: "Ngày",
-                        enabled: false,
-                      );
+                  hintText: "Tìm kiếm...",
+                  searchHint: "Nhập tên bác sĩ...",
+                  onChanged: (doctor) {
+                    if (doctor != null) {
+                      setState(() {
+                        context.read<WorkScheduleCubit>().setInit();
+                        context
+                            .read<WorkScheduleCubit>()
+                            .getStaffWorkSchedule(doctor);
+                        _selectedWorkSchedule = null;
+                        _workSchedules = [];
+                        _selectedDoctor = doctor;
+                      });
                     }
-                    return DatePickerField(
-                      key: const ValueKey("enabled"),
-                      label: "Ngày",
-                      allowedDates: workScheduleState.workSchedules
-                          .map((e) => e.date)
-                          .toList(),
-                      onDateSelected: (date) {
-                        setState(() {
-                          _workSchedules = workScheduleState.workSchedules
-                              .where((e) => e.date == date)
-                              .toList();
-                        });
-                      },
-                    );
-                  }),
-                ),
-                SizedBox(width: 8.sp),
-                Expanded(
-                  flex: 1,
-                  child: Builder(builder: (context) {
-                    if (_workSchedules.isEmpty) {
-                      return IgnorePointer(
-                        ignoring: true,
-                        child: Opacity(
-                          opacity: 0.6,
-                          child: DropdownButtonFormField<Shift>(
-                            items: const [],
-                            onChanged: (val) {},
-                            decoration: const InputDecoration(
-                              labelText: "Ca",
-                              hintText: "Chọn ca",
-                              border: OutlineInputBorder(),
+                  },
+                );
+              }),
+              SizedBox(height: 8.sp),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: BlocBuilder<WorkScheduleCubit, WorkScheduleState>(
+                        builder: (context, workScheduleState) {
+                      if (workScheduleState is! WorkScheduleDone) {
+                        return const DatePickerField(
+                          key: ValueKey("disabled"),
+                          label: "Ngày",
+                          enabled: false,
+                        );
+                      }
+                      return DatePickerField(
+                        key: const ValueKey("enabled"),
+                        label: "Ngày",
+                        allowedDates: workScheduleState.workSchedules
+                            .map((e) => e.date)
+                            .toList(),
+                        onDateSelected: (date) {
+                          setState(() {
+                            _workSchedules = workScheduleState.workSchedules
+                                .where((e) => e.date == date)
+                                .toList();
+                          });
+                        },
+                      );
+                    }),
+                  ),
+                  SizedBox(width: 8.sp),
+                  Expanded(
+                    flex: 1,
+                    child: Builder(builder: (context) {
+                      if (_workSchedules.isEmpty) {
+                        return IgnorePointer(
+                          ignoring: true,
+                          child: Opacity(
+                            opacity: 0.6,
+                            child: DropdownButtonFormField<Shift>(
+                              items: const [],
+                              onChanged: (val) {},
+                              decoration: const InputDecoration(
+                                labelText: "Ca",
+                                hintText: "Chọn ca",
+                                border: OutlineInputBorder(),
+                              ),
                             ),
                           ),
+                        );
+                      }
+                      return DropdownButtonFormField<Shift>(
+                        items: _workSchedules
+                            .map((e) => DropdownMenuItem(
+                                  key: Key(e.shift!.id.toString()),
+                                  value: e.shift,
+                                  child: Text(e.shift?.name == null
+                                      ? "Không có"
+                                      : "${e.shift?.name} \n("
+                                          "${TimeOfDayFormatter.format24h(e.shift!.startTime)} - "
+                                          "${TimeOfDayFormatter.format24h(e.shift!.endTime)})\n"
+                                      "-------------------------",
+                                  ),
+                                ))
+                            .toList(),
+                        decoration: const InputDecoration(
+                          labelText: "Ca",
+                          hintText: "Chọn ca",
+                          border: OutlineInputBorder(),
                         ),
+                        onChanged: (val) {
+                          if (val != null) {
+                            _selectedWorkSchedule = _workSchedules
+                                .firstWhere((e) => e.shift!.id == val.id);
+                          }
+                        },
                       );
-                    }
-                    return DropdownButtonFormField<Shift>(
-                      items: _workSchedules
-                          .map((e) => DropdownMenuItem(
-                                key: Key(e.shift!.id.toString()),
-                                value: e.shift,
-                                child: Text(e.shift?.name == null
-                                    ? "Không có"
-                                    : "${e.shift?.name} \n("
-                                        "${TimeOfDayFormatter.format24h(e.shift!.startTime)} - "
-                                        "${TimeOfDayFormatter.format24h(e.shift!.endTime)})",
-                                ),
-                              ))
-                          .toList(),
-                      decoration: const InputDecoration(
-                        labelText: "Ca",
-                        hintText: "Chọn ca",
-                        border: OutlineInputBorder(),
-                      ),
-                      onChanged: (val) {
-                        if (val != null) {
-                          _selectedWorkSchedule = _workSchedules
-                              .firstWhere((e) => e.shift!.id == val.id);
-                        }
-                      },
-                    );
-                  }),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            CustomButton(
-                text: "Đặt lịch",
-                onPressed: () {
-                  onClickButton();
-                })
-          ],
+                    }),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              CustomButton(
+                  text: "Đặt lịch",
+                  onPressed: () {
+                    onClickButton();
+                  })
+            ],
+          ),
         );
       });
     });
