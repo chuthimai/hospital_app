@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hospital_app/features/view_invoice/domain/entities/enum/invoice_status.dart';
 import 'package:hospital_app/share/utils/money_formatter.dart';
 import '../../domain/entities/invoice.dart';
 import '../../domain/entities/service_invoice.dart';
@@ -17,6 +18,7 @@ class ViewInvoiceDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Chi tiết hoá đơn'),
         actions: [
+          invoice.status == InvoiceStatus.issued ?
           IconButton(
             icon: const Icon(Icons.qr_code_2_outlined),
             onPressed: () => {
@@ -26,7 +28,7 @@ class ViewInvoiceDetailScreen extends StatelessWidget {
               )
             },
             tooltip: "Mã QR thanh toán",
-          ),
+          ): const SizedBox(),
         ],
       ),
       body: Padding(
