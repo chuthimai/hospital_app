@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hospital_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:hospital_app/features/auth/presentation/cubit/auth_state.dart';
+import 'package:hospital_app/share/constants/app_default.dart';
 import 'package:hospital_app/share/utils/date_formatter.dart';
 import 'package:hospital_app/share/widgets/info_row.dart';
 
@@ -26,7 +27,9 @@ class ProfileView extends StatelessWidget {
           // Ảnh đại diện
           CircleAvatar(
             radius: 60,
-            backgroundImage: NetworkImage(user.photo),
+            backgroundImage: user.photo == null
+                ? AssetImage(AppDefault.imageLink) as ImageProvider
+                : NetworkImage(user.photo!) as ImageProvider,
           ),
           const SizedBox(height: 16),
 
@@ -41,13 +44,16 @@ class ProfileView extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Thông tin chung
-          InfoRow(label: "Số điện thoại", value: user.telecom ?? "Không có thông tin"),
+          InfoRow(
+              label: "Số điện thoại",
+              value: user.telecom ?? "Không có thông tin"),
           InfoRow(label: "Giới tính", value: user.gender ? "Nam" : "Nữ"),
           InfoRow(
             label: "Ngày sinh",
             value: DateFormatter.format(user.birthDate),
           ),
-          InfoRow(label: "Địa chỉ", value: user.address ?? "Không có thông tin"),
+          InfoRow(
+              label: "Địa chỉ", value: user.address ?? "Không có thông tin"),
         ],
       ),
     );

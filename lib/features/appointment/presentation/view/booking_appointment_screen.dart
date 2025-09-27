@@ -10,6 +10,7 @@ import 'package:hospital_app/features/view_doctor/data/datasource/specialty_loca
 import 'package:hospital_app/features/view_doctor/data/datasource/specialty_remote_data_source.dart';
 import 'package:hospital_app/features/view_doctor/data/repositories/physician_repository_impl.dart';
 import 'package:hospital_app/features/view_doctor/data/repositories/specialty_repository_impl.dart';
+import 'package:hospital_app/features/view_doctor/domain/entities/physician.dart';
 import 'package:hospital_app/features/view_doctor/domain/repositories/physician_repository.dart';
 import 'package:hospital_app/features/view_doctor/domain/repositories/specialty_repository.dart';
 import 'package:hospital_app/features/view_doctor/presentation/cubit/physician_cubit.dart';
@@ -33,7 +34,8 @@ import '../cubit/work_schedule_cubit.dart';
 import '../widgets/booking_appointment_view.dart';
 
 class BookingAppointmentScreen extends StatelessWidget {
-  BookingAppointmentScreen({super.key});
+  final Physician? doctor;
+  BookingAppointmentScreen({super.key, this.doctor});
 
   final ShiftRepository _shiftRepo = ShiftRepositoryImpl(
       localDataSource: ShiftLocalDataSourceImpl(),
@@ -91,7 +93,9 @@ class BookingAppointmentScreen extends StatelessWidget {
           body: SafeArea(
             child: Padding(
               padding: EdgeInsets.fromLTRB(16.sp, 8.sp, 16.sp, 16.sp),
-              child: const BookingAppointmentView(),
+              child: BookingAppointmentView(
+                doctor: doctor,
+              ),
             ),
           ),
         ),

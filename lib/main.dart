@@ -103,6 +103,22 @@ class InitializerApp extends StatelessWidget {
           );
         }
 
+        if (snapshot.hasError) {
+          return MaterialApp(
+            home: Scaffold(
+              body: Center(
+                child: Text("Lỗi khởi tạo: ${snapshot.error}"),
+              ),
+            ),
+          );
+        }
+
+        if (!snapshot.hasData) {
+          return const MaterialApp(
+            home: SplashScreen(),
+          );
+        }
+
         final dependency = snapshot.data!;
 
         return MultiBlocProvider(

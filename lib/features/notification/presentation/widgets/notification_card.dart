@@ -73,7 +73,7 @@ class _NotificationCardState extends State<NotificationCard> {
             ),
           ),
 
-          // Chấm trạng thái (góc trên bên phải)
+          // Trạng thái (góc trên bên phải)
           Positioned(
             right: 8,
             top: 8,

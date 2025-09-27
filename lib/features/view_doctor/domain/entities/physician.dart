@@ -9,7 +9,7 @@ class Physician {
   final Roles role;
   final DateTime? birthDate;
   final String? photo;
-  final MedicalSpecialty? specialty;
+  MedicalSpecialty? specialty;
   final List<Qualification> qualifications;
 
   Physician({
@@ -22,4 +22,8 @@ class Physician {
     this.specialty,
     this.qualifications = const [],
   });
+
+  void setSpecialty(MedicalSpecialty specialty) {
+    this.specialty = specialty;
+  }
 }

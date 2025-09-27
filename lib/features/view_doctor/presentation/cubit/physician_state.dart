@@ -5,6 +5,8 @@ abstract class PhysicianState {}
 
 class PhysicianInitial extends PhysicianState {}
 
+class PhysicianLoading extends PhysicianState {}
+
 class PhysicianDone extends PhysicianState {
   final List<Physician> physicians;
 

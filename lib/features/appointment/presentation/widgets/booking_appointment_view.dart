@@ -1,25 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hospital_app/features/view_doctor/domain/entities/physician.dart';
 import 'schedule_by_date_form.dart';
 import 'schedule_by_doctor_form.dart';
 
 class BookingAppointmentView extends StatefulWidget {
-  const BookingAppointmentView({super.key});
+  // 0 = Khám theo lịch, 1 = Khám theo bác sĩ
+  final Physician? doctor;
+
+  const BookingAppointmentView({
+    super.key,
+    this.doctor,
+  });
 
   @override
   State<BookingAppointmentView> createState() => _BookingAppointmentViewState();
 }
 
 class _BookingAppointmentViewState extends State<BookingAppointmentView> {
-  // 0 = Khám theo lịch, 1 = Khám theo bác sĩ
   int _selectedTab = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.doctor != null) _selectedTab = 1;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.sp),
           child: Wrap(
             spacing: 8,
             children: [
@@ -76,7 +88,7 @@ class _BookingAppointmentViewState extends State<BookingAppointmentView> {
           child: SingleChildScrollView(
             child: _selectedTab == 0
                 ? const ScheduleByDateForm()
-                : const ScheduleByDoctorForm(),
+                : ScheduleByDoctorForm(doctor: widget.doctor,),
           ),
         ),
       ],

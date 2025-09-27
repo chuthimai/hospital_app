@@ -39,6 +39,7 @@ class _DatePickerFieldState extends State<DatePickerField> {
                 : "",
           ),
           decoration: InputDecoration(
+            hintText: "Chọn ngày",
             labelText: widget.label,
             border: const OutlineInputBorder(),
             suffixIcon: const Icon(Icons.calendar_today),

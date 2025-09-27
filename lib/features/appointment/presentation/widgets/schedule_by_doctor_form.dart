@@ -9,6 +9,7 @@ import 'package:hospital_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:hospital_app/features/view_doctor/domain/entities/physician.dart';
 import 'package:hospital_app/features/view_doctor/presentation/cubit/physician_cubit.dart';
 import 'package:hospital_app/features/view_doctor/presentation/cubit/physician_state.dart';
+import 'package:hospital_app/share/utils/app_exception/time_of_day_formatter.dart';
 import 'package:hospital_app/share/widgets/app_snack_bar.dart';
 import 'package:hospital_app/share/widgets/custom_button.dart';
 import 'package:hospital_app/share/widgets/custom_dropdown_search.dart';
@@ -23,7 +24,12 @@ import '../cubit/specialty_state.dart';
 import '../cubit/work_schedule_state.dart';
 
 class ScheduleByDoctorForm extends StatefulWidget {
-  const ScheduleByDoctorForm({super.key});
+  final Physician? doctor;
+
+  const ScheduleByDoctorForm({
+    super.key,
+    this.doctor,
+  });
 
   @override
   State<ScheduleByDoctorForm> createState() => _ScheduleByDoctorFormState();
@@ -33,12 +39,32 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
   List<WorkSchedule> _workSchedules = [];
   Physician? _selectedDoctor;
   WorkSchedule? _selectedWorkSchedule;
+  int? _selectedSpecialtyId;
 
   @override
   void initState() {
     super.initState();
     context.read<SpecialtyCubit>().getAllSpecialties();
     context.read<ShiftCubit>().getAllShifts();
+
+    if (widget.doctor != null) {
+      _selectedDoctor = widget.doctor;
+      _selectedSpecialtyId = _selectedDoctor?.specialty?.id;
+
+      // Load danh sách bác sĩ trong khoa
+      if (widget.doctor?.specialty?.id != null) {
+        context
+            .read<PhysicianCubit>()
+            .getAllPhysiciansInSpecialty(widget.doctor!.specialty!.id);
+      }
+
+      // Load lịch làm việc cho bác sĩ
+      context.read<WorkScheduleCubit>().setInit();
+      context.read<WorkScheduleCubit>().getStaffWorkSchedule(widget.doctor!);
+
+      _selectedWorkSchedule = null;
+      _workSchedules = [];
+    }
   }
 
   @override
@@ -53,6 +79,8 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
           children: [
             SizedBox(height: 8.sp),
             DropdownButtonFormField<int>(
+              value: _selectedSpecialtyId,
+              hint: const Text("Chọn chuyên khoa"),
               items: specialtyState.specialties
                   .map((e) => DropdownMenuItem(
                       key: Key(e.id.toString()),
@@ -60,7 +88,7 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
                       child: Text(e.name)))
                   .toList(),
               decoration: const InputDecoration(
-                labelText: "Chọn chuyên khoa",
+                labelText: "Chuyên khoa",
                 border: OutlineInputBorder(),
               ),
               onChanged: (val) {
@@ -69,6 +97,7 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
                   context.read<WorkScheduleCubit>().setInit();
                   _selectedDoctor = null;
                   _selectedWorkSchedule = null;
+                  _selectedSpecialtyId = val;
                   if (val != null) {
                     _workSchedules = [];
                     context
@@ -87,7 +116,7 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
                   items: const [],
                   selectedItem: null,
                   itemAsString: (d) => d.name,
-                  labelText: "Chọn bác sĩ",
+                  labelText: "Bác sĩ",
                   onChanged: (_) {},
                   enabled: false,
                 );
@@ -96,7 +125,7 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
                 items: physicianState.physicians,
                 selectedItem: _selectedDoctor,
                 itemAsString: (d) => d.name,
-                labelText: "Chọn bác sĩ",
+                labelText: "Bác sĩ",
                 hintText: "Tìm kiếm...",
                 searchHint: "Nhập tên bác sĩ...",
                 onChanged: (doctor) {
@@ -124,13 +153,13 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
                     if (workScheduleState is! WorkScheduleDone) {
                       return const DatePickerField(
                         key: ValueKey("disabled"),
-                        label: "Chọn ngày",
+                        label: "Ngày",
                         enabled: false,
                       );
                     }
                     return DatePickerField(
                       key: const ValueKey("enabled"),
-                      label: "Chọn ngày",
+                      label: "Ngày",
                       allowedDates: workScheduleState.workSchedules
                           .map((e) => e.date)
                           .toList(),
@@ -157,7 +186,8 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
                             items: const [],
                             onChanged: (val) {},
                             decoration: const InputDecoration(
-                              labelText: "Chọn ca",
+                              labelText: "Ca",
+                              hintText: "Chọn ca",
                               border: OutlineInputBorder(),
                             ),
                           ),
@@ -167,12 +197,19 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
                     return DropdownButtonFormField<Shift>(
                       items: _workSchedules
                           .map((e) => DropdownMenuItem(
-                              key: Key(e.shift!.id.toString()),
-                              value: e.shift,
-                              child: Text(e.shift!.name ?? "Không có")))
+                                key: Key(e.shift!.id.toString()),
+                                value: e.shift,
+                                child: Text(e.shift?.name == null
+                                    ? "Không có"
+                                    : "${e.shift?.name} \n("
+                                        "${TimeOfDayFormatter.format24h(e.shift!.startTime)} - "
+                                        "${TimeOfDayFormatter.format24h(e.shift!.endTime)})",
+                                ),
+                              ))
                           .toList(),
                       decoration: const InputDecoration(
-                        labelText: "Chọn ca",
+                        labelText: "Ca",
+                        hintText: "Chọn ca",
                         border: OutlineInputBorder(),
                       ),
                       onChanged: (val) {
@@ -187,9 +224,11 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
               ],
             ),
             const SizedBox(height: 12),
-            CustomButton(text: "Đặt lịch", onPressed: () {
-              onClickButton();
-            })
+            CustomButton(
+                text: "Đặt lịch",
+                onPressed: () {
+                  onClickButton();
+                })
           ],
         );
       });
@@ -218,10 +257,13 @@ class _ScheduleByDoctorFormState extends State<ScheduleByDoctorForm> {
   }
 
   void reset() {
-    _workSchedules = [];
-    _selectedDoctor = null;
-    _selectedWorkSchedule = null;
-    context.read<PhysicianCubit>().setInit();
-    context.read<WorkScheduleCubit>().setInit();
+    setState(() {
+      _workSchedules = [];
+      _selectedDoctor = null;
+      _selectedWorkSchedule = null;
+      _selectedSpecialtyId = null;
+      context.read<PhysicianCubit>().setInit();
+      context.read<WorkScheduleCubit>().setInit();
+    });
   }
 }

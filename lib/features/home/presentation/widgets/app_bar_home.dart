@@ -6,6 +6,7 @@ import 'package:hospital_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:hospital_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:hospital_app/features/notification/presentation/cubit/dot_notification_cubit.dart';
 import 'package:hospital_app/features/notification/presentation/cubit/dot_notification_state.dart';
+import 'package:hospital_app/share/constants/app_default.dart';
 
 class AppBarHome extends StatefulWidget {
   const AppBarHome({super.key});
@@ -39,7 +40,9 @@ class _AppBarHomeState extends State<AppBarHome> {
 
             return CircleAvatar(
               backgroundColor: Theme.of(context).cardColor,
-              backgroundImage: NetworkImage(user.photo),
+              backgroundImage: user.photo == null
+                  ? AssetImage(AppDefault.imageLink) as ImageProvider
+                  : NetworkImage(user.photo!) as ImageProvider,
               radius: 24.sp,
             );
           }),

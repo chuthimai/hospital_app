@@ -11,6 +11,7 @@ import 'package:hospital_app/features/notification/presentation/view/notificatio
 import 'package:hospital_app/features/profile/presentation/view/profile_screen.dart';
 import 'package:hospital_app/features/setting/presentation/view/otp_auth_phone_screen.dart';
 import 'package:hospital_app/features/setting/presentation/view/setting_screen.dart';
+import 'package:hospital_app/features/view_doctor/domain/entities/physician.dart';
 import 'package:hospital_app/features/view_doctor/presentation/view/view_doctor_detail_screen.dart';
 import 'package:hospital_app/features/view_doctor/presentation/view/view_doctors_screen.dart';
 import 'package:hospital_app/features/view_followup_appointment/presentation/view/view_followup_appointment_detail_screen.dart';
@@ -85,7 +86,8 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/book-appointment',
       builder: (context, state) {
-        return BookingAppointmentScreen();
+        final doctor = state.extra == null ? null : state.extra as Physician;
+        return BookingAppointmentScreen(doctor: doctor,);
       },
     ),
     GoRoute(
@@ -129,14 +131,14 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/doctors',
       builder: (context, state) {
-        return const ViewDoctorsScreen();
+        return ViewDoctorsScreen();
       },
     ),
     GoRoute(
       path: '/doctors/:id',
       builder: (context, state) {
-        final doctorId = state.pathParameters['id']!;
-        return const ViewDoctorDetailScreen();
+        final doctor = state.extra as Physician;
+        return ViewDoctorDetailScreen(doctor);
       },
     ),
     GoRoute(

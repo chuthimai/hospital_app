@@ -3,7 +3,7 @@ class User {
   final String name;
   final String? email;
   final String role;
-  final String photo;
+  final String? photo;
   final String? telecom;
   final bool gender;
   final DateTime birthDate;
@@ -14,7 +14,7 @@ class User {
     required this.name,
     required this.email,
     required this.role,
-    required this.photo,
+    this.photo,
     this.telecom,
     required this.gender,
     required this.birthDate,

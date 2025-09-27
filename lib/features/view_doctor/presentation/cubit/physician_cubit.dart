@@ -9,7 +9,7 @@ class PhysicianCubit extends Cubit<PhysicianState> {
   PhysicianCubit(this.repo): super(PhysicianInitial());
 
   Future<void> getAllPhysiciansInSpecialty(int medicalSpecialtyId) async {
-    emit(PhysicianInitial());
+    emit(PhysicianLoading());
     final physicians = await repo.getAllPhysiciansInSpecialty(medicalSpecialtyId);
     emit(PhysicianDone(physicians));
   }

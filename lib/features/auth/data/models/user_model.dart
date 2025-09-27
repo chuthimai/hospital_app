@@ -42,7 +42,7 @@ class UserModel {
       name: name,
       email: email,
       role: role,
-      photo: photo ?? AppDefault.imageLink,
+      photo: photo,
       telecom: telecom,
       gender: gender == "1",
       birthDate: format.parse(birthDate),
