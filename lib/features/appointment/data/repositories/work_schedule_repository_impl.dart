@@ -44,10 +44,10 @@ class WorkScheduleRepositoryImpl implements WorkScheduleRepository {
   }
 
   @override
-  Future<List<WorkSchedule>> getStaffWordSchedule(Physician doctor) async {
+  Future<List<WorkSchedule>> getStaffWordSchedule(Physician? doctor) async {
     try {
       final workSchedulesApi =
-          await _remoteDataSource.getStaffWordSchedule(doctor.id);
+          await _remoteDataSource.getStaffWordSchedule(doctor?.id);
 
       final workSchedules = await Future.wait(workSchedulesApi.map((e) async {
         final workSchedule = e.toEntity();

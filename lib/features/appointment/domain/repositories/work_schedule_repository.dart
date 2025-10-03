@@ -5,5 +5,5 @@ import '../entities/work_schedule.dart';
 abstract class WorkScheduleRepository {
   Future<void> saveWorkSchedule(WorkSchedule workSchedule);  // local
   Future<void> deleteAllWorkSchedules();  // local
-  Future<List<WorkSchedule>> getStaffWordSchedule(Physician doctor);  // api
+  Future<List<WorkSchedule>> getStaffWordSchedule(Physician? doctor);  // api
 }

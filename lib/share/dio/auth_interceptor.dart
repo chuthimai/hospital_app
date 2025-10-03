@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:hospital_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:hospital_app/share/navigation/router.dart';
+import 'package:hospital_app/share/utils/app_logger.dart';
 
 import 'token_manager.dart';
 
@@ -36,6 +37,7 @@ class AuthInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
+    AppLogger().info("Error connect status: ${err.response?.statusCode}");
     if (err.response?.statusCode == 401) {
       final requestOptions = err.requestOptions;
 

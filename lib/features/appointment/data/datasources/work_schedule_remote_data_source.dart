@@ -3,12 +3,12 @@ import 'package:hospital_app/share/constants/path_api.dart';
 import 'package:hospital_app/share/dio/remote_service.dart';
 
 abstract class WorkScheduleRemoteDataSource {
-  Future<List<WorkScheduleApiModel>> getStaffWordSchedule(int doctorId);
+  Future<List<WorkScheduleApiModel>> getStaffWordSchedule(int? doctorId);
 }
 
 class WorkScheduleRemoteDataSourceImpl implements WorkScheduleRemoteDataSource {
   @override
-  Future<List<WorkScheduleApiModel>> getStaffWordSchedule(int doctorId) async {
+  Future<List<WorkScheduleApiModel>> getStaffWordSchedule(int? doctorId) async {
     try {
       final remote = RemoteService();
       final response = await remote.post(

@@ -17,4 +17,10 @@ class WorkScheduleCubit extends Cubit<WorkScheduleState> {
   void setInit() {
     emit(WorkScheduleInitial());
   }
+
+  Future<void> getWorkSchedule() async {
+    emit(WorkScheduleInitial());
+    final workSchedules = await repo.getStaffWordSchedule(null);
+    emit(WorkScheduleDone(workSchedules));
+  }
 }
