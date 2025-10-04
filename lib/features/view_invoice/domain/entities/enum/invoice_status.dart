@@ -25,3 +25,23 @@ extension InvoiceStatusVi on InvoiceStatus {
     }
   }
 }
+
+extension InvoiceStatusParser on InvoiceStatus {
+  static InvoiceStatus fromString(String value) {
+    switch (value) {
+      case "draft":
+        return InvoiceStatus.draft;
+      case "issued":
+        return InvoiceStatus.issued;
+      case "balanced":
+        return InvoiceStatus.balanced;
+      case "cancelled":
+        return InvoiceStatus.cancelled;
+      case "enteredInError":
+        return InvoiceStatus.enteredInError;
+      default:
+        return InvoiceStatus.issued;
+    }
+  }
+}
+

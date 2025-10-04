@@ -1,4 +1,3 @@
-
 import 'enum/currencies.dart';
 import 'enum/invoice_status.dart';
 import 'service_invoice.dart';
@@ -8,17 +7,21 @@ class Invoice {
   final Currencies currency;
   final InvoiceStatus status;
   final DateTime? createdTime;
-  final List<ServiceInvoice> serviceInvoices;
+  List<ServiceInvoice> _serviceInvoices;
 
   Invoice({
     required this.id,
     this.currency = Currencies.VND,
     this.status = InvoiceStatus.issued,
     this.createdTime,
-    this.serviceInvoices = const [],
-  });
+    List<ServiceInvoice>? serviceInvoices,
+  }) : _serviceInvoices = serviceInvoices ?? [];
+
+  List<ServiceInvoice> get serviceInvoices => _serviceInvoices;
+  set serviceInvoices(List<ServiceInvoice>? invoices) {
+    _serviceInvoices = invoices ?? [];
+  }
 
   double get totalGross =>
-      serviceInvoices.fold(
-          0.0, (sum, serviceInvoice) => sum + serviceInvoice.price);
+      _serviceInvoices.fold(0.0, (sum, serviceInvoice) => sum + serviceInvoice.price);
 }
