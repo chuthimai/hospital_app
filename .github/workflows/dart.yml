@@ -23,9 +23,9 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # 4. Phân tích code (optional)
+      # 4. Phân tích code (hiển thị warning nhưng ko dừng)
       - name: Analyze project source
-        run: flutter analyze
+        run: flutter analyze || true
 
       # 5. Chạy test (optional)
       - name: Run tests

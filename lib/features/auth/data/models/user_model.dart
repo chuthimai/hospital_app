@@ -1,4 +1,3 @@
-import 'package:hospital_app/share/constants/app_default.dart';
 import 'package:intl/intl.dart';
 
 import '../../domain/entities/user.dart';
