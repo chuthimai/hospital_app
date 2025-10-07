@@ -111,7 +111,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/medical-records/:id',
       builder: (context, state) {
-        final medicalRecordId = state.pathParameters['id']!;
+        // final medicalRecordId = state.pathParameters['id']!;
         return const ViewMedicalRecordDetailScreen();
       },
     ),
@@ -170,7 +170,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/followup-appointments/:id',
       builder: (context, state) {
-        final followupAppointmentId = state.pathParameters['id']!;
+        // final followupAppointmentId = state.pathParameters['id']!;
         return const ViewFollowupAppointmentDetailScreen();
       },
     ),
@@ -183,7 +183,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/transfer-letters/:id',
       builder: (context, state) {
-        final transferLetterId = state.pathParameters['id']!;
+        // final transferLetterId = state.pathParameters['id']!;
         return const ViewTransferLettersScreen();
       },
     ),

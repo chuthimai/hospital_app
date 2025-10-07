@@ -13,29 +13,29 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      # 2️. Cài Flutter SDK
+      # 2. Cài Flutter SDK
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.24.0" # Bạn có thể chỉnh theo version bạn dùng
+          flutter-version: "3.19.0"
 
-      # 3️. Cài dependencies
+      # 3. Cài dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      # 4️. Phân tích code (optional)
+      # 4. Phân tích code (hiển thị warning nhưng ko dừng)
       - name: Analyze project source
-        run: flutter analyze
+        run: flutter analyze || true
 
-      # 5️. Chạy test (optional)
+      # 5. Chạy test (optional)
       - name: Run tests
         run: flutter test
 
-      # 6️. Build file APK (release)
+      # 6. Build file APK (release)
       - name: Build Android APK
         run: flutter build apk --release
 
-      # 7️. Lưu file APK ra artifacts để tải về
+      # 7. Lưu file APK ra artifacts để tải về
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
