@@ -2,7 +2,7 @@ name: Flutter Android Build
 
 on:
   push:
-    branches: [ "build" ]
+    branches: [ "build/android" ]
 
 jobs:
   build:
@@ -46,7 +46,7 @@ jobs:
 
       # 6. Build file APK (release)
       - name: Build Android APK
-        run: flutter build apk --release
+        run: flutter build apk --release --dart-define=BASE_URL=${{ secrets.PROD_BASE_URL }}
 
       # 7. Lưu file APK ra artifacts để tải về
       - name: Upload APK artifact
