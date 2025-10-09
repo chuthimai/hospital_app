@@ -31,6 +31,19 @@ jobs:
       - name: Run tests
         run: flutter test
 
+      - name: Run tests and show pass percentage
+        run: |
+          flutter test --machine > test_output.json
+          passed=$(grep -c '"result":"success"' test_output.json || true)
+          failed=$(grep -c '"result":"failure"' test_output.json || true)
+          total=$((passed + failed))
+          if [ "$total" -gt 0 ]; then
+            percent=$((100 * passed / total))
+            echo "----- Passed: $passed / $total tests ($percent%)"
+          else
+            echo "xxxxx No tests found."
+          fi
+
       # 6. Build file APK (release)
       - name: Build Android APK
         run: flutter build apk --release --dart-define=BASE_URL=${{ secrets.PROD_BASE_URL }}
