@@ -78,5 +78,5 @@ Sử dụng tổ chức code theo kiến trúc Clean Architecture kết hợp v�
 ```
 
 ## Nhánh build
-- Khi push code lên nhánh build/android, github action sẽ chạy luồng **Flutter Android build** tự động build file app-release.apk. Xem trong Actions > Flutter Android build > workflow mới nhất > Artifacts để download về.
+- Khi push code lên nhánh build-app/android, github action sẽ chạy luồng **Flutter Android build** tự động build file app-release.apk. Xem trong Actions > Flutter Android build > workflow mới nhất > Artifacts để download về.
 
