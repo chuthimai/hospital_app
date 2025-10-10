@@ -31,8 +31,14 @@ import 'share/themes/app_theme.dart';
 import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Khởi tạo Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const InitializerApp());
 }
 
@@ -64,11 +70,6 @@ class InitializerApp extends StatelessWidget {
     // Tạo RemoteService
     RemoteService(authCubit: authCubit);
     await Future.wait([
-      // Khởi tạo Firebase
-      Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      ),
-
       // Khởi tạo Push Notification ở local
       LocalNotificationService.init(),
 
