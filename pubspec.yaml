@@ -55,6 +55,8 @@ dependencies:
   firebase_messaging: ^14.7.1
   flutter_local_notifications: ^18.0.1
   intl: ^0.18.1
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.0
 
 dev_dependencies:
   flutter_test:
@@ -112,3 +114,18 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_native_splash:
+  color: "#3F7749"
+  image: assets/icons/app_icon.png
+  android: true
+  ios: true
+  android_12:
+    color: "#3F7749"
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/app_icon.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/icons/app_icon.png"
