@@ -45,3 +45,6 @@ app.*.map.json
 # App config: API root
 lib/share/constants/app_config.dart
 lib/share/constants/path_api.dart
+
+# Firebase
+lib/firebase_options.dart
