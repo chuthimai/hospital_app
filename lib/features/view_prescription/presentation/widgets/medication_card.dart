@@ -25,7 +25,7 @@ class MedicationCard extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          "Dạng đóng gói: ${prescribedMedication.medication.doseForm.toVietnamese()}\n"
+          "Dạng đóng gói: ${prescribedMedication.medication.doseForm.viName}\n"
           "Số lượng: ${prescribedMedication.quantity}\n"
           "Cách dùng thuốc: ${prescribedMedication.dosageInstruction}"
           "${prescribedMedication.note != null ? "\nGhi chú: ${prescribedMedication.note}" : ""}",

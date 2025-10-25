@@ -31,6 +31,6 @@ class MedicationApiModel {
   Medication toEntity() => Medication(
     id: id,
     name: name,
-    doseForm: SNOMEDCTFormCodesParser.fromCode(doseForm),
+    doseForm: SNOMEDCTFormCodesExt.fromCode(doseForm),
   );
 }
