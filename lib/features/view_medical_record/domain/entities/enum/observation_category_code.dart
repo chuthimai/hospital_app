@@ -12,7 +12,7 @@ enum ObservationCategoryCode {
   activity,
 }
 
-extension ObservationCategoryCodeVi on ObservationCategoryCode {
+extension ObservationCategoryCodeExtension on ObservationCategoryCode {
   String toVietnamese() {
     switch (this) {
       case ObservationCategoryCode.socialHistory:
@@ -35,4 +35,55 @@ extension ObservationCategoryCodeVi on ObservationCategoryCode {
         return "Hoạt động bệnh nhân";
     }
   }
+
+  /// Convert enum → FHIR code (string)
+  String toCode() {
+    switch (this) {
+      case ObservationCategoryCode.socialHistory:
+        return 'social-history';
+      case ObservationCategoryCode.vitalSigns:
+        return 'vital-signs';
+      case ObservationCategoryCode.imaging:
+        return 'imaging';
+      case ObservationCategoryCode.laboratory:
+        return 'laboratory';
+      case ObservationCategoryCode.procedure:
+        return 'procedure';
+      case ObservationCategoryCode.survey:
+        return 'survey';
+      case ObservationCategoryCode.exam:
+        return 'exam';
+      case ObservationCategoryCode.therapy:
+        return 'therapy';
+      case ObservationCategoryCode.activity:
+        return 'activity';
+    }
+  }
+
+  /// Convert FHIR code (string) → enum
+  static ObservationCategoryCode fromCode(String code) {
+    switch (code) {
+      case 'social-history':
+        return ObservationCategoryCode.socialHistory;
+      case 'vital-signs':
+        return ObservationCategoryCode.vitalSigns;
+      case 'imaging':
+        return ObservationCategoryCode.imaging;
+      case 'laboratory':
+        return ObservationCategoryCode.laboratory;
+      case 'procedure':
+        return ObservationCategoryCode.procedure;
+      case 'survey':
+        return ObservationCategoryCode.survey;
+      case 'exam':
+        return ObservationCategoryCode.exam;
+      case 'therapy':
+        return ObservationCategoryCode.therapy;
+      case 'activity':
+        return ObservationCategoryCode.activity;
+      default:
+        throw ArgumentError('Unknown ObservationCategoryCode: $code');
+    }
+  }
+
 }

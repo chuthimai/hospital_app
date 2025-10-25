@@ -2,11 +2,12 @@ import 'package:hospital_app/features/view_medical_record/domain/entities/servic
 
 import 'image_study.dart';
 
-class ImagingReport extends ServiceReport {
+class ImageReport extends ServiceReport {
   final String focus;
   final List<ImageStudy> imageStudies;
+  final String interpretation;
 
-  ImagingReport({
+  ImageReport({
     required super.id,
     required super.category,
     required super.method,
@@ -18,5 +19,6 @@ class ImagingReport extends ServiceReport {
     super.effectiveTime,
     required this.focus,
     this.imageStudies = const [],
+    required this.interpretation,
   });
 }

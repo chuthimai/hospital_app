@@ -11,7 +11,8 @@ enum ObservationStatus {
   unknown,
 }
 
-extension ObservationStatusVi on ObservationStatus {
+extension ObservationStatusExtension on ObservationStatus {
+  /// Convert enum → Vietnamese description
   String toVietnamese() {
     switch (this) {
       case ObservationStatus.registered:
@@ -30,6 +31,28 @@ extension ObservationStatusVi on ObservationStatus {
         return "Nhập nhầm (không hợp lệ)";
       case ObservationStatus.unknown:
         return "Không xác định";
+    }
+  }
+
+  /// Convert FHIR code (string) → enum
+  static ObservationStatus fromCode(String code) {
+    switch (code) {
+      case "registered":
+        return ObservationStatus.registered;
+      case "preliminary":
+        return ObservationStatus.preliminary;
+      case "final":
+        return ObservationStatus.final_;
+      case "amended":
+        return ObservationStatus.amended;
+      case "corrected":
+        return ObservationStatus.corrected;
+      case "cancelled":
+        return ObservationStatus.cancelled;
+      case "entered-in-error":
+        return ObservationStatus.enteredInError;
+      default:
+        return ObservationStatus.unknown;
     }
   }
 }

@@ -7,11 +7,11 @@ class MeasurementIndicator extends AssessmentItem {
   final double? maximum;
 
   MeasurementIndicator({
+    required super.id,
+    required super.name,
     required this.type,
     required this.unit,
     this.minimum,
     this.maximum,
-    required super.id,
-    required super.name,
   });
 }

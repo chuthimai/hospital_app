@@ -7,7 +7,7 @@ enum ConditionDiagnosisSeverity {
   mild,
 }
 
-extension ConditionDiagnosisSeverityVi on ConditionDiagnosisSeverity {
+extension ConditionDiagnosisSeverityExtension on ConditionDiagnosisSeverity {
   String toVietnamese() {
     switch (this) {
       case ConditionDiagnosisSeverity.severe:

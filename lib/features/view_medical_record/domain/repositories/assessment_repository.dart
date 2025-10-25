@@ -1,5 +1,3 @@
-import '../entities/assessment_category.dart';
-import '../entities/assessment_question.dart';
 import '../entities/assessment_result.dart';
 import '../entities/assessment_item.dart';
 import '../entities/measurement_indicator.dart';
@@ -13,12 +11,6 @@ abstract class AssessmentRepository {
   Future<void> saveAssessmentItem(AssessmentItem assessmentItem);
   Future<void> deleteAssessmentItems();
 
-  Future<void> saveAssessmentQuestion(AssessmentQuestion assessmentQuestion);
-  Future<void> deleteAssessmentQuestions();
-
   Future<void> saveMeasurementIndicator(MeasurementIndicator measurementIndicator);
   Future<void> deleteMeasurementIndicators();
-
-  Future<void> saveAssessmentCategory(AssessmentCategory assessmentCategory);
-  Future<void> deleteAssessmentCategories();
 }

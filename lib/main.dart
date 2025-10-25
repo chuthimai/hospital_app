@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +27,7 @@ import 'package:hospital_app/share/navigation/router.dart';
 import 'package:hospital_app/share/notification/local_notification_service.dart';
 import 'package:hospital_app/share/notification/push_notification_service.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hospital_app/share/utils/app_logger.dart';
 import 'package:hospital_app/splash_screen.dart';
 
 import 'share/themes/app_theme.dart';
@@ -35,9 +38,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Khởi tạo Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  if (!Platform.isIOS && !Platform.isMacOS) {
+    try {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    } catch (e) {
+      AppLogger().warn("Firebase không được khởi tạo: $e");
+    }
+  } else {
+    AppLogger().info("Bỏ qua khởi tạo Firebase trên iOS/macOS");
+  }
 
   runApp(const InitializerApp());
 }
@@ -79,10 +90,11 @@ class InitializerApp extends StatelessWidget {
       ]),
 
       // Khởi tạo Push Notification trước khi mở app
-      PushNotificationService.init(
-        notificationRepository: notificationRepository,
-        notificationSettingRepository: notificationSettingRepository,
-      ),
+      if (!Platform.isIOS && !Platform.isMacOS)
+        PushNotificationService.init(
+          notificationRepository: notificationRepository,
+          notificationSettingRepository: notificationSettingRepository,
+        ),
     ]);
 
     return _AppDependencies(

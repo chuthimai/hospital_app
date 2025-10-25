@@ -1,14 +1,11 @@
-
-import 'assessment_category.dart';
-
 class AssessmentItem {
   final int id;
   final String name;
-  final AssessmentCategory? assessmentCategory;
+  final AssessmentItem? parentAssessmentItem;
 
   AssessmentItem({
     required this.id,
     required this.name,
-    this.assessmentCategory,
+    this.parentAssessmentItem,
   });
 }

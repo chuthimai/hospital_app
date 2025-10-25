@@ -12,7 +12,7 @@ abstract class ReportRepository {
   Future<void> saveDiagnosisReport(DiagnosisReport diagnosisReport);
   Future<void> deleteDiagnosisReports();
 
-  Future<void> saveImagingReport(ImagingReport imagingReport);
+  Future<void> saveImageReport(ImageReport imageReport);
   Future<void> deleteImageReports();
 
   Future<void> saveImageStudy(ImageStudy imageStudy);
