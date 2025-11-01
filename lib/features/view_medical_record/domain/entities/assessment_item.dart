@@ -1,11 +1,12 @@
 class AssessmentItem {
   final int id;
   final String name;
-  final AssessmentItem? parentAssessmentItem;
+  final List<AssessmentItem>? children;
+
 
   AssessmentItem({
     required this.id,
     required this.name,
-    this.parentAssessmentItem,
+    this.children,
   });
 }

@@ -31,11 +31,11 @@ const AssessmentItemDbModelSchema = CollectionSchema(
   idName: r'id',
   indexes: {},
   links: {
-    r'parentAssessmentItem': LinkSchema(
-      id: 1963958549860407046,
-      name: r'parentAssessmentItem',
+    r'children': LinkSchema(
+      id: -9182910424039762063,
+      name: r'children',
       target: r'AssessmentItemDbModel',
-      single: true,
+      single: false,
     )
   },
   embeddedSchemas: {},
@@ -97,17 +97,14 @@ Id _assessmentItemDbModelGetId(AssessmentItemDbModel object) {
 
 List<IsarLinkBase<dynamic>> _assessmentItemDbModelGetLinks(
     AssessmentItemDbModel object) {
-  return [object.parentAssessmentItem];
+  return [object.children];
 }
 
 void _assessmentItemDbModelAttach(
     IsarCollection<dynamic> col, Id id, AssessmentItemDbModel object) {
   object.id = id;
-  object.parentAssessmentItem.attach(
-      col,
-      col.isar.collection<AssessmentItemDbModel>(),
-      r'parentAssessmentItem',
-      id);
+  object.children.attach(
+      col, col.isar.collection<AssessmentItemDbModel>(), r'children', id);
 }
 
 extension AssessmentItemDbModelQueryWhereSort
@@ -394,17 +391,63 @@ extension AssessmentItemDbModelQueryObject on QueryBuilder<
 extension AssessmentItemDbModelQueryLinks on QueryBuilder<AssessmentItemDbModel,
     AssessmentItemDbModel, QFilterCondition> {
   QueryBuilder<AssessmentItemDbModel, AssessmentItemDbModel,
-          QAfterFilterCondition>
-      parentAssessmentItem(FilterQuery<AssessmentItemDbModel> q) {
+      QAfterFilterCondition> children(FilterQuery<AssessmentItemDbModel> q) {
     return QueryBuilder.apply(this, (query) {
-      return query.link(q, r'parentAssessmentItem');
+      return query.link(q, r'children');
     });
   }
 
   QueryBuilder<AssessmentItemDbModel, AssessmentItemDbModel,
-      QAfterFilterCondition> parentAssessmentItemIsNull() {
+      QAfterFilterCondition> childrenLengthEqualTo(int length) {
     return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'parentAssessmentItem', 0, true, 0, true);
+      return query.linkLength(r'children', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<AssessmentItemDbModel, AssessmentItemDbModel,
+      QAfterFilterCondition> childrenIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'children', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<AssessmentItemDbModel, AssessmentItemDbModel,
+      QAfterFilterCondition> childrenIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'children', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<AssessmentItemDbModel, AssessmentItemDbModel,
+      QAfterFilterCondition> childrenLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'children', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<AssessmentItemDbModel, AssessmentItemDbModel,
+      QAfterFilterCondition> childrenLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'children', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<AssessmentItemDbModel, AssessmentItemDbModel,
+      QAfterFilterCondition> childrenLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'children', lower, includeLower, upper, includeUpper);
     });
   }
 }

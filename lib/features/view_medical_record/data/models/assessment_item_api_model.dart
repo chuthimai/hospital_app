@@ -9,13 +9,13 @@ part 'assessment_item_api_model.g.dart';
 class AssessmentItemApiModel {
   final int id;
   final String name;
-  final AssessmentItemApiModel? parentAssessmentItem;
+  final List<AssessmentItemApiModel>? children;
   final MeasurementIndicatorApiModel? measurementIndicator;
 
   AssessmentItemApiModel({
     required this.id,
     required this.name,
-    this.parentAssessmentItem,
+    this.children,
     this.measurementIndicator,
   });
 
@@ -39,7 +39,7 @@ class AssessmentItemApiModel {
     return AssessmentItem(
       id: id,
       name: name,
-      parentAssessmentItem: parentAssessmentItem?.toEntity(),
+      children: children?.map((e) => e.toEntity()).toList(),
     );
   }
 
@@ -48,9 +48,8 @@ class AssessmentItemApiModel {
       return AssessmentItemApiModel(
         id: entity.id,
         name: entity.name,
-        parentAssessmentItem: entity.parentAssessmentItem != null
-            ? AssessmentItemApiModel.fromEntity(entity.parentAssessmentItem!)
-            : null,
+        children: entity.children?.map((e) =>
+            AssessmentItemApiModel.fromEntity(e)).toList(),
         measurementIndicator: MeasurementIndicatorApiModel(
           type: entity.type,
           unit: entity.unit,
@@ -63,9 +62,8 @@ class AssessmentItemApiModel {
     return AssessmentItemApiModel(
       id: entity.id,
       name: entity.name,
-      parentAssessmentItem: entity.parentAssessmentItem != null
-          ? AssessmentItemApiModel.fromEntity(entity.parentAssessmentItem!)
-          : null,
+      children: entity.children?.map((e) =>
+          AssessmentItemApiModel.fromEntity(e)).toList(),
     );
   }
 }

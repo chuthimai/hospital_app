@@ -8,6 +8,7 @@ part 'login_request.g.dart';
 class LoginRequest {
   final int identifier;
   final String password;
+  final String role = "PATIENT";
 
   LoginRequest({required this.identifier, required this.password});
 

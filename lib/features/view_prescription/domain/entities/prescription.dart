@@ -7,11 +7,13 @@ class Prescription {
   final DateTime createTime;
   final List<PrescribedMedication> prescribedMedications;
   final Physician? performer;
+  final String? note;
 
   Prescription({
     required this.id,
     required this.createTime,
     this.prescribedMedications = const [],
     this.performer,
+    this.note
   });
 }

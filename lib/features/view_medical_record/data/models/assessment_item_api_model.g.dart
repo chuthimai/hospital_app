@@ -11,10 +11,10 @@ AssessmentItemApiModel _$AssessmentItemApiModelFromJson(
     AssessmentItemApiModel(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
-      parentAssessmentItem: json['parentAssessmentItem'] == null
-          ? null
-          : AssessmentItemApiModel.fromJson(
-              json['parentAssessmentItem'] as Map<String, dynamic>),
+      children: (json['children'] as List<dynamic>?)
+          ?.map(
+              (e) => AssessmentItemApiModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       measurementIndicator: json['measurementIndicator'] == null
           ? null
           : MeasurementIndicatorApiModel.fromJson(
@@ -26,6 +26,6 @@ Map<String, dynamic> _$AssessmentItemApiModelToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'parentAssessmentItem': instance.parentAssessmentItem?.toJson(),
+      'children': instance.children?.map((e) => e.toJson()).toList(),
       'measurementIndicator': instance.measurementIndicator?.toJson(),
     };

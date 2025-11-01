@@ -8,7 +8,7 @@ class AssessmentItemDbModel {
   Id id;
   late String name;
 
-  final parentAssessmentItem = IsarLink<AssessmentItemDbModel>();
+  final children = IsarLinks<AssessmentItemDbModel>();
 
   AssessmentItemDbModel({
     required this.id,
@@ -16,13 +16,11 @@ class AssessmentItemDbModel {
   });
 
   Future<AssessmentItem> toEntity() async {
-    await parentAssessmentItem.load();
+    await children.load();
     return AssessmentItem(
       id: id,
       name: name,
-      parentAssessmentItem: parentAssessmentItem.value == null
-          ? null
-          : await parentAssessmentItem.value!.toEntity(),
+      children: await Future.wait(children.map((c) => c.toEntity())),
     );
   }
 
@@ -31,9 +29,10 @@ class AssessmentItemDbModel {
       id: entity.id,
       name: entity.name,
     );
-    if (entity.parentAssessmentItem != null) {
-      model.parentAssessmentItem.value =
-          AssessmentItemDbModel.fromEntity(entity.parentAssessmentItem!);
+    if (entity.children != null) {
+      model.children.addAll(
+        entity.children!.map((e) => AssessmentItemDbModel.fromEntity(e)),
+      );
     }
     return model;
   }
