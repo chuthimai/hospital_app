@@ -18,7 +18,7 @@ import 'package:hospital_app/features/view_medical_record/domain/entities/servic
 /// Fake danh sách PatientRecord
 List<PatientRecord> fakePatientRecords = [
   PatientRecord(
-    id: 1,
+    id: 46,
     status: RecordStatus.complete,
     createTime: DateTime(2025, 9, 15, 10, 0),
     prescription: fakePrescriptions[0],
@@ -90,7 +90,123 @@ List<PatientRecord> fakePatientRecords = [
     ],
   ),
   PatientRecord(
-    id: 2,
+    id: 47,
+    status: RecordStatus.incomplete,
+    createTime: DateTime(2025, 9, 17, 9, 45),
+    prescription: fakePrescriptions[2],
+    // đơn thuốc của BS C
+    serviceReports: [
+      DiagnosisReport(
+        id: 103,
+        category: ObservationCategoryCode.therapy,
+        method: ObservationMethod.unknown,
+        status: ObservationStatus.final_,
+        service: fakeServices[2],
+        // Khám da liễu
+        requester: fakePhysicians[1],
+        // BS. Trần Thị B
+        performer: fakePhysicians[1],
+        type: "Khám da liễu",
+        severity: ConditionDiagnosisSeverity.moderate,
+        conclusion: "Nghi ngờ viêm da dị ứng, cần xét nghiệm thêm.",
+        effectiveTime: DateTime(2025, 9, 17, 10, 15),
+        recordedTime: DateTime(2025, 9, 17, 10, 15),
+        assessmentResults: [
+          AssessmentResult(
+            id: 301,
+            value: "Da nổi mẩn ngứa",
+            assessmentItem: AssessmentItem(
+              id: 301,
+              name: "1. Tình trạng hiện tại",
+            ),
+          ),
+          AssessmentResult(
+            id: 302,
+            value: "Nguy cơ bị kiến đa khoa cắn",
+            assessmentItem: AssessmentItem(
+              id: 302,
+              name: "2. Chuẩn đoán",
+              children: [
+                AssessmentItem(
+                  id: 303,
+                  name: "2.1. Nguyên nhân",
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      ServiceReport(
+        id: 104,
+        category: ObservationCategoryCode.laboratory,
+        method: ObservationMethod.unknown,
+        status: ObservationStatus.registered,
+        service: fakeServices[4],
+        // Xét nghiệm máu tổng quát
+        requester: fakePhysicians[1],
+      ),
+    ],
+  ),
+  PatientRecord(
+    id: 48,
+    status: RecordStatus.incomplete,
+    createTime: DateTime(2025, 9, 17, 9, 45),
+    prescription: fakePrescriptions[2],
+    // đơn thuốc của BS C
+    serviceReports: [
+      DiagnosisReport(
+        id: 103,
+        category: ObservationCategoryCode.therapy,
+        method: ObservationMethod.unknown,
+        status: ObservationStatus.final_,
+        service: fakeServices[2],
+        // Khám da liễu
+        requester: fakePhysicians[1],
+        // BS. Trần Thị B
+        performer: fakePhysicians[1],
+        type: "Khám da liễu",
+        severity: ConditionDiagnosisSeverity.moderate,
+        conclusion: "Nghi ngờ viêm da dị ứng, cần xét nghiệm thêm.",
+        effectiveTime: DateTime(2025, 9, 17, 10, 15),
+        recordedTime: DateTime(2025, 9, 17, 10, 15),
+        assessmentResults: [
+          AssessmentResult(
+            id: 301,
+            value: "Da nổi mẩn ngứa",
+            assessmentItem: AssessmentItem(
+              id: 301,
+              name: "1. Tình trạng hiện tại",
+            ),
+          ),
+          AssessmentResult(
+            id: 302,
+            value: "Nguy cơ bị kiến đa khoa cắn",
+            assessmentItem: AssessmentItem(
+              id: 302,
+              name: "2. Chuẩn đoán",
+              children: [
+                AssessmentItem(
+                  id: 303,
+                  name: "2.1. Nguyên nhân",
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      ServiceReport(
+        id: 104,
+        category: ObservationCategoryCode.laboratory,
+        method: ObservationMethod.unknown,
+        status: ObservationStatus.registered,
+        service: fakeServices[4],
+        // Xét nghiệm máu tổng quát
+        requester: fakePhysicians[1],
+      ),
+    ],
+  ),
+  PatientRecord(
+    id: 49,
     status: RecordStatus.incomplete,
     createTime: DateTime(2025, 9, 17, 9, 45),
     prescription: fakePrescriptions[2],
