@@ -9,12 +9,16 @@ class PatientRecord {
   final DateTime createTime;
   final List<ServiceReport> serviceReports;
   final Prescription? prescription;
+  final String? pathUrl;
+  final String? pathFilePdf;
 
   PatientRecord({
     required this.id,
     this.status = RecordStatus.incomplete,
     required this.createTime,
     this.serviceReports = const [],
-    this.prescription
+    this.prescription,
+    this.pathUrl,
+    this.pathFilePdf,
   });
 }

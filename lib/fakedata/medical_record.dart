@@ -263,4 +263,10 @@ List<PatientRecord> fakePatientRecords = [
       ),
     ],
   ),
+  PatientRecord(
+      id: 50,
+      createTime: DateTime.now(),
+      pathUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+      pathFilePdf: "/data/user/0/com.example.hospital_app/app_flutter/test.pdf"
+  )
 ];

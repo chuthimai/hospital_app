@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hospital_app/features/view_medical_record/domain/entities/enum/record_status.dart';
 import 'package:hospital_app/features/view_medical_record/domain/entities/patient_record.dart';
 
 import '../../../../fakedata/medical_record.dart';
@@ -24,6 +25,9 @@ class ViewMedicalRecordsScreen extends StatelessWidget {
             final patientRecord = patientRecords[index];
             return Card(
               key: ValueKey(patientRecord.id),
+              color: patientRecord.status == RecordStatus.complete
+                  ? Theme.of(context).disabledColor
+                  : Theme.of(context).cardColor,
               margin: EdgeInsets.symmetric(horizontal: 12.sp, vertical: 6.sp),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.sp),
