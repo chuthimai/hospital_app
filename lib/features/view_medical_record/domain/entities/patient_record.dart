@@ -10,7 +10,7 @@ class PatientRecord {
   final List<ServiceReport> serviceReports;
   final Prescription? prescription;
   final String? pathUrl;
-  final String? pathFilePdf;
+  String? pathFilePdf;
 
   PatientRecord({
     required this.id,

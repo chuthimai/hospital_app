@@ -23,4 +23,16 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
     throw UnimplementedError();
   }
 
+  @override
+  Future<void> saveInvoice(Invoice invoice) {
+    // TODO: implement saveInvoice
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> isSavedInvoice(Invoice invoice) {
+    // TODO: implement isSavedInvoice
+    throw UnimplementedError();
+  }
+
 }
