@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hospital_app/features/view_medical_record/presentation/widgets/android_pdf_view.dart';
 import 'package:hospital_app/share/utils/date_formatter.dart';
 import 'package:hospital_app/share/utils/pdf_file_manager.dart';
 import 'package:hospital_app/share/widgets/app_snack_bar.dart';
@@ -46,6 +49,14 @@ class _MedicalRecordDetailBodyState extends State<MedicalRecordDetailBody> {
   @override
   Widget build(BuildContext context) {
     if (pathFilePdf != null) {
+      if (Platform.isAndroid) {
+        return SizedBox(
+          width: double.infinity,
+          child: AndroidPdfView(
+            filePath: pathFilePdf!,
+          ),
+        );
+      }
       return Center(
         child: PdfViewer(pathFilePdf!),
       );
