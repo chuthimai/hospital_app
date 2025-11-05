@@ -55,7 +55,7 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
     try {
       final remote = RemoteService();
       final response = await remote.get(
-        "${PathApi.getAllAppointments}?user-identifier=${user.id}",
+        "${PathApi.getAllAppointments}?userIdentifier=${user.id}",
       );
 
       final data = response.data as List<dynamic>;
