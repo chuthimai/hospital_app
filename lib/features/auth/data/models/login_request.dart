@@ -8,9 +8,15 @@ part 'login_request.g.dart';
 class LoginRequest {
   final int identifier;
   final String password;
-  final String role = "PATIENT";
 
-  LoginRequest({required this.identifier, required this.password});
+  @JsonKey(defaultValue: "patient")
+  final String role;
+
+  LoginRequest({
+    required this.identifier,
+    required this.password,
+    this.role = "patient",
+  });
 
   factory LoginRequest.fromParams(LoginParams params) {
     return LoginRequest(identifier: params.id, password: params.password);
