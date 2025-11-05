@@ -31,18 +31,18 @@ class ApiErrorHandler {
             }
           } else {
             switch (statusCode) {
-              case 400:
-                message = "Yêu cầu không hợp lệ.";
-                break;
+              // case 400:
+              //   message = "Yêu cầu không hợp lệ.";
+              //   break;
               case 401:
                 message = "Bạn chưa đăng nhập hoặc phiên đã hết hạn.";
                 break;
               case 403:
                 message = "Bạn không có quyền truy cập.";
                 break;
-              case 404:
-                message = "Không tìm thấy tài nguyên.";
-                break;
+              // case 404:
+              //   message = "Không tìm thấy tài nguyên.";
+              //   break;
               case 500:
                 message = "Lỗi server, vui lòng thử lại sau.";
                 break;

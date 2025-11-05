@@ -29,14 +29,23 @@ class AppointmentApiModel {
 
   Map<String, dynamic> toJson() => _$AppointmentApiModelToJson(this);
 
-  Appointment toEntity() => Appointment(
-    id: identifier,
-    status: AppointmentStatusExchange.fromString(status ? "booked" : "cancelled"),
-    reason: reason,
-    cancellationDate: cancellationDate,
-    workSchedule: workSchedule.toEntity(),
-    physician: physician?.toEntity(),
-  );
+  Appointment toEntity() {
+    AppointmentStatus localStatus = AppointmentStatus.booked;
+    if (status == false) {
+      reason != null ?
+      localStatus = AppointmentStatus.cancelled :
+      localStatus = AppointmentStatus.checkedIn;
+    }
+
+    return Appointment(
+      id: identifier,
+      status: localStatus,
+      reason: reason,
+      cancellationDate: cancellationDate,
+      workSchedule: workSchedule.toEntity(),
+      physician: physician?.toEntity(),
+    );
+  }
 }
 
 

@@ -96,7 +96,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/appointments-history',
       builder: (context, state) {
-        return const ViewAppointmentsScreen();
+        return ViewAppointmentsScreen();
       },
     ),
     GoRoute(

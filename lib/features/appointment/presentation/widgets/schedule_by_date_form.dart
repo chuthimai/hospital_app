@@ -62,8 +62,7 @@ class _ScheduleByDateFormState extends State<ScheduleByDateForm> {
                           _shifts = workScheduleState.workSchedules
                               .map((e) => e.shift!)
                               .fold<Map<int, Shift>>({}, (map, shift) {
-                                map[shift.id] =
-                                    shift;
+                                map[shift.id] = shift;
                                 return map;
                               })
                               .values
