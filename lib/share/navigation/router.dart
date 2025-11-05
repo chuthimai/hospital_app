@@ -102,7 +102,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/services',
       builder: (context, state) {
-        return const ViewServicesScreen();
+        return ViewServicesScreen();
       },
     ),
     GoRoute(

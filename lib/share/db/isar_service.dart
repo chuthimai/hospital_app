@@ -28,12 +28,15 @@ class IsarService {
     final dir = await getApplicationDocumentsDirectory();
     _isar = await Isar.open(
       [
+        // Đơn thuốc
         PrescriptionDbModelSchema,
         PrescribedMedicationDbModelSchema,
         MedicationDbModelSchema,
 
+        // Thông báo
         NotificationDbModelSchema,
 
+        // Đặt lịch
         LocationDbModelSchema,
         ServiceDbModelSchema,
         PhysicianDbModelSchema,
@@ -42,6 +45,7 @@ class IsarService {
         ShiftDbModelSchema,
         WorkScheduleDbModelSchema,
 
+        // Bệnh án
         AssessmentItemDbModelSchema,
         AssessmentResultDbModelSchema,
         DiagnosisReportDbModelSchema,

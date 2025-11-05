@@ -8,4 +8,7 @@ class PathApi {
   static const createAppointment = "/appointments";
   static const getAllAppointments = "/appointments/by-user";
   static const cancelAppointment = "/appointments/";
+
+  /// Dịch vụ
+  static const getAllIncompleteServices = "/billing/services-required";
 }
