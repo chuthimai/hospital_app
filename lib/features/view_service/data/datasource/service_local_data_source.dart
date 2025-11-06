@@ -1,4 +1,5 @@
 
+import 'package:hospital_app/features/view_service/data/models/location_db_model.dart';
 import 'package:hospital_app/share/db/isar_service.dart';
 import 'package:isar/isar.dart';
 
@@ -29,7 +30,16 @@ class ServiceLocalDataSourceImpl implements ServiceLocalDataSource {
   Future<void> saveService(ServiceDbModel service) async {
     final isar = await _isar;
     await isar.writeTxn(() async {
+      // Nếu có location thì lưu location
+      if (service.location.value != null) {
+        await isar.locationDbModels.put(service.location.value!);
+      }
+
+      // Lưu service
       await isar.serviceDbModels.put(service);
+
+      // Lưu link quan hệ
+      await service.location.save();
     });
   }
 
@@ -37,7 +47,9 @@ class ServiceLocalDataSourceImpl implements ServiceLocalDataSource {
   Future<void> saveServices(List<ServiceDbModel> services) async {
     final isar = await _isar;
     await isar.writeTxn(() async {
-      await isar.serviceDbModels.putAll(services);
+      for (final service in services) {
+        await saveService(service);
+      }
     });
   }
 
@@ -68,7 +80,17 @@ class ServiceLocalDataSourceImpl implements ServiceLocalDataSource {
       ) async {
     for (final service in incompleteServices) {
       service.isCompleted = false;
-      await isar.serviceDbModels.put(service);
+
+      // Lưu location
+      if (service.location.value != null) {
+        await isar.locationDbModels.put(service.location.value!);
+      }
+
+      // Lưu service
+      final serviceId = await isar.serviceDbModels.put(service);
+
+      // Sau khi có id -> lưu link location
+      await service.location.save();
     }
   }
 

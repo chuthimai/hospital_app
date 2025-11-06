@@ -9,7 +9,7 @@ part of 'service_invoice_api_model.dart';
 ServiceInvoiceApiModel _$ServiceInvoiceApiModelFromJson(
         Map<String, dynamic> json) =>
     ServiceInvoiceApiModel(
-      id: (json['id'] as num).toInt(),
+      identifier: (json['identifier'] as num).toInt(),
       price: (json['price'] as num).toDouble(),
       service:
           ServiceApiModel.fromJson(json['service'] as Map<String, dynamic>),
@@ -18,7 +18,7 @@ ServiceInvoiceApiModel _$ServiceInvoiceApiModelFromJson(
 Map<String, dynamic> _$ServiceInvoiceApiModelToJson(
         ServiceInvoiceApiModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'identifier': instance.identifier,
       'price': instance.price,
       'service': instance.service,
     };

@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import '../../../view_doctor/data/models/physician_api_model.dart';
 import '../../domain/entities/prescription.dart';
 import 'prescribed_medication_api_model.dart';
 
@@ -6,14 +7,18 @@ part 'prescription_api_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class PrescriptionApiModel {
-  final int id;
-  final DateTime createTime;
+  final int identifier;
+  final DateTime createdTime;
   final List<PrescribedMedicationApiModel> prescribedMedications;
+  final PhysicianApiModel? physician;
+  final String? advice;
 
   PrescriptionApiModel({
-    required this.id,
-    required this.createTime,
+    required this.identifier,
+    required this.createdTime,
     this.prescribedMedications = const [],
+    this.physician,
+    this.advice,
   });
 
   factory PrescriptionApiModel.fromJson(Map<String, dynamic> json) =>
@@ -23,17 +28,23 @@ class PrescriptionApiModel {
 
   factory PrescriptionApiModel.fromEntity(Prescription entity) =>
       PrescriptionApiModel(
-        id: entity.id,
-        createTime: entity.createTime,
+        identifier: entity.id,
+        createdTime: entity.createdTime,
         prescribedMedications: entity.prescribedMedications
             .map((pm) => PrescribedMedicationApiModel.fromEntity(pm))
             .toList(),
+        physician: entity.performer != null
+            ? PhysicianApiModel.fromEntity(entity.performer!)
+            : null,
+        advice: entity.note,
       );
 
   Prescription toEntity() => Prescription(
-    id: id,
-    createTime: createTime,
+    id: identifier,
+    createdTime: createdTime,
     prescribedMedications:
     prescribedMedications.map((pm) => pm.toEntity()).toList(),
+    performer: physician?.toEntity(),
+    note: advice,
   );
 }

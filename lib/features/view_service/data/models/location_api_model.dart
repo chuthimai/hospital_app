@@ -5,12 +5,12 @@ part 'location_api_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class LocationApiModel {
-  final int id;
+  final int identifier;
   final String name;
   final LocationApiModel? partOfLocation;
 
   LocationApiModel({
-    required this.id,
+    required this.identifier,
     required this.name,
     this.partOfLocation,
   });
@@ -22,7 +22,7 @@ class LocationApiModel {
 
   Location toEntity() {
     return Location(
-      id: id,
+      id: identifier,
       name: name,
       partOf: partOfLocation?.toEntity(),
     );
@@ -30,7 +30,7 @@ class LocationApiModel {
 
   static LocationApiModel fromEntity(Location entity) {
     return LocationApiModel(
-      id: entity.id,
+      identifier: entity.id,
       name: entity.name,
       partOfLocation: entity.partOf != null
           ? LocationApiModel.fromEntity(entity.partOf!)

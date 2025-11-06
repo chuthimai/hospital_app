@@ -7,7 +7,7 @@ class Service {
   final String name;
   String? extraDetails;
   final float? price;
-  Location location;
+  Location? location;
   final bool isCompleted;
 
   Service({
@@ -15,7 +15,7 @@ class Service {
     required this.name,
     this.extraDetails,
     this.price = 0.0,
-    required this.location,
+    this.location,
     this.isCompleted = true,
   });
 }

@@ -24,7 +24,7 @@ class ServiceCard extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          "Nơi làm dịch vụ: ${service.location.fullAddress}",
+          "Nơi làm dịch vụ: ${service.location?.fullAddress ?? "Không có thông tin"}",
         ),
       ),
     );

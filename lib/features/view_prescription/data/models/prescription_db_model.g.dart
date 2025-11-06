@@ -18,10 +18,15 @@ const PrescriptionDbModelSchema = CollectionSchema(
   name: r'PrescriptionDbModel',
   id: 6427974844464927153,
   properties: {
-    r'createTime': PropertySchema(
+    r'createdTime': PropertySchema(
       id: 0,
-      name: r'createTime',
+      name: r'createdTime',
       type: IsarType.dateTime,
+    ),
+    r'note': PropertySchema(
+      id: 1,
+      name: r'note',
+      type: IsarType.string,
     )
   },
   estimateSize: _prescriptionDbModelEstimateSize,
@@ -31,6 +36,12 @@ const PrescriptionDbModelSchema = CollectionSchema(
   idName: r'id',
   indexes: {},
   links: {
+    r'performer': LinkSchema(
+      id: -1340996288465430527,
+      name: r'performer',
+      target: r'PhysicianDbModel',
+      single: true,
+    ),
     r'prescribedMedications': LinkSchema(
       id: 73411836064018507,
       name: r'prescribedMedications',
@@ -51,6 +62,12 @@ int _prescriptionDbModelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  {
+    final value = object.note;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   return bytesCount;
 }
 
@@ -60,7 +77,8 @@ void _prescriptionDbModelSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeDateTime(offsets[0], object.createTime);
+  writer.writeDateTime(offsets[0], object.createdTime);
+  writer.writeString(offsets[1], object.note);
 }
 
 PrescriptionDbModel _prescriptionDbModelDeserialize(
@@ -70,8 +88,9 @@ PrescriptionDbModel _prescriptionDbModelDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = PrescriptionDbModel(
-    createTime: reader.readDateTime(offsets[0]),
+    createdTime: reader.readDateTime(offsets[0]),
     id: id,
+    note: reader.readStringOrNull(offsets[1]),
   );
   return object;
 }
@@ -85,6 +104,8 @@ P _prescriptionDbModelDeserializeProp<P>(
   switch (propertyId) {
     case 0:
       return (reader.readDateTime(offset)) as P;
+    case 1:
+      return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -96,12 +117,14 @@ Id _prescriptionDbModelGetId(PrescriptionDbModel object) {
 
 List<IsarLinkBase<dynamic>> _prescriptionDbModelGetLinks(
     PrescriptionDbModel object) {
-  return [object.prescribedMedications];
+  return [object.performer, object.prescribedMedications];
 }
 
 void _prescriptionDbModelAttach(
     IsarCollection<dynamic> col, Id id, PrescriptionDbModel object) {
   object.id = id;
+  object.performer
+      .attach(col, col.isar.collection<PhysicianDbModel>(), r'performer', id);
   object.prescribedMedications.attach(
       col,
       col.isar.collection<PrescribedMedicationDbModel>(),
@@ -192,45 +215,45 @@ extension PrescriptionDbModelQueryWhere
 extension PrescriptionDbModelQueryFilter on QueryBuilder<PrescriptionDbModel,
     PrescriptionDbModel, QFilterCondition> {
   QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
-      createTimeEqualTo(DateTime value) {
+      createdTimeEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'createTime',
+        property: r'createdTime',
         value: value,
       ));
     });
   }
 
   QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
-      createTimeGreaterThan(
+      createdTimeGreaterThan(
     DateTime value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'createTime',
+        property: r'createdTime',
         value: value,
       ));
     });
   }
 
   QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
-      createTimeLessThan(
+      createdTimeLessThan(
     DateTime value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'createTime',
+        property: r'createdTime',
         value: value,
       ));
     });
   }
 
   QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
-      createTimeBetween(
+      createdTimeBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
@@ -238,7 +261,7 @@ extension PrescriptionDbModelQueryFilter on QueryBuilder<PrescriptionDbModel,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'createTime',
+        property: r'createdTime',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -302,6 +325,160 @@ extension PrescriptionDbModelQueryFilter on QueryBuilder<PrescriptionDbModel,
       ));
     });
   }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
+      noteIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'note',
+      ));
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
+      noteIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'note',
+      ));
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
+      noteEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
+      noteGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
+      noteLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
+      noteBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'note',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
+      noteStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
+      noteEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
+      noteContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
+      noteMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'note',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
+      noteIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'note',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
+      noteIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'note',
+        value: '',
+      ));
+    });
+  }
 }
 
 extension PrescriptionDbModelQueryObject on QueryBuilder<PrescriptionDbModel,
@@ -309,6 +486,20 @@ extension PrescriptionDbModelQueryObject on QueryBuilder<PrescriptionDbModel,
 
 extension PrescriptionDbModelQueryLinks on QueryBuilder<PrescriptionDbModel,
     PrescriptionDbModel, QFilterCondition> {
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
+      performer(FilterQuery<PhysicianDbModel> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'performer');
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
+      performerIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'performer', 0, true, 0, true);
+    });
+  }
+
   QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterFilterCondition>
       prescribedMedications(FilterQuery<PrescribedMedicationDbModel> q) {
     return QueryBuilder.apply(this, (query) {
@@ -377,16 +568,30 @@ extension PrescriptionDbModelQueryLinks on QueryBuilder<PrescriptionDbModel,
 extension PrescriptionDbModelQuerySortBy
     on QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QSortBy> {
   QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterSortBy>
-      sortByCreateTime() {
+      sortByCreatedTime() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'createTime', Sort.asc);
+      return query.addSortBy(r'createdTime', Sort.asc);
     });
   }
 
   QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterSortBy>
-      sortByCreateTimeDesc() {
+      sortByCreatedTimeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'createTime', Sort.desc);
+      return query.addSortBy(r'createdTime', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterSortBy>
+      sortByNote() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'note', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterSortBy>
+      sortByNoteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'note', Sort.desc);
     });
   }
 }
@@ -394,16 +599,16 @@ extension PrescriptionDbModelQuerySortBy
 extension PrescriptionDbModelQuerySortThenBy
     on QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QSortThenBy> {
   QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterSortBy>
-      thenByCreateTime() {
+      thenByCreatedTime() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'createTime', Sort.asc);
+      return query.addSortBy(r'createdTime', Sort.asc);
     });
   }
 
   QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterSortBy>
-      thenByCreateTimeDesc() {
+      thenByCreatedTimeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'createTime', Sort.desc);
+      return query.addSortBy(r'createdTime', Sort.desc);
     });
   }
 
@@ -420,14 +625,35 @@ extension PrescriptionDbModelQuerySortThenBy
       return query.addSortBy(r'id', Sort.desc);
     });
   }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterSortBy>
+      thenByNote() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'note', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QAfterSortBy>
+      thenByNoteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'note', Sort.desc);
+    });
+  }
 }
 
 extension PrescriptionDbModelQueryWhereDistinct
     on QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QDistinct> {
   QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QDistinct>
-      distinctByCreateTime() {
+      distinctByCreatedTime() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'createTime');
+      return query.addDistinctBy(r'createdTime');
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, PrescriptionDbModel, QDistinct>
+      distinctByNote({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'note', caseSensitive: caseSensitive);
     });
   }
 }
@@ -441,9 +667,15 @@ extension PrescriptionDbModelQueryProperty
   }
 
   QueryBuilder<PrescriptionDbModel, DateTime, QQueryOperations>
-      createTimeProperty() {
+      createdTimeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'createTime');
+      return query.addPropertyName(r'createdTime');
+    });
+  }
+
+  QueryBuilder<PrescriptionDbModel, String?, QQueryOperations> noteProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'note');
     });
   }
 }

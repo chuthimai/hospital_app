@@ -6,12 +6,12 @@ part 'medication_api_model.g.dart';
 
 @JsonSerializable()
 class MedicationApiModel {
-  final int id;
+  final int identifier;
   final String name;
   final String doseForm;
 
   MedicationApiModel({
-    required this.id,
+    required this.identifier,
     required this.name,
     required this.doseForm,
   });
@@ -23,13 +23,13 @@ class MedicationApiModel {
 
   factory MedicationApiModel.fromEntity(Medication medication) =>
       MedicationApiModel(
-        id: medication.id,
+        identifier: medication.id,
         name: medication.name,
         doseForm: medication.doseForm.name,
       );
 
   Medication toEntity() => Medication(
-    id: id,
+    id: identifier,
     name: name,
     doseForm: SNOMEDCTFormCodesExt.fromCode(doseForm),
   );

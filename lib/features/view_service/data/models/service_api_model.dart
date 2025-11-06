@@ -6,44 +6,47 @@ part 'service_api_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class ServiceApiModel {
-  final int id;
+  final int identifier;
   final String name;
-  final String? extraDetails;
-  final LocationApiModel location;
-  final bool isCompleted;
+  final String? detailDescription;
+  final LocationApiModel? location;
+  final bool active;
 
   ServiceApiModel({
-    required this.id,
+    required this.identifier,
     required this.name,
-    this.extraDetails,
-    required this.location,
-    this.isCompleted = true,
+    this.detailDescription,
+    this.location,
+    this.active = true,
   });
 
   // --- JSON Serializable ---
-  factory ServiceApiModel.fromJson(Map<String, dynamic> json) =>
-      _$ServiceApiModelFromJson(json);
+  factory ServiceApiModel.fromJson(Map<String, dynamic> json) {
+    return _$ServiceApiModelFromJson(json);
+  }
 
   Map<String, dynamic> toJson() => _$ServiceApiModelToJson(this);
 
   // --- Mapping ---
   Service toEntity() {
     return Service(
-      id: id,
+      id: identifier,
       name: name,
-      extraDetails: extraDetails,
-      location: location.toEntity(),
-      isCompleted: isCompleted,
+      extraDetails: detailDescription,
+      location: location?.toEntity(),
+      isCompleted: !active,
     );
   }
 
   static ServiceApiModel fromEntity(Service entity) {
     return ServiceApiModel(
-      id: entity.id,
+      identifier: entity.id,
       name: entity.name,
-      extraDetails: entity.extraDetails,
-      location: LocationApiModel.fromEntity(entity.location),
-      isCompleted: entity.isCompleted,
+      detailDescription: entity.extraDetails,
+      location: entity.location == null
+          ? null
+          : LocationApiModel.fromEntity(entity.location!),
+      active: !entity.isCompleted,
     );
   }
 }

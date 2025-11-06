@@ -57,7 +57,7 @@ class DiagnosisReportDbModel {
       method: ObservationMethodExtension.fromCode(method),
       status: ObservationStatusExtension.fromCode(status),
       effectiveTime: effectiveTime,
-      service: service.value!.toEntity(),
+      service: await service.value!.toEntity(),
       requester: await requester.value!.toEntity(),
       performer: await performer.value?.toEntity(),
       assessmentResults: await Future.wait(

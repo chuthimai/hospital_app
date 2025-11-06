@@ -14,12 +14,14 @@ class ServiceDbModel {
 
   final location = IsarLink<LocationDbModel>();
 
-  Service toEntity() {
+  Future<Service> toEntity() async {
+    await location.load();
+
     return Service(
       id: id,
       name: name,
       extraDetails: detailDescription,
-      location: location.value!.toEntity(),
+      location: location.value?.toEntity(),
       isCompleted: isCompleted,
     );
   }
@@ -31,7 +33,9 @@ class ServiceDbModel {
       ..detailDescription = entity.extraDetails
       ..isCompleted = entity.isCompleted;
 
-    model.location.value = LocationDbModel.fromEntity(entity.location);
+    if (entity.location != null) {
+      model.location.value = LocationDbModel.fromEntity(entity.location!);
+    }
 
     return model;
   }

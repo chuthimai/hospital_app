@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hospital_app/features/appointment/data/datasources/appointment_local_data_source.dart';
 import 'package:hospital_app/features/auth/data/datasources/auth_local_data_source.dart';
 import 'package:hospital_app/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:hospital_app/features/auth/data/repositories/auth_repository_impl.dart';
@@ -22,6 +23,8 @@ import 'package:hospital_app/features/setting/domain/repositories/notification_s
 import 'package:hospital_app/features/setting/domain/repositories/theme_repository.dart';
 import 'package:hospital_app/features/setting/presentation/cubit/notification_setting_cubit.dart';
 import 'package:hospital_app/features/setting/presentation/cubit/theme_cubit.dart';
+import 'package:hospital_app/features/view_prescription/data/datasources/prescription_local_data_source.dart';
+import 'package:hospital_app/features/view_service/data/datasource/service_local_data_source.dart';
 import 'package:hospital_app/share/dio/remote_service.dart';
 import 'package:hospital_app/share/navigation/router.dart';
 import 'package:hospital_app/share/notification/local_notification_service.dart';
@@ -63,6 +66,9 @@ class InitializerApp extends StatelessWidget {
       remoteDataSource: AuthRemoteDataSourceImpl(),
       localDataSource: AuthLocalDataSourceImpl(),
       notificationLocalDataSource: NotificationLocalDataSourceImpl(),
+      prescriptionLocalDataSource: PrescriptionLocalDataSourceImpl(),
+      serviceLocalDataSource: ServiceLocalDataSourceImpl(),
+      appointmentLocalDataSource: AppointmentLocalDataSourceImpl(),
     );
     final AuthCubit authCubit = AuthCubit(authRepository);
 

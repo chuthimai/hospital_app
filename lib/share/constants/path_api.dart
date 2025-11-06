@@ -11,4 +11,8 @@ class PathApi {
 
   /// Dịch vụ
   static const getAllIncompleteServices = "/billing/services-required";
+
+  /// Đơn thuốc
+  static const getAllPrescriptions = "/medicines/prescriptions";
+  static const getDetailPrescription = "/medicines/prescriptions/";
 }

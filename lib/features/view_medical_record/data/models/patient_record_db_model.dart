@@ -35,7 +35,7 @@ class PatientRecordDbModel {
       serviceReports: await Future.wait(
         serviceReports.map((r) => r.toEntity()),
       ),
-      prescription: prescription.value?.toEntity(),
+      prescription: await prescription.value?.toEntity(),
     );
   }
 

@@ -22,7 +22,6 @@ class ServiceRemoteDataSourceImpl implements ServiceRemoteDataSource {
       final services = data
           .map((json) => ServiceApiModel.fromJson(json as Map<String, dynamic>))
           .toList();
-
       return services;
 
     } catch (e) {

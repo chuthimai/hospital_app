@@ -128,7 +128,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/prescriptions',
       builder: (context, state) {
-        return const ViewPrescriptionsScreen();
+        return ViewPrescriptionsScreen();
       },
     ),
     GoRoute(

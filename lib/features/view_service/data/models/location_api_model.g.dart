@@ -8,7 +8,7 @@ part of 'location_api_model.dart';
 
 LocationApiModel _$LocationApiModelFromJson(Map<String, dynamic> json) =>
     LocationApiModel(
-      id: (json['id'] as num).toInt(),
+      identifier: (json['identifier'] as num).toInt(),
       name: json['name'] as String,
       partOfLocation: json['partOfLocation'] == null
           ? null
@@ -18,7 +18,7 @@ LocationApiModel _$LocationApiModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$LocationApiModelToJson(LocationApiModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'identifier': instance.identifier,
       'name': instance.name,
       'partOfLocation': instance.partOfLocation?.toJson(),
     };
