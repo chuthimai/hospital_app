@@ -14,7 +14,6 @@ ServiceApiModel _$ServiceApiModelFromJson(Map<String, dynamic> json) =>
       location: json['location'] == null
           ? null
           : LocationApiModel.fromJson(json['location'] as Map<String, dynamic>),
-      active: json['active'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$ServiceApiModelToJson(ServiceApiModel instance) =>
@@ -23,5 +22,4 @@ Map<String, dynamic> _$ServiceApiModelToJson(ServiceApiModel instance) =>
       'name': instance.name,
       'detailDescription': instance.detailDescription,
       'location': instance.location?.toJson(),
-      'active': instance.active,
     };

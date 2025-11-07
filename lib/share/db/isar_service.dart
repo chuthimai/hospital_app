@@ -4,6 +4,8 @@ import 'package:hospital_app/features/appointment/data/models/work_schedule_db_m
 import 'package:hospital_app/features/notification/data/models/notification_db_model.dart';
 import 'package:hospital_app/features/view_doctor/data/models/medical_specialty_db_model.dart';
 import 'package:hospital_app/features/view_doctor/data/models/physician_db_model.dart';
+import 'package:hospital_app/features/view_invoice/data/models/invoice_db_model.dart';
+import 'package:hospital_app/features/view_invoice/data/models/service_invoice_db_model.dart';
 import 'package:hospital_app/features/view_medical_record/data/models/assessment_item_db_model.dart';
 import 'package:hospital_app/features/view_medical_record/data/models/assessment_result_db_model.dart';
 import 'package:hospital_app/features/view_medical_record/data/models/diagnosis_report_db_model.dart';
@@ -54,6 +56,10 @@ class IsarService {
         MeasurementIndicatorDbModelSchema,
         PatientRecordDbModelSchema,
         ServiceReportDbModelSchema,
+
+        // Hoá đơn
+        InvoiceDbModelSchema,
+        ServiceInvoiceDbModelSchema,
       ],
       directory: dir.path,
       inspector: true,

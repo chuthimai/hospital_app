@@ -7,13 +7,13 @@ part 'service_invoice_api_model.g.dart';
 @JsonSerializable()
 class ServiceInvoiceApiModel {
   final int identifier;
-  final double price;
-  final ServiceApiModel service;
+  final double? price;
+  final ServiceApiModel? service;
 
   ServiceInvoiceApiModel({
     required this.identifier,
-    required this.price,
-    required this.service,
+    this.price,
+    this.service,
   });
 
   factory ServiceInvoiceApiModel.fromJson(Map<String, dynamic> json) =>
@@ -25,8 +25,8 @@ class ServiceInvoiceApiModel {
   ServiceInvoice toEntity() {
     return ServiceInvoice(
       id: identifier,
-      service: service.toEntity(),
-      price: price,
+      service: service?.toEntity(),
+      price: price ?? 0.0,
     );
   }
 
@@ -35,7 +35,9 @@ class ServiceInvoiceApiModel {
     return ServiceInvoiceApiModel(
       identifier: entity.id,
       price: entity.price,
-      service: ServiceApiModel.fromEntity(entity.service),
+      service: entity.service == null
+          ? null
+          : ServiceApiModel.fromEntity(entity.service!),
     );
   }
 }

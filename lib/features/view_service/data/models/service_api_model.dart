@@ -10,14 +10,12 @@ class ServiceApiModel {
   final String name;
   final String? detailDescription;
   final LocationApiModel? location;
-  final bool active;
 
   ServiceApiModel({
     required this.identifier,
     required this.name,
     this.detailDescription,
     this.location,
-    this.active = true,
   });
 
   // --- JSON Serializable ---
@@ -34,7 +32,6 @@ class ServiceApiModel {
       name: name,
       extraDetails: detailDescription,
       location: location?.toEntity(),
-      isCompleted: !active,
     );
   }
 
@@ -46,7 +43,6 @@ class ServiceApiModel {
       location: entity.location == null
           ? null
           : LocationApiModel.fromEntity(entity.location!),
-      active: !entity.isCompleted,
     );
   }
 }

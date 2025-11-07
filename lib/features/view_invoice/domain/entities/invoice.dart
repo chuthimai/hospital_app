@@ -2,7 +2,7 @@ import 'enum/currencies.dart';
 import 'enum/invoice_status.dart';
 import 'service_invoice.dart';
 
-class Invoice {
+class Invoice implements Comparable<Invoice> {
   final int id;
   final Currencies currency;
   final InvoiceStatus status;
@@ -24,4 +24,17 @@ class Invoice {
 
   double get totalGross =>
       _serviceInvoices.fold(0.0, (sum, serviceInvoice) => sum + serviceInvoice.price);
+
+  @override
+  int compareTo(Invoice other) {
+    if (status == InvoiceStatus.issued && other.status != InvoiceStatus.issued) {
+      return -1;
+    }
+    if (status != InvoiceStatus.issued && other.status == InvoiceStatus.issued) {
+      return 1;
+    }
+    return other.id.compareTo(id);
+  }
+
+  
 }

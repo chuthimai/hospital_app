@@ -154,7 +154,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/invoices',
       builder: (context, state) {
-        return const ViewInvoicesScreen();
+        return ViewInvoicesScreen();
       },
     ),
     GoRoute(

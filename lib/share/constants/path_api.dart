@@ -15,4 +15,8 @@ class PathApi {
   /// Đơn thuốc
   static const getAllPrescriptions = "/medicines/prescriptions";
   static const getDetailPrescription = "/medicines/prescriptions/";
+
+  /// Hoá đơn
+  static const getAllInvoices = "/billing/invoices";
+  static const getDetailInvoice = "/billing/invoices/";
 }

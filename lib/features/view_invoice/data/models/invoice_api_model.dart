@@ -7,16 +7,16 @@ part 'invoice_api_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class InvoiceApiModel {
-  final int id;
-  final String status;
+  final int identifier;
+  final bool status;
   final DateTime? createdTime;
-  final List<ServiceInvoiceApiModel> serviceInvoices;
+  final List<ServiceInvoiceApiModel> invoiceServices;
 
   InvoiceApiModel({
-    required this.id,
+    required this.identifier,
     required this.status,
     this.createdTime,
-    required this.serviceInvoices,
+    this.invoiceServices = const [],
   });
 
   factory InvoiceApiModel.fromJson(Map<String, dynamic> json) =>
@@ -27,20 +27,20 @@ class InvoiceApiModel {
   /// chuyển về domain entity
   Invoice toEntity() {
     return Invoice(
-      id: id,
-      status: InvoiceStatusParser.fromString(status),
+      id: identifier,
+      status: status ? InvoiceStatus.balanced : InvoiceStatus.issued,
       createdTime: createdTime,
-      serviceInvoices: serviceInvoices.map((e) => e.toEntity()).toList(),
+      serviceInvoices: invoiceServices.map((e) => e.toEntity()).toList(),
     );
   }
 
   /// tạo từ entity domain
   factory InvoiceApiModel.fromEntity(Invoice entity) {
     return InvoiceApiModel(
-      id: entity.id,
-      status: entity.status.name,
+      identifier: entity.id,
+      status: entity.status == InvoiceStatus.balanced ? true : false,
       createdTime: entity.createdTime,
-      serviceInvoices: entity.serviceInvoices
+      invoiceServices: entity.serviceInvoices
           .map((e) => ServiceInvoiceApiModel.fromEntity(e))
           .toList(),
     );
