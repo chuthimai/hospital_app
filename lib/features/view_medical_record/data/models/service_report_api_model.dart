@@ -17,10 +17,10 @@ part 'service_report_api_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class ServiceReportApiModel {
-  final int id;
+  final int identifier;
   final String category;
   final String method;
-  final String status;
+  final bool status;
   final DateTime? effectiveTime;
   final ServiceApiModel service;
   final PhysicianApiModel requester;
@@ -29,18 +29,19 @@ class ServiceReportApiModel {
   final DiagnosisReportApiModel? diagnosisReport;
   final ImagingReportApiModel? imagingReport;
 
-  ServiceReportApiModel(
-      {required this.id,
-      required this.category,
-      required this.method,
-      required this.status,
-      this.effectiveTime,
-      required this.service,
-      required this.requester,
-      this.performer,
-      this.assessmentResults = const [],
-      this.diagnosisReport,
-      this.imagingReport});
+  ServiceReportApiModel({
+    required this.identifier,
+    required this.category,
+    required this.method,
+    required this.status,
+    this.effectiveTime,
+    required this.service,
+    required this.requester,
+    this.performer,
+    this.assessmentResults = const [],
+    this.diagnosisReport,
+    this.imagingReport,
+  });
 
   factory ServiceReportApiModel.fromJson(Map<String, dynamic> json) =>
       _$ServiceReportApiModelFromJson(json);
@@ -51,14 +52,14 @@ class ServiceReportApiModel {
   ServiceReport toEntity() {
     if (diagnosisReport != null) {
       return DiagnosisReport(
-        id: id,
+        id: identifier,
         category: ObservationCategoryCodeExtension.fromCode(category),
         method: ObservationMethodExtension.fromCode(method),
-        status: ObservationStatusExtension.fromCode(status),
+        status: status ? ObservationStatus.final_ : ObservationStatus.registered,
         service: service.toEntity(),
         requester: requester.toEntity(),
         performer: performer?.toEntity(),
-        assessmentResults: assessmentResults.map((r) => r.toEntity()).toList(),
+        // assessmentResults: assessmentResults.map((r) => r.toEntity()).toList(),
         type: diagnosisReport!.type,
         conclusion: diagnosisReport!.conclusion,
         severity: ConditionDiagnosisSeverityExtension.fromCode(
@@ -69,14 +70,14 @@ class ServiceReportApiModel {
 
     if (imagingReport != null) {
       return ImageReport(
-        id: id,
+        id: identifier,
         category: ObservationCategoryCodeExtension.fromCode(category),
         method: ObservationMethodExtension.fromCode(method),
-        status: ObservationStatusExtension.fromCode(status),
+        status: status ? ObservationStatus.final_ : ObservationStatus.registered,
         service: service.toEntity(),
         requester: requester.toEntity(),
         performer: performer?.toEntity(),
-        assessmentResults: assessmentResults.map((r) => r.toEntity()).toList(),
+        // assessmentResults: assessmentResults.map((r) => r.toEntity()).toList(),
         focus: imagingReport!.focus,
         interpretation: imagingReport!.interpretation,
         imageStudies:
@@ -84,14 +85,14 @@ class ServiceReportApiModel {
       );
     }
     return ServiceReport(
-      id: id,
+      id: identifier,
       category: ObservationCategoryCodeExtension.fromCode(category),
       method: ObservationMethodExtension.fromCode(method),
-      status: ObservationStatusExtension.fromCode(status),
+      status: status ? ObservationStatus.final_ : ObservationStatus.registered,
       service: service.toEntity(),
       requester: requester.toEntity(),
       performer: performer?.toEntity(),
-      assessmentResults: assessmentResults.map((r) => r.toEntity()).toList(),
+      // assessmentResults: assessmentResults.map((r) => r.toEntity()).toList(),
     );
   }
 
@@ -99,19 +100,19 @@ class ServiceReportApiModel {
   factory ServiceReportApiModel.fromEntity(ServiceReport entity) {
     if (entity is DiagnosisReport) {
       return ServiceReportApiModel(
-        id: entity.id,
+        identifier: entity.id,
         category: entity.category.name,
         method: entity.method.name,
-        status: entity.status.name,
+        status: entity.status == ObservationStatus.final_,
         effectiveTime: entity.effectiveTime,
         service: ServiceApiModel.fromEntity(entity.service),
         requester: PhysicianApiModel.fromEntity(entity.requester),
         performer: entity.performer == null
             ? null
             : PhysicianApiModel.fromEntity(entity.performer!),
-        assessmentResults: entity.assessmentResults
-            .map((e) => AssessmentResultApiModel.fromEntity(e))
-            .toList(),
+        // assessmentResults: entity.assessmentResults
+        //     .map((e) => AssessmentResultApiModel.fromEntity(e))
+        //     .toList(),
         diagnosisReport: DiagnosisReportApiModel(
           type: entity.type,
           severity: entity.severity.name,
@@ -122,19 +123,19 @@ class ServiceReportApiModel {
 
     if (entity is ImageReport) {
       return ServiceReportApiModel(
-        id: entity.id,
+        identifier: entity.id,
         category: entity.category.name,
         method: entity.method.name,
-        status: entity.status.name,
+        status: entity.status == ObservationStatus.final_,
         effectiveTime: entity.effectiveTime,
         service: ServiceApiModel.fromEntity(entity.service),
         requester: PhysicianApiModel.fromEntity(entity.requester),
         performer: entity.performer == null
             ? null
             : PhysicianApiModel.fromEntity(entity.performer!),
-        assessmentResults: entity.assessmentResults
-            .map((e) => AssessmentResultApiModel.fromEntity(e))
-            .toList(),
+        // assessmentResults: entity.assessmentResults
+        //     .map((e) => AssessmentResultApiModel.fromEntity(e))
+        //     .toList(),
         imagingReport: ImagingReportApiModel(
           focus: entity.focus,
           interpretation: entity.interpretation,
@@ -146,19 +147,19 @@ class ServiceReportApiModel {
     }
 
     return ServiceReportApiModel(
-      id: entity.id,
+      identifier: entity.id,
       category: entity.category.name,
       method: entity.method.name,
-      status: entity.status.name,
+      status: entity.status == ObservationStatus.final_,
       effectiveTime: entity.effectiveTime,
       service: ServiceApiModel.fromEntity(entity.service),
       requester: PhysicianApiModel.fromEntity(entity.requester),
       performer: entity.performer == null
           ? null
           : PhysicianApiModel.fromEntity(entity.performer!),
-      assessmentResults: entity.assessmentResults
-          .map((e) => AssessmentResultApiModel.fromEntity(e))
-          .toList(),
+      // assessmentResults: entity.assessmentResults
+      //     .map((e) => AssessmentResultApiModel.fromEntity(e))
+      //     .toList(),
     );
   }
 }

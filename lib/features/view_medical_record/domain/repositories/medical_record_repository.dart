@@ -6,5 +6,4 @@ abstract class MedicalRecordRepository {
   // Chỉ lưu patientRecord đã đóng
   Future<void> savePatientRecord(PatientRecord patientRecord);  // local
   Future<void> deleteAllPatientRecords();  // local
-  Future<bool> isSavedPatientRecord(PatientRecord patientRecord);
 }

@@ -54,7 +54,7 @@ class MedicalRecordRepositoryImpl implements MedicalRecordRepository {
     try {
       final patientRecordLocal = await _localDataSource.getDetailPatientRecord(
           PatientRecordDbModel.fromEntity(patientRecord));
-      return patientRecordLocal.toEntity();
+      if (patientRecordLocal != null) return patientRecordLocal.toEntity();
     } catch (e) {
       AppLogger().error("Local error: $e");
     }
@@ -67,37 +67,28 @@ class MedicalRecordRepositoryImpl implements MedicalRecordRepository {
       return patientRecordRemote.toEntity();
     } catch (e) {
       AppLogger().error("Remote/Local error: $e");
+      rethrow;
     }
-
-    return null;
   }
 
   @override
   Future<void> savePatientRecord(PatientRecord patientRecord) async {
-    final isSaved = await isSavedPatientRecord(patientRecord);
-    if (isSaved) return;
-
+    if (patientRecord.status != RecordStatus.complete) return;
+    if (patientRecord.pathUrl == null) return;
     try {
-      if (patientRecord.status == RecordStatus.complete) {
-        if (patientRecord.pathUrl != null) {
-          final pathFilePdf = await PdfFileManager.downloadPdf(
-            patientRecord.pathUrl!,
-            "BA${patientRecord.id}",
-          );
-          // TODO: Cần trả về lỗi khi ko tải file về đc
-          patientRecord.pathFilePdf = pathFilePdf;
-          await _localDataSource.savePatientRecord(
-              PatientRecordDbModel.fromEntity(patientRecord));
-        }
-      }
+      final pathFilePdf = await PdfFileManager.downloadPdf(
+        patientRecord.pathUrl!,
+        "BA${patientRecord.id}",
+      );
+
+      patientRecord.pathFilePdf = pathFilePdf;
+      await _localDataSource
+          .savePatientRecord(PatientRecordDbModel.fromEntity(patientRecord));
     } catch (e) {
       AppLogger().error("Local error: $e");
+      if (e.toString().contains("Error downloading PDF")) {
+        throw Exception("Tải file thất bại");
+      }
     }
-  }
-
-  @override
-  Future<bool> isSavedPatientRecord(PatientRecord patientRecord) async {
-    return await _localDataSource
-        .isSavedPatientRecord(PatientRecordDbModel.fromEntity(patientRecord));
   }
 }

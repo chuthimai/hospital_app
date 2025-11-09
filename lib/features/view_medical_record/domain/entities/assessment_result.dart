@@ -1,13 +1,13 @@
-import 'assessment_item.dart';
-
 class AssessmentResult {
   final int id;
-  final String value;
-  final AssessmentItem assessmentItem;
+  final String name;
+  final String? value;
+  final List<AssessmentResult> assessmentResults;
 
   AssessmentResult({
     required this.id,
-    required this.value,
-    required this.assessmentItem,
+    required this.name,
+    this.value,
+    this.assessmentResults = const [],
   });
 }

@@ -21,17 +21,17 @@ class AssessmentResultApiModel {
 
   Map<String, dynamic> toJson() => _$AssessmentResultApiModelToJson(this);
 
-  AssessmentResult toEntity() => AssessmentResult(
-    id: id,
-    value: value,
-    assessmentItem: assessmentItem.toEntity(),
-  );
-
-  factory AssessmentResultApiModel.fromEntity(AssessmentResult entity) {
-    return AssessmentResultApiModel(
-      id: entity.id,
-      value: entity.value,
-      assessmentItem: AssessmentItemApiModel.fromEntity(entity.assessmentItem),
-    );
-  }
+  // AssessmentResult toEntity() => AssessmentResult(
+  //   id: id,
+  //   value: value,
+  //   assessmentItem: assessmentItem.toEntity(),
+  // );
+  //
+  // factory AssessmentResultApiModel.fromEntity(AssessmentResult entity) {
+  //   return AssessmentResultApiModel(
+  //     id: entity.id,
+  //     value: entity.value,
+  //     assessmentItem: AssessmentItemApiModel.fromEntity(entity.assessmentItem),
+  //   );
+  // }
 }

@@ -29,7 +29,7 @@ class AssessmentResultsView extends StatelessWidget {
     List<AssessmentResult> resultTable = [];
     List<AssessmentResult> assessmentResults = [];
     for (AssessmentResult result in results) {
-      if (result.assessmentItem is MeasurementIndicator) {
+      if (result is MeasurementIndicator) {
         resultTable.add(result);
         continue;
       }

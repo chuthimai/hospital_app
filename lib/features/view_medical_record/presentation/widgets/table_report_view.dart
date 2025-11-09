@@ -31,7 +31,7 @@ class TableReportView extends StatelessWidget {
         rows: [
           ...List.generate(results.length, (index) {
             final r = results[index];
-            final item = r.assessmentItem as MeasurementIndicator;
+            final item = r as MeasurementIndicator;
 
             final min = item.minimum?.toStringAsFixed(1) ?? "-";
             final max = item.maximum?.toStringAsFixed(1) ?? "-";
@@ -46,7 +46,7 @@ class TableReportView extends StatelessWidget {
                 ),
                 cells: [
                   DataCell(Text(item.name)),
-                  DataCell(Text(r.value)),
+                  DataCell(Text(r.value ?? "Không có dữ liệu")),
                   DataCell(Text("$min - $max")),
                   DataCell(Text(item.unit)),
                 ]);

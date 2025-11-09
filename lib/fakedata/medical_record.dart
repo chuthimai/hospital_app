@@ -1,7 +1,6 @@
 import 'package:hospital_app/fakedata/physician.dart';
 import 'package:hospital_app/fakedata/prescription.dart';
 import 'package:hospital_app/fakedata/service.dart';
-import 'package:hospital_app/features/view_medical_record/domain/entities/assessment_item.dart';
 import 'package:hospital_app/features/view_medical_record/domain/entities/assessment_result.dart';
 import 'package:hospital_app/features/view_medical_record/domain/entities/diagnosis_report.dart';
 import 'package:hospital_app/features/view_medical_record/domain/entities/enum/condition_diagnosis_severity.dart';
@@ -20,7 +19,7 @@ List<PatientRecord> fakePatientRecords = [
   PatientRecord(
     id: 46,
     status: RecordStatus.complete,
-    createTime: DateTime(2025, 9, 15, 10, 0),
+    createdTime: DateTime(2025, 9, 15, 10, 0),
     prescription: fakePrescriptions[0],
     // đơn thuốc của BS A
     serviceReports: [
@@ -40,29 +39,23 @@ List<PatientRecord> fakePatientRecords = [
         effectiveTime: DateTime(2025, 9, 15, 10, 30),
         recordedTime: DateTime(2025, 9, 15, 10, 30),
         assessmentResults: [
-          AssessmentResult(
-            id: 201,
+          MeasurementIndicator(
+            id: 301,
+            name: "Nhiệt độ",
             value: "37.8",
-            assessmentItem: MeasurementIndicator(
-              id: 301,
-              name: "Nhiệt độ",
-              type: "temperature",
-              unit: "°C",
-              minimum: 36.5,
-              maximum: 37.5,
-            ),
+            type: "temperature",
+            unit: "°C",
+            minimum: 36.5,
+            maximum: 37.5,
           ),
-          AssessmentResult(
-            id: 202,
-            value: "120/80",
-            assessmentItem: MeasurementIndicator(
-              id: 302,
-              name: "Huyết áp",
-              type: "blood-pressure",
-              unit: "mmHg",
-              maximum: 300,
-              minimum: 200,
-            ),
+          MeasurementIndicator(
+            id: 302,
+            name: "Huyết áp",
+            value: "37.8",
+            type: "blood-pressure",
+            unit: "mmHg",
+            maximum: 300,
+            minimum: 200,
           ),
         ],
       ),
@@ -92,7 +85,7 @@ List<PatientRecord> fakePatientRecords = [
   PatientRecord(
     id: 47,
     status: RecordStatus.incomplete,
-    createTime: DateTime(2025, 9, 17, 9, 45),
+    createdTime: DateTime(2025, 9, 17, 9, 45),
     prescription: fakePrescriptions[2],
     // đơn thuốc của BS C
     serviceReports: [
@@ -114,26 +107,91 @@ List<PatientRecord> fakePatientRecords = [
         assessmentResults: [
           AssessmentResult(
             id: 301,
+            name: "1. Tình trạng hiện tại",
             value: "Da nổi mẩn ngứa",
-            assessmentItem: AssessmentItem(
-              id: 301,
-              name: "1. Tình trạng hiện tại",
+          ),
+          AssessmentResult(id: 302, name: "2. Chuẩn đoán", assessmentResults: [
+            AssessmentResult(
+              id: 303,
+              name: "2.1. Nguyên nhân",
+              value: "Nguy cơ bị kiến đa khoa cắn"
             ),
+            AssessmentResult(
+                id: 304,
+                name: "2.2. Nguyên nhân",
+                value: "Nguy cơ bị kiến đa khoa cắn 2"
+            ),
+            AssessmentResult(
+                id: 305,
+                name: "2.3. Tình trạng hiện tại ",
+                assessmentResults: [
+                  MeasurementIndicator(
+                    id: 301,
+                    name: "Nhiệt độ",
+                    value: "37.8",
+                    type: "temperature",
+                    unit: "°C",
+                    minimum: 36.5,
+                    maximum: 37.5,
+                  ),
+                  MeasurementIndicator(
+                    id: 302,
+                    name: "Huyết áp",
+                    value: "37.8",
+                    type: "blood-pressure",
+                    unit: "mmHg",
+                    maximum: 300,
+                    minimum: 200,
+                  ),
+                ]
+            ),
+          ],),
+          AssessmentResult(
+            id: 309,
+            name: "3. Tình trạng hiện tại",
+            value: "Da nổi mẩn ngứa",
           ),
           AssessmentResult(
-            id: 302,
-            value: "Nguy cơ bị kiến đa khoa cắn",
-            assessmentItem: AssessmentItem(
-              id: 302,
-              name: "2. Chuẩn đoán",
-              children: [
-                AssessmentItem(
-                  id: 303,
-                  name: "2.1. Nguyên nhân",
-                ),
-              ],
-            ),
+            id: 301,
+            name: "1. Tình trạng hiện tại",
+            value: "Da nổi mẩn ngứa",
           ),
+          AssessmentResult(id: 302, name: "2. Chuẩn đoán", assessmentResults: [
+            AssessmentResult(
+                id: 303,
+                name: "2.1. Nguyên nhân",
+                value: "Nguy cơ bị kiến đa khoa cắn"
+            ),
+            AssessmentResult(
+                id: 304,
+                name: "2.2. Nguyên nhân",
+                value: "Nguy cơ bị kiến đa khoa cắn 2"
+            ),
+            AssessmentResult(
+                id: 305,
+                name: "2.3. Tình trạng hiện tại ",
+                assessmentResults: [
+                  MeasurementIndicator(
+                    id: 301,
+                    name: "Nhiệt độ",
+                    value: "37.8",
+                    type: "temperature",
+                    unit: "°C",
+                    minimum: 36.5,
+                    maximum: 37.5,
+                  ),
+                  MeasurementIndicator(
+                    id: 302,
+                    name: "Huyết áp",
+                    value: "37.8",
+                    type: "blood-pressure",
+                    unit: "mmHg",
+                    maximum: 300,
+                    minimum: 200,
+                  ),
+                ]
+            ),
+          ],),
         ],
       ),
       ServiceReport(
@@ -150,7 +208,7 @@ List<PatientRecord> fakePatientRecords = [
   PatientRecord(
     id: 48,
     status: RecordStatus.incomplete,
-    createTime: DateTime(2025, 9, 17, 9, 45),
+    createdTime: DateTime(2025, 9, 17, 9, 45),
     prescription: fakePrescriptions[2],
     // đơn thuốc của BS C
     serviceReports: [
@@ -172,26 +230,21 @@ List<PatientRecord> fakePatientRecords = [
         assessmentResults: [
           AssessmentResult(
             id: 301,
+            name: "1. Tình trạng hiện tại",
             value: "Da nổi mẩn ngứa",
-            assessmentItem: AssessmentItem(
-              id: 301,
-              name: "1. Tình trạng hiện tại",
-            ),
           ),
-          AssessmentResult(
-            id: 302,
-            value: "Nguy cơ bị kiến đa khoa cắn",
-            assessmentItem: AssessmentItem(
-              id: 302,
-              name: "2. Chuẩn đoán",
-              children: [
-                AssessmentItem(
-                  id: 303,
-                  name: "2.1. Nguyên nhân",
-                ),
-              ],
+          AssessmentResult(id: 302, name: "2. Chuẩn đoán", assessmentResults: [
+            AssessmentResult(
+                id: 303,
+                name: "2.1. Nguyên nhân",
+                value: "Nguy cơ bị kiến đa khoa cắn"
             ),
-          ),
+            AssessmentResult(
+                id: 304,
+                name: "2.2. Nguyên nhân",
+                value: "Nguy cơ bị kiến đa khoa cắn 2"
+            ),
+          ])
         ],
       ),
       ServiceReport(
@@ -208,7 +261,7 @@ List<PatientRecord> fakePatientRecords = [
   PatientRecord(
     id: 49,
     status: RecordStatus.incomplete,
-    createTime: DateTime(2025, 9, 17, 9, 45),
+    createdTime: DateTime(2025, 9, 17, 9, 45),
     prescription: fakePrescriptions[2],
     // đơn thuốc của BS C
     serviceReports: [
@@ -230,26 +283,21 @@ List<PatientRecord> fakePatientRecords = [
         assessmentResults: [
           AssessmentResult(
             id: 301,
+            name: "1. Tình trạng hiện tại",
             value: "Da nổi mẩn ngứa",
-            assessmentItem: AssessmentItem(
-              id: 301,
-              name: "1. Tình trạng hiện tại",
-            ),
           ),
-          AssessmentResult(
-            id: 302,
-            value: "Nguy cơ bị kiến đa khoa cắn",
-            assessmentItem: AssessmentItem(
-              id: 302,
-              name: "2. Chuẩn đoán",
-              children: [
-                AssessmentItem(
-                  id: 303,
-                  name: "2.1. Nguyên nhân",
-                ),
-              ],
+          AssessmentResult(id: 302, name: "2. Chuẩn đoán", assessmentResults: [
+            AssessmentResult(
+                id: 303,
+                name: "2.1. Nguyên nhân",
+                value: "Nguy cơ bị kiến đa khoa cắn"
             ),
-          ),
+            AssessmentResult(
+                id: 304,
+                name: "2.2. Nguyên nhân",
+                value: "Nguy cơ bị kiến đa khoa cắn 2"
+            ),
+          ])
         ],
       ),
       ServiceReport(
@@ -265,8 +313,8 @@ List<PatientRecord> fakePatientRecords = [
   ),
   PatientRecord(
       id: 50,
-      createTime: DateTime.now(),
-      pathUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-      pathFilePdf: "/data/user/0/com.example.hospital_app/app_flutter/test.pdf"
-  )
+      createdTime: DateTime.now(),
+      pathUrl:
+          "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+      pathFilePdf: "/data/user/0/com.example.hospital_app/app_flutter/test.pdf")
 ];

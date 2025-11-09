@@ -6,7 +6,7 @@ import 'service_report.dart';
 class PatientRecord {
   final int id;
   final RecordStatus status;
-  final DateTime createTime;
+  final DateTime createdTime;
   final List<ServiceReport> serviceReports;
   final Prescription? prescription;
   final String? pathUrl;
@@ -15,7 +15,7 @@ class PatientRecord {
   PatientRecord({
     required this.id,
     this.status = RecordStatus.incomplete,
-    required this.createTime,
+    required this.createdTime,
     this.serviceReports = const [],
     this.prescription,
     this.pathUrl,

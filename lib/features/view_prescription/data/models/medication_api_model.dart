@@ -9,11 +9,13 @@ class MedicationApiModel {
   final int identifier;
   final String name;
   final String doseForm;
+  final String code;
 
   MedicationApiModel({
     required this.identifier,
     required this.name,
     required this.doseForm,
+    required this.code,
   });
 
   factory MedicationApiModel.fromJson(Map<String, dynamic> json) =>
@@ -26,11 +28,12 @@ class MedicationApiModel {
         identifier: medication.id,
         name: medication.name,
         doseForm: medication.doseForm.name,
+        code: medication.doseForm.code,
       );
 
   Medication toEntity() => Medication(
     id: identifier,
     name: name,
-    doseForm: SNOMEDCTFormCodesExt.fromCode(doseForm),
+    doseForm: SNOMEDCTFormCodesExt.fromCode(code),
   );
 }

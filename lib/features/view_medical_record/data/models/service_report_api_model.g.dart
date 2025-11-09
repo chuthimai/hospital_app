@@ -9,10 +9,10 @@ part of 'service_report_api_model.dart';
 ServiceReportApiModel _$ServiceReportApiModelFromJson(
         Map<String, dynamic> json) =>
     ServiceReportApiModel(
-      id: (json['id'] as num).toInt(),
+      identifier: (json['identifier'] as num).toInt(),
       category: json['category'] as String,
       method: json['method'] as String,
-      status: json['status'] as String,
+      status: json['status'] as bool,
       effectiveTime: json['effectiveTime'] == null
           ? null
           : DateTime.parse(json['effectiveTime'] as String),
@@ -42,7 +42,7 @@ ServiceReportApiModel _$ServiceReportApiModelFromJson(
 Map<String, dynamic> _$ServiceReportApiModelToJson(
         ServiceReportApiModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'identifier': instance.identifier,
       'category': instance.category,
       'method': instance.method,
       'status': instance.status,
