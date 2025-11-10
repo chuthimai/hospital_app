@@ -14,6 +14,11 @@ ServiceApiModel _$ServiceApiModelFromJson(Map<String, dynamic> json) =>
       location: json['location'] == null
           ? null
           : LocationApiModel.fromJson(json['location'] as Map<String, dynamic>),
+      assessmentItems: (json['assessmentItems'] as List<dynamic>?)
+              ?.map((e) =>
+                  AssessmentItemApiModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$ServiceApiModelToJson(ServiceApiModel instance) =>
@@ -22,4 +27,6 @@ Map<String, dynamic> _$ServiceApiModelToJson(ServiceApiModel instance) =>
       'name': instance.name,
       'detailDescription': instance.detailDescription,
       'location': instance.location?.toJson(),
+      'assessmentItems':
+          instance.assessmentItems.map((e) => e.toJson()).toList(),
     };

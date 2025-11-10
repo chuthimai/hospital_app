@@ -14,7 +14,6 @@ class DiagnosisReport extends ServiceReport {
     required super.method,
     required super.status,
     required super.service,
-    required super.requester,
     super.assessmentResults,
     super.effectiveTime,
     super.performer,

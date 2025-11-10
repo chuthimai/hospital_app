@@ -13,7 +13,6 @@ class ImageReport extends ServiceReport {
     required super.method,
     required super.status,
     required super.service,
-    required super.requester,
     super.performer,
     super.assessmentResults,
     super.effectiveTime,

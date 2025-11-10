@@ -13,7 +13,6 @@ class ServiceReport {
   final ObservationStatus status;
   final DateTime? effectiveTime;
   final Service service;
-  final Physician requester;
   final Physician? performer;
   final List<AssessmentResult> assessmentResults;
 
@@ -24,7 +23,6 @@ class ServiceReport {
     this.status = ObservationStatus.final_,
     this.effectiveTime,
     required this.service,
-    required this.requester,
     this.performer,
     this.assessmentResults = const [],
   });

@@ -45,9 +45,6 @@ class PatientRecordApiModel {
         identifier: entity.id,
         status: entity.status == RecordStatus.complete,
         createdTime: entity.createdTime,
-        serviceReports: entity.serviceReports
-            .map((e) => ServiceReportApiModel.fromEntity(e))
-            .toList(),
         prescription: entity.prescription != null
             ? PrescriptionApiModel.fromEntity(entity.prescription!)
             : null,

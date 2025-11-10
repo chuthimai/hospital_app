@@ -9,16 +9,16 @@ part of 'assessment_result_api_model.dart';
 AssessmentResultApiModel _$AssessmentResultApiModelFromJson(
         Map<String, dynamic> json) =>
     AssessmentResultApiModel(
-      id: (json['id'] as num).toInt(),
+      identifier: (json['identifier'] as num).toInt(),
       value: json['value'] as String,
-      assessmentItem: AssessmentItemApiModel.fromJson(
-          json['assessmentItem'] as Map<String, dynamic>),
+      assessmentItemIdentifier:
+          (json['assessmentItemIdentifier'] as num).toInt(),
     );
 
 Map<String, dynamic> _$AssessmentResultApiModelToJson(
         AssessmentResultApiModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'identifier': instance.identifier,
       'value': instance.value,
-      'assessmentItem': instance.assessmentItem.toJson(),
+      'assessmentItemIdentifier': instance.assessmentItemIdentifier,
     };

@@ -30,8 +30,6 @@ List<PatientRecord> fakePatientRecords = [
         status: ObservationStatus.final_,
         service: fakeServices[0],
         // Khám nội tổng quát
-        requester: fakePhysicians[0],
-        // BS. Nguyễn Văn A
         performer: fakePhysicians[0],
         type: "Khám tổng quát",
         severity: ConditionDiagnosisSeverity.mild,
@@ -66,7 +64,6 @@ List<PatientRecord> fakePatientRecords = [
         status: ObservationStatus.final_,
         service: fakeServices[7],
         // Chụp X-quang phổi
-        requester: fakePhysicians[0],
         performer: fakePhysicians[2],
         focus: "Phổi",
         interpretation: "Không thấy bất thường",
@@ -96,8 +93,6 @@ List<PatientRecord> fakePatientRecords = [
         status: ObservationStatus.final_,
         service: fakeServices[2],
         // Khám da liễu
-        requester: fakePhysicians[1],
-        // BS. Trần Thị B
         performer: fakePhysicians[1],
         type: "Khám da liễu",
         severity: ConditionDiagnosisSeverity.moderate,
@@ -200,8 +195,6 @@ List<PatientRecord> fakePatientRecords = [
         method: ObservationMethod.unknown,
         status: ObservationStatus.registered,
         service: fakeServices[4],
-        // Xét nghiệm máu tổng quát
-        requester: fakePhysicians[1],
       ),
     ],
   ),
@@ -219,8 +212,6 @@ List<PatientRecord> fakePatientRecords = [
         status: ObservationStatus.final_,
         service: fakeServices[2],
         // Khám da liễu
-        requester: fakePhysicians[1],
-        // BS. Trần Thị B
         performer: fakePhysicians[1],
         type: "Khám da liễu",
         severity: ConditionDiagnosisSeverity.moderate,
@@ -253,8 +244,6 @@ List<PatientRecord> fakePatientRecords = [
         method: ObservationMethod.unknown,
         status: ObservationStatus.registered,
         service: fakeServices[4],
-        // Xét nghiệm máu tổng quát
-        requester: fakePhysicians[1],
       ),
     ],
   ),
@@ -272,8 +261,6 @@ List<PatientRecord> fakePatientRecords = [
         status: ObservationStatus.final_,
         service: fakeServices[2],
         // Khám da liễu
-        requester: fakePhysicians[1],
-        // BS. Trần Thị B
         performer: fakePhysicians[1],
         type: "Khám da liễu",
         severity: ConditionDiagnosisSeverity.moderate,
@@ -306,8 +293,6 @@ List<PatientRecord> fakePatientRecords = [
         method: ObservationMethod.unknown,
         status: ObservationStatus.registered,
         service: fakeServices[4],
-        // Xét nghiệm máu tổng quát
-        requester: fakePhysicians[1],
       ),
     ],
   ),

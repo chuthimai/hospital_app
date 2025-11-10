@@ -1,3 +1,4 @@
+import 'package:hospital_app/features/view_medical_record/data/models/assessment_item_api_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 import '../../domain/entities/service.dart';
 import 'location_api_model.dart';
@@ -10,12 +11,14 @@ class ServiceApiModel {
   final String name;
   final String? detailDescription;
   final LocationApiModel? location;
+  final List<AssessmentItemApiModel> assessmentItems;
 
   ServiceApiModel({
     required this.identifier,
     required this.name,
     this.detailDescription,
     this.location,
+    this.assessmentItems = const [],
   });
 
   // --- JSON Serializable ---

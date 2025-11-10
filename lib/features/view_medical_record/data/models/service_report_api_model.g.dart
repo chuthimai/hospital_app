@@ -18,8 +18,6 @@ ServiceReportApiModel _$ServiceReportApiModelFromJson(
           : DateTime.parse(json['effectiveTime'] as String),
       service:
           ServiceApiModel.fromJson(json['service'] as Map<String, dynamic>),
-      requester:
-          PhysicianApiModel.fromJson(json['requester'] as Map<String, dynamic>),
       performer: json['performer'] == null
           ? null
           : PhysicianApiModel.fromJson(
@@ -48,7 +46,6 @@ Map<String, dynamic> _$ServiceReportApiModelToJson(
       'status': instance.status,
       'effectiveTime': instance.effectiveTime?.toIso8601String(),
       'service': instance.service.toJson(),
-      'requester': instance.requester.toJson(),
       'performer': instance.performer?.toJson(),
       'assessmentResults':
           instance.assessmentResults.map((e) => e.toJson()).toList(),

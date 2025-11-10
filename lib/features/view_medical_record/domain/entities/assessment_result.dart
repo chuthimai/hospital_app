@@ -1,13 +1,17 @@
 class AssessmentResult {
   final int id;
   final String name;
-  final String? value;
+  String? value;
   final List<AssessmentResult> assessmentResults;
 
   AssessmentResult({
     required this.id,
     required this.name,
     this.value,
-    this.assessmentResults = const [],
-  });
+    List<AssessmentResult>? assessmentResults,
+  }) : assessmentResults = assessmentResults ?? [];
+
+  void addChildAssessmentResult(AssessmentResult assessmentResult) {
+    assessmentResults.add(assessmentResult);
+  }
 }

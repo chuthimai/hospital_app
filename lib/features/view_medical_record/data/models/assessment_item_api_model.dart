@@ -1,21 +1,23 @@
-import 'package:hospital_app/features/view_medical_record/domain/entities/measurement_indicator.dart';
+import 'package:hospital_app/features/view_medical_record/domain/entities/assessment_result.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../domain/entities/measurement_indicator.dart';
 import 'measurement_indicator_api_model.dart';
 
 part 'assessment_item_api_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class AssessmentItemApiModel {
-  final int id;
+  final int identifier;
   final String name;
-  final List<AssessmentItemApiModel>? children;
-  final MeasurementIndicatorApiModel? measurementIndicator;
+  final int? parentIdentifier;
+  final MeasurementIndicatorApiModel? measurementItem;
 
   AssessmentItemApiModel({
-    required this.id,
+    required this.identifier,
     required this.name,
-    this.children,
-    this.measurementIndicator,
+    this.parentIdentifier,
+    this.measurementItem,
   });
 
   factory AssessmentItemApiModel.fromJson(Map<String, dynamic> json) =>
@@ -23,46 +25,21 @@ class AssessmentItemApiModel {
 
   Map<String, dynamic> toJson() => _$AssessmentItemApiModelToJson(this);
 
-  // AssessmentItem toEntity() {
-  //   if (measurementIndicator != null) {
-  //     return MeasurementIndicator(
-  //       id: id,
-  //       name: name,
-  //       type: measurementIndicator!.type,
-  //       unit: measurementIndicator!.unit,
-  //       minimum: measurementIndicator!.minimum,
-  //       maximum: measurementIndicator!.maximum,
-  //     );
-  //   }
-  //
-  //   return AssessmentItem(
-  //     id: id,
-  //     name: name,
-  //     children: children?.map((e) => e.toEntity()).toList(),
-  //   );
-  // }
-  //
-  // factory AssessmentItemApiModel.fromEntity(AssessmentItem entity) {
-  //   if (entity is MeasurementIndicator) {
-  //     return AssessmentItemApiModel(
-  //       id: entity.id,
-  //       name: entity.name,
-  //       children: entity.children?.map((e) =>
-  //           AssessmentItemApiModel.fromEntity(e)).toList(),
-  //       measurementIndicator: MeasurementIndicatorApiModel(
-  //         type: entity.type,
-  //         unit: entity.unit,
-  //         maximum: entity.maximum,
-  //         minimum: entity.minimum,
-  //       ),
-  //     );
-  //   }
-  //
-  //   return AssessmentItemApiModel(
-  //     id: entity.id,
-  //     name: entity.name,
-  //     children: entity.children?.map((e) =>
-  //         AssessmentItemApiModel.fromEntity(e)).toList(),
-  //   );
-  // }
+  AssessmentResult toEntity() {
+    if (measurementItem != null) {
+      return MeasurementIndicator(
+        id: identifier,
+        name: name,
+        type: measurementItem!.type,
+        unit: measurementItem!.unit,
+        minimum: measurementItem!.minimum,
+        maximum: measurementItem!.maximum,
+      );
+    }
+
+    return AssessmentResult(
+      id: identifier,
+      name: name,
+    );
+  }
 }
