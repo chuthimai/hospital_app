@@ -15,6 +15,7 @@ class ImageReport extends ServiceReport {
     required super.service,
     super.performer,
     super.assessmentResults,
+    super.recordedTime,
     super.effectiveTime,
     required this.focus,
     this.imageStudies = const [],

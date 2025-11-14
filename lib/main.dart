@@ -24,6 +24,7 @@ import 'package:hospital_app/features/setting/domain/repositories/theme_reposito
 import 'package:hospital_app/features/setting/presentation/cubit/notification_setting_cubit.dart';
 import 'package:hospital_app/features/setting/presentation/cubit/theme_cubit.dart';
 import 'package:hospital_app/features/view_invoice/data/datasource/invoice_local_data_source.dart';
+import 'package:hospital_app/features/view_medical_record/data/datasource/medical_record_local_data_source.dart';
 import 'package:hospital_app/features/view_prescription/data/datasources/prescription_local_data_source.dart';
 import 'package:hospital_app/features/view_service/data/datasource/service_local_data_source.dart';
 import 'package:hospital_app/share/dio/remote_service.dart';
@@ -71,6 +72,7 @@ class InitializerApp extends StatelessWidget {
       serviceLocalDataSource: ServiceLocalDataSourceImpl(),
       appointmentLocalDataSource: AppointmentLocalDataSourceImpl(),
       invoiceLocalDataSource: InvoiceLocalDataSourceImpl(),
+      medicalRecordLocalDataSource:  MedicalRecordLocalDataSourceImpl(),
     );
     final AuthCubit authCubit = AuthCubit(authRepository);
 

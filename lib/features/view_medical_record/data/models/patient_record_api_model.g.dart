@@ -21,7 +21,7 @@ PatientRecordApiModel _$PatientRecordApiModelFromJson(
           ? null
           : PrescriptionApiModel.fromJson(
               json['prescription'] as Map<String, dynamic>),
-      pathUrl: json['pathUrl'] as String?,
+      exportFileName: json['exportFileName'] as String?,
     );
 
 Map<String, dynamic> _$PatientRecordApiModelToJson(
@@ -32,5 +32,5 @@ Map<String, dynamic> _$PatientRecordApiModelToJson(
       'createdTime': instance.createdTime.toIso8601String(),
       'serviceReports': instance.serviceReports.map((e) => e.toJson()).toList(),
       'prescription': instance.prescription?.toJson(),
-      'pathUrl': instance.pathUrl,
+      'exportFileName': instance.exportFileName,
     };

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hospital_app/features/view_service/presentation/view/service_list_screen.dart';
 
 import '../../data/datasource/service_local_data_source.dart';
 import '../../data/datasource/service_remote_data_source.dart';
@@ -21,6 +22,15 @@ class ViewServicesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dịch vụ cần làm'),
+        actions: [
+          IconButton(
+            onPressed: () => {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (ctx) => ServiceListScreen()))
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       body: SafeArea(
         child: MultiBlocProvider(

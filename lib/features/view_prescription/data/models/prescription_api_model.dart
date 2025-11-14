@@ -26,25 +26,26 @@ class PrescriptionApiModel {
 
   Map<String, dynamic> toJson() => _$PrescriptionApiModelToJson(this);
 
-  factory PrescriptionApiModel.fromEntity(Prescription entity) =>
-      PrescriptionApiModel(
-        identifier: entity.id,
-        createdTime: entity.createdTime,
-        prescribedMedications: entity.prescribedMedications
-            .map((pm) => PrescribedMedicationApiModel.fromEntity(pm))
-            .toList(),
-        physician: entity.performer != null
-            ? PhysicianApiModel.fromEntity(entity.performer!)
-            : null,
-        advice: entity.note,
-      );
+  factory PrescriptionApiModel.fromEntity(Prescription entity) {
+    return PrescriptionApiModel(
+      identifier: entity.id,
+      createdTime: entity.createdTime,
+      prescribedMedications: entity.prescribedMedications
+          .map((pm) => PrescribedMedicationApiModel.fromEntity(pm))
+          .toList(),
+      physician: entity.performer != null
+          ? PhysicianApiModel.fromEntity(entity.performer!)
+          : null,
+      advice: entity.note,
+    );
+  }
 
   Prescription toEntity() => Prescription(
-    id: identifier,
-    createdTime: createdTime,
-    prescribedMedications:
-    prescribedMedications.map((pm) => pm.toEntity()).toList(),
-    performer: physician?.toEntity(),
-    note: advice,
-  );
+        id: identifier,
+        createdTime: createdTime,
+        prescribedMedications:
+            prescribedMedications.map((pm) => pm.toEntity()).toList(),
+        performer: physician?.toEntity(),
+        note: advice,
+      );
 }

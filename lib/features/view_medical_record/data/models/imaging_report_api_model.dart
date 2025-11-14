@@ -10,14 +10,14 @@ part 'imaging_report_api_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class ImagingReportApiModel {
-  final String focus;
-  final List<ImageStudyApiModel> imageStudies;
-  final String interpretation;
+  final String? focus;
+  final List<ImageStudyApiModel> images;
+  final String? interpretation;
 
   ImagingReportApiModel({
-    required this.focus,
-    this.imageStudies = const [],
-    required this.interpretation,
+    this.focus,
+    this.images = const [],
+    this.interpretation,
   });
 
   factory ImagingReportApiModel.fromJson(Map<String, dynamic> json) =>

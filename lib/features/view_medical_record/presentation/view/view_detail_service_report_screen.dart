@@ -4,6 +4,7 @@ import 'package:hospital_app/features/view_medical_record/domain/entities/diagno
 import 'package:hospital_app/features/view_medical_record/domain/entities/enum/condition_diagnosis_severity.dart';
 import 'package:hospital_app/features/view_medical_record/domain/entities/enum/observation_method.dart';
 import 'package:hospital_app/features/view_medical_record/domain/entities/image_report.dart';
+import 'package:hospital_app/features/view_medical_record/domain/entities/laboratory_report.dart';
 import 'package:hospital_app/features/view_medical_record/presentation/widgets/assessment_results_view.dart';
 import 'package:hospital_app/features/view_medical_record/presentation/widgets/images_view.dart';
 
@@ -73,64 +74,135 @@ class ViewDetailServiceReportScreen extends StatelessWidget {
                               ),
                             )),
                             Expanded(
-                              child: Text(imageReport.focus),
+                              child: Text(imageReport.focus ?? "Chưa có thông tin"),
                             )
                           ],
                         ),
-                        const Text(
-                          "Diễn giải kết quả",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.sp),
+                          child: Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.all(4.sp),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Diễn giải kết quả",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  imageReport.interpretation,
+                                  textAlign: TextAlign.start,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Text(imageReport.interpretation),
+                        )
                       ],
                     );
                   }
 
-                  if (serviceReport is DiagnosisReport) {
-                    final diagnosisReport = serviceReport as DiagnosisReport;
-                    return Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Expanded(
-                              child: Text(
-                                "Phương pháp sử dụng: ",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child:
-                                  Text(diagnosisReport.method.toVietnamese()),
-                            )
-                          ],
+                  if (serviceReport is LaboratoryReport) {
+                    final laboratoryReport = serviceReport as LaboratoryReport;
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.sp),
+                      child: Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(4.sp),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(6),
                         ),
-                        Row(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Expanded(
-                                child: Text(
-                              "Mức độ nghiêm trọng: ",
+                            const Text(
+                              "Diễn giải kết quả",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
-                            )),
-                            Expanded(
-                              child:
-                                  Text(diagnosisReport.severity.toVietnamese()),
-                            )
+                            ),
+                            Text(
+                              laboratoryReport.interpretation,
+                              textAlign: TextAlign.start,
+                            ),
                           ],
                         ),
-                        const Text(
-                          "Kết luận",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                      ),
+                    );
+
+                  }
+
+                  if (serviceReport is DiagnosisReport) {
+                    final diagnosisReport = serviceReport as DiagnosisReport;
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.sp),
+                      child: Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(4.sp),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 1,
                           ),
+                          borderRadius: BorderRadius.circular(6),
                         ),
-                        Text(diagnosisReport.conclusion),
-                      ],
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Expanded(
+                                  child: Text(
+                                    "Phương pháp sử dụng: ",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child:
+                                  Text(diagnosisReport.method.toVietnamese()),
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Expanded(
+                                    child: Text(
+                                      "Mức độ nghiêm trọng: ",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )),
+                                Expanded(
+                                  child:
+                                  Text(diagnosisReport.severity.toVietnamese()),
+                                )
+                              ],
+                            ),
+                            const Text(
+                              "Kết luận",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(diagnosisReport.conclusion),
+                          ],
+                        ),
+                      ),
                     );
                   }
                   return const SizedBox();

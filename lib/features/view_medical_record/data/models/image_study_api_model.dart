@@ -5,12 +5,12 @@ part 'image_study_api_model.g.dart';
 
 @JsonSerializable()
 class ImageStudyApiModel {
-  final int id;
+  final int identifier;
   final String endpoint;
   final DateTime? receivedTime;
 
   ImageStudyApiModel({
-    required this.id,
+    required this.identifier,
     required this.endpoint,
     this.receivedTime,
   });
@@ -22,7 +22,7 @@ class ImageStudyApiModel {
 
   /// Convert API model → Domain entity
   ImageStudy toEntity() => ImageStudy(
-    id: id,
+    id: identifier,
     endpoint: endpoint,
     receivedTime: receivedTime,
   );
@@ -30,7 +30,7 @@ class ImageStudyApiModel {
   /// Convert Domain entity → API model
   factory ImageStudyApiModel.fromEntity(ImageStudy entity) =>
       ImageStudyApiModel(
-        id: entity.id,
+        identifier: entity.id,
         endpoint: entity.endpoint,
         receivedTime: entity.receivedTime,
       );

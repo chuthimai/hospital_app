@@ -13,7 +13,7 @@ class PatientRecordApiModel {
   final DateTime createdTime;
   final List<ServiceReportApiModel> serviceReports;
   final PrescriptionApiModel? prescription;
-  final String? pathUrl;
+  final String? exportFileName;
 
   PatientRecordApiModel({
     required this.identifier,
@@ -21,7 +21,7 @@ class PatientRecordApiModel {
     required this.createdTime,
     this.serviceReports = const [],
     this.prescription,
-    this.pathUrl,
+    this.exportFileName,
   });
 
   factory PatientRecordApiModel.fromJson(Map<String, dynamic> json) =>
@@ -31,23 +31,24 @@ class PatientRecordApiModel {
 
   /// API → Domain
   PatientRecord toEntity() => PatientRecord(
-    id: identifier,
-    status: status ? RecordStatus.complete : RecordStatus.incomplete,
-    createdTime: createdTime,
-    serviceReports: serviceReports.map((r) => r.toEntity()).toList(),
-    prescription: prescription?.toEntity(),
-    pathUrl: pathUrl,
-  );
+        id: identifier,
+        status: status ? RecordStatus.complete : RecordStatus.incomplete,
+        createdTime: createdTime,
+        serviceReports: serviceReports.map((r) => r.toEntity()).toList(),
+        prescription: prescription?.toEntity(),
+        pathUrl: exportFileName,
+      );
 
   /// Domain → API
-  factory PatientRecordApiModel.fromEntity(PatientRecord entity) =>
-      PatientRecordApiModel(
-        identifier: entity.id,
-        status: entity.status == RecordStatus.complete,
-        createdTime: entity.createdTime,
-        prescription: entity.prescription != null
-            ? PrescriptionApiModel.fromEntity(entity.prescription!)
-            : null,
-        pathUrl: entity.pathUrl,
-      );
+  factory PatientRecordApiModel.fromEntity(PatientRecord entity) {
+    return PatientRecordApiModel(
+      identifier: entity.id,
+      status: entity.status == RecordStatus.complete,
+      createdTime: entity.createdTime,
+      prescription: entity.prescription != null
+          ? PrescriptionApiModel.fromEntity(entity.prescription!)
+          : null,
+      exportFileName: entity.pathUrl,
+    );
+  }
 }

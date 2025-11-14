@@ -21,4 +21,15 @@ class PatientRecord {
     this.pathUrl,
     this.pathFilePdf,
   });
+
+  @override
+  String toString() {
+    return 'PatientRecord{\n'
+        'id: $id, \n'
+        'status: $status, \n'
+        'pathUrl: $pathUrl, \n'
+        'pathFilePdf: $pathFilePdf, \n'
+        'serviceReports: ${serviceReports.length}\n'
+        '}';
+  }
 }

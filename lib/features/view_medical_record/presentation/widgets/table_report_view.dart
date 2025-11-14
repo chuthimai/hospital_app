@@ -33,8 +33,8 @@ class TableReportView extends StatelessWidget {
             final r = results[index];
             final item = r as MeasurementIndicator;
 
-            final min = item.minimum?.toStringAsFixed(1) ?? "-";
-            final max = item.maximum?.toStringAsFixed(1) ?? "-";
+            final min = item.minimum ?? "-";
+            final max = item.maximum ?? "-";
             return DataRow(
                 color: MaterialStateProperty.resolveWith<Color?>(
                       (Set<MaterialState> states) {

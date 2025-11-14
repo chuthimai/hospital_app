@@ -3,8 +3,8 @@ import 'assessment_result.dart';
 class MeasurementIndicator extends AssessmentResult {
   final String type;
   final String unit;
-  final double? minimum;
-  final double? maximum;
+  final String? minimum;
+  final String? maximum;
 
   MeasurementIndicator({
     required super.id,

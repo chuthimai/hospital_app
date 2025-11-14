@@ -87,7 +87,7 @@ class _MedicalRecordDetailBodyState extends State<MedicalRecordDetailBody> {
                       ),
                     ),
                     subtitle: Text("Thời gian thực hiện: "
-                        "${serviceReport.effectiveTime != null ? DateFormatter.format(serviceReport.effectiveTime!) : "Không có thông tin"}"),
+                        "${serviceReport.recordedTime != null ? DateFormatter.formatFull(serviceReport.recordedTime!) : "Không có thông tin"}"),
                     trailing: const Icon(Icons.arrow_forward_ios),
                   ),
                   onTap: () => context.push(

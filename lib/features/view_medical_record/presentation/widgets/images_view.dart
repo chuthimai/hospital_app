@@ -10,9 +10,9 @@ class ImagesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Nếu >=4 ảnh thì grid 4 cột, ít hơn thì vừa khít
-    int crossAxisCount = imageStudies.length >= 4
-        ? 4
+    // Nếu >=2 ảnh thì grid 2 cột, ít hơn thì vừa khít
+    int crossAxisCount = imageStudies.length >= 2
+        ? 2
         : imageStudies.length;
 
     return GridView.builder(

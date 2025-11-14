@@ -50,7 +50,8 @@ class MedicalRecordRepositoryImpl implements MedicalRecordRepository {
 
   @override
   Future<PatientRecord?> getDetailPatientRecord(
-      PatientRecord patientRecord) async {
+      PatientRecord patientRecord
+      ) async {
     try {
       final patientRecordLocal = await _localDataSource.getDetailPatientRecord(
           PatientRecordDbModel.fromEntity(patientRecord));
@@ -63,8 +64,7 @@ class MedicalRecordRepositoryImpl implements MedicalRecordRepository {
       final patientRecordRemote =
           await _remoteDataSource.getDetailPatientRecord(
               PatientRecordApiModel.fromEntity(patientRecord));
-      await savePatientRecord(patientRecord);
-      return patientRecordRemote.toEntity();
+      return await savePatientRecord(patientRecordRemote.toEntity());
     } catch (e) {
       AppLogger().error("Remote/Local error: $e");
       rethrow;
@@ -72,9 +72,9 @@ class MedicalRecordRepositoryImpl implements MedicalRecordRepository {
   }
 
   @override
-  Future<void> savePatientRecord(PatientRecord patientRecord) async {
-    if (patientRecord.status != RecordStatus.complete) return;
-    if (patientRecord.pathUrl == null) return;
+  Future<PatientRecord?> savePatientRecord(PatientRecord patientRecord) async {
+    if (patientRecord.status != RecordStatus.complete) return patientRecord;
+    if (patientRecord.pathUrl == null) return patientRecord;
     try {
       final pathFilePdf = await PdfFileManager.downloadPdf(
         patientRecord.pathUrl!,
@@ -84,11 +84,14 @@ class MedicalRecordRepositoryImpl implements MedicalRecordRepository {
       patientRecord.pathFilePdf = pathFilePdf;
       await _localDataSource
           .savePatientRecord(PatientRecordDbModel.fromEntity(patientRecord));
+      return patientRecord;
     } catch (e) {
       AppLogger().error("Local error: $e");
       if (e.toString().contains("Error downloading PDF")) {
         throw Exception("Tải file thất bại");
       }
     }
+    return null;
   }
+
 }

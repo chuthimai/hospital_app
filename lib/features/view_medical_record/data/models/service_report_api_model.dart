@@ -3,6 +3,7 @@ import 'package:hospital_app/features/view_medical_record/domain/entities/enum/c
 import 'package:hospital_app/features/view_medical_record/domain/entities/enum/observation_category_code.dart';
 import 'package:hospital_app/features/view_medical_record/domain/entities/enum/observation_method.dart';
 import 'package:hospital_app/features/view_medical_record/domain/entities/image_report.dart';
+import 'package:hospital_app/features/view_medical_record/domain/entities/laboratory_report.dart';
 import 'package:hospital_app/features/view_medical_record/domain/entities/measurement_indicator.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -15,33 +16,38 @@ import 'assessment_item_api_model.dart';
 import 'assessment_result_api_model.dart';
 import 'diagnosis_report_api_model.dart';
 import 'imaging_report_api_model.dart';
+import 'laboratory_report_api_model.dart';
 
 part 'service_report_api_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class ServiceReportApiModel {
   final int identifier;
-  final String category;
-  final String method;
+  final String? category;
+  final String? method;
   final bool status;
   final DateTime? effectiveTime;
+  final DateTime? recordedTime;
   final ServiceApiModel service;
   final PhysicianApiModel? performer;
   final List<AssessmentResultApiModel> assessmentResults;
   final DiagnosisReportApiModel? diagnosisReport;
   final ImagingReportApiModel? imagingReport;
+  final LaboratoryReportApiModel? laboratoryReport;
 
   ServiceReportApiModel({
     required this.identifier,
-    required this.category,
-    required this.method,
+    this.category = "",
+    this.method = "",
     required this.status,
     this.effectiveTime,
+    this.recordedTime,
     required this.service,
     this.performer,
     this.assessmentResults = const [],
     this.diagnosisReport,
     this.imagingReport,
+    this.laboratoryReport,
   });
 
   factory ServiceReportApiModel.fromJson(Map<String, dynamic> json) =>
@@ -61,11 +67,11 @@ class ServiceReportApiModel {
         service: service.toEntity(),
         performer: performer?.toEntity(),
         assessmentResults: _toAssessmentResultEntities(),
-        type: diagnosisReport!.type,
-        conclusion: diagnosisReport!.conclusion,
+        type: diagnosisReport?.type ?? "",
+        conclusion: diagnosisReport?.conclusion ?? "",
         severity: ConditionDiagnosisSeverityExtension.fromCode(
-            diagnosisReport!.severity),
-        recordedTime: diagnosisReport!.recordedTime,
+            diagnosisReport?.severity ?? ""),
+        recordedTime: recordedTime,
       );
     }
 
@@ -79,12 +85,29 @@ class ServiceReportApiModel {
         service: service.toEntity(),
         performer: performer?.toEntity(),
         assessmentResults: _toAssessmentResultEntities(),
-        focus: imagingReport!.focus,
-        interpretation: imagingReport!.interpretation,
+        focus: imagingReport?.focus ?? "",
+        interpretation: imagingReport?.interpretation ?? "",
         imageStudies:
-        imagingReport!.imageStudies.map((e) => e.toEntity()).toList(),
+        imagingReport!.images.map((e) => e.toEntity()).toList(),
+        recordedTime: recordedTime,
       );
     }
+
+    if (laboratoryReport != null) {
+      return LaboratoryReport(
+        id: identifier,
+        category: ObservationCategoryCodeExtension.fromCode(category),
+        method: ObservationMethodExtension.fromCode(method),
+        status:
+        status ? ObservationStatus.final_ : ObservationStatus.registered,
+        service: service.toEntity(),
+        performer: performer?.toEntity(),
+        assessmentResults: _toAssessmentResultEntities(),
+        interpretation: imagingReport?.interpretation ?? "",
+        recordedTime: recordedTime,
+      );
+    }
+
     return ServiceReport(
       id: identifier,
       category: ObservationCategoryCodeExtension.fromCode(category),
@@ -93,6 +116,7 @@ class ServiceReportApiModel {
       service: service.toEntity(),
       performer: performer?.toEntity(),
       assessmentResults: _toAssessmentResultEntities(),
+      recordedTime: recordedTime,
     );
   }
 

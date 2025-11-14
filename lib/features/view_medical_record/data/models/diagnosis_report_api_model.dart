@@ -8,16 +8,14 @@ part 'diagnosis_report_api_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class DiagnosisReportApiModel {
-  final String type;
-  final String severity;
-  final String conclusion;
-  final DateTime? recordedTime;
+  final String? type;
+  final String? severity;
+  final String? conclusion;
 
   DiagnosisReportApiModel({
-    required this.type,
-    required this.severity,
-    required this.conclusion,
-    this.recordedTime,
+    this.type,
+    this.severity,
+    this.conclusion,
   });
 
   factory DiagnosisReportApiModel.fromJson(Map<String, dynamic> json) =>

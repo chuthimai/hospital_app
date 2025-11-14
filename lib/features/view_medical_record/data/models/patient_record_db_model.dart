@@ -12,10 +12,6 @@ class PatientRecordDbModel {
   late String? pathUrl;
   late String pathFilePdf;
 
-  // TODO: delete later
-  // final serviceReports = IsarLinks<ServiceReportDbModel>();
-  // final prescription = IsarLink<PrescriptionDbModel>();
-
   PatientRecordDbModel({
     required this.id,
     required this.status,
@@ -26,10 +22,6 @@ class PatientRecordDbModel {
 
   /// DB → Domain
   Future<PatientRecord> toEntity() async {
-    // await Future.wait([
-    //   serviceReports.load(),
-    //   prescription.load(),
-    // ]);
 
     return PatientRecord(
       id: id,
@@ -37,10 +29,6 @@ class PatientRecordDbModel {
       createdTime: createTime,
       pathUrl: pathUrl,
       pathFilePdf: pathFilePdf,
-      // serviceReports: await Future.wait(
-      //   serviceReports.map((r) => r.toEntity()),
-      // ),
-      // prescription: await prescription.value?.toEntity(),
     );
   }
 
@@ -50,16 +38,9 @@ class PatientRecordDbModel {
       id: entity.id,
       status: entity.status.name,
       createTime: entity.createdTime,
-      pathFilePdf: entity.pathFilePdf!,
+      pathFilePdf: entity.pathFilePdf ?? "",
       pathUrl: entity.pathUrl,
     );
-
-    // model.serviceReports.addAll(entity.serviceReports
-    //     .map((e) => ServiceReportDbModel.fromEntity(e)));
-    // if (entity.prescription != null) {
-    //   model.prescription.value =
-    //       PrescriptionDbModel.fromEntity(entity.prescription!);
-    // }
 
     return model;
   }

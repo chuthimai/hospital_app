@@ -3,6 +3,7 @@ import 'package:hospital_app/features/auth/data/models/register_request.dart';
 import 'package:hospital_app/features/auth/domain/entities/register_params.dart';
 import 'package:hospital_app/features/notification/data/datasource/notification_local_data_source.dart';
 import 'package:hospital_app/features/view_invoice/data/datasource/invoice_local_data_source.dart';
+import 'package:hospital_app/features/view_medical_record/data/datasource/medical_record_local_data_source.dart';
 import 'package:hospital_app/features/view_prescription/data/datasources/prescription_local_data_source.dart';
 import 'package:hospital_app/features/view_service/data/datasource/service_local_data_source.dart';
 import 'package:hospital_app/share/db/secure_token_storage.dart';
@@ -23,6 +24,7 @@ class AuthRepositoryImpl implements AuthRepository {
   final ServiceLocalDataSource _serviceLocalDataSource;
   final AppointmentLocalDataSource _appointmentLocalDataSource;
   final InvoiceLocalDataSource _invoiceLocalDataSource;
+  final MedicalRecordLocalDataSource _medicalRecordLocalDataSource;
 
   AuthRepositoryImpl({
     required AuthRemoteDataSource remoteDataSource,
@@ -32,13 +34,15 @@ class AuthRepositoryImpl implements AuthRepository {
     required ServiceLocalDataSource serviceLocalDataSource,
     required AppointmentLocalDataSource appointmentLocalDataSource,
     required InvoiceLocalDataSource invoiceLocalDataSource,
+    required MedicalRecordLocalDataSource medicalRecordLocalDataSource,
   })  : _localDataSource = localDataSource,
         _remoteDataSource = remoteDataSource,
         _notificationLocalDataSource = notificationLocalDataSource,
         _prescriptionLocalDataSource = prescriptionLocalDataSource,
         _serviceLocalDataSource = serviceLocalDataSource,
         _appointmentLocalDataSource = appointmentLocalDataSource,
-        _invoiceLocalDataSource = invoiceLocalDataSource;
+        _invoiceLocalDataSource = invoiceLocalDataSource,
+        _medicalRecordLocalDataSource = medicalRecordLocalDataSource;
 
   @override
   Future<User> login(LoginParams loginParams) async {
@@ -61,6 +65,7 @@ class AuthRepositoryImpl implements AuthRepository {
     await _serviceLocalDataSource.deleteAllServices();
     await _appointmentLocalDataSource.deleteAllAppointments();
     await _invoiceLocalDataSource.deleteAllInvoices();
+    await _medicalRecordLocalDataSource.deleteAllPatientRecords();
     await SecureTokenStorage().deleteTokens();
   }
 

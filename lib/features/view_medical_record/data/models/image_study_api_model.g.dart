@@ -8,7 +8,7 @@ part of 'image_study_api_model.dart';
 
 ImageStudyApiModel _$ImageStudyApiModelFromJson(Map<String, dynamic> json) =>
     ImageStudyApiModel(
-      id: (json['id'] as num).toInt(),
+      identifier: (json['identifier'] as num).toInt(),
       endpoint: json['endpoint'] as String,
       receivedTime: json['receivedTime'] == null
           ? null
@@ -17,7 +17,7 @@ ImageStudyApiModel _$ImageStudyApiModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$ImageStudyApiModelToJson(ImageStudyApiModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'identifier': instance.identifier,
       'endpoint': instance.endpoint,
       'receivedTime': instance.receivedTime?.toIso8601String(),
     };

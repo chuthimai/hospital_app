@@ -66,7 +66,7 @@ extension ObservationCategoryCodeExtension on ObservationCategoryCode {
   }
 
   /// Convert FHIR code (string) → enum
-  static ObservationCategoryCode fromCode(String code) {
+  static ObservationCategoryCode fromCode(String? code) {
     switch (code) {
       case 'social-history':
         return ObservationCategoryCode.socialHistory;
