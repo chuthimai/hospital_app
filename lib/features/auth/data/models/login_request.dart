@@ -9,8 +9,6 @@ class LoginRequest {
   final int identifier;
   final String password;
   final String? deviceToken;
-
-  @JsonKey(defaultValue: "patient")
   final String role;
 
   LoginRequest({

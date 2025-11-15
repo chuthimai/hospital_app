@@ -43,6 +43,5 @@ class SecureTokenStorage {
   Future<void> deleteTokens() async {
     await _storage.delete(key: _accessTokenKey);
     await _storage.delete(key: _refreshTokenKey);
-    await _storage.delete(key: _deviceTokenKey);
   }
 }

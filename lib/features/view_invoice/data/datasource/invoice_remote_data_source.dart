@@ -49,8 +49,18 @@ class InvoiceRemoteDataSourceImpl implements InvoiceRemoteDataSource {
   }
 
   @override
-  Future<String> getQrCodeInvoice(InvoiceApiModel invoice) {
-    // TODO: implement getQrCodeInvoice
-    throw UnimplementedError();
+  Future<String> getQrCodeInvoice(InvoiceApiModel invoice) async {
+    try {
+      final remote = RemoteService();
+      final response = await remote.get(
+        PathApi.getQrCodeInvoice + invoice.identifier.toString(),
+      );
+      final data = response.data as Map<String, dynamic>;
+      return data["qrCode"];
+
+    } catch (e) {
+      final error = ApiErrorHandler.handle(e);
+      throw error;
+    }
   }
 }

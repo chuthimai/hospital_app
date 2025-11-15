@@ -19,6 +19,7 @@ class PathApi {
   /// Hoá đơn
   static const getAllInvoices = "/billing/invoices";
   static const getDetailInvoice = "/billing/invoices/";
+  static const getQrCodeInvoice = "/billing/transaction/";
 
   /// Bệnh án
   static const getAllMedicalRecord = "/records";

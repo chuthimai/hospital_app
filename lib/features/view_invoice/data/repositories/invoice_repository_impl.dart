@@ -62,9 +62,14 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   }
 
   @override
-  Future<String> getQrCodeInvoice(Invoice invoice) {
-    // TODO: implement getQrCodeInvoice
-    throw UnimplementedError();
+  Future<String> getQrCodeInvoice(Invoice invoice) async {
+    if (invoice.status == InvoiceStatus.balanced) return "";
+    try {
+      return await _remoteDataSource.getQrCodeInvoice(InvoiceApiModel.fromEntity(invoice));
+    } catch (e) {
+      AppLogger().error("Remote data: $e");
+      throw Exception("Lấy mã thanh toán thất bại");
+    }
   }
 
   @override
