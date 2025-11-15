@@ -6,32 +6,18 @@ part 'assessment_result_api_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class AssessmentResultApiModel {
-  final int id;
+  final int identifier;
   final String value;
-  final AssessmentItemApiModel assessmentItem;
+  final int assessmentItemIdentifier;
 
   AssessmentResultApiModel({
-    required this.id,
+    required this.identifier,
     required this.value,
-    required this.assessmentItem,
+    required this.assessmentItemIdentifier,
   });
 
   factory AssessmentResultApiModel.fromJson(Map<String, dynamic> json) =>
       _$AssessmentResultApiModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$AssessmentResultApiModelToJson(this);
-
-  AssessmentResult toEntity() => AssessmentResult(
-    id: id,
-    value: value,
-    assessmentItem: assessmentItem.toEntity(),
-  );
-
-  factory AssessmentResultApiModel.fromEntity(AssessmentResult entity) {
-    return AssessmentResultApiModel(
-      id: entity.id,
-      value: entity.value,
-      assessmentItem: AssessmentItemApiModel.fromEntity(entity.assessmentItem),
-    );
-  }
 }

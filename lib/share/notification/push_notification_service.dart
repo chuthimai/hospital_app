@@ -5,6 +5,7 @@ import 'package:hospital_app/features/setting/domain/repositories/notification_s
 import 'package:hospital_app/share/navigation/router.dart';
 import 'package:hospital_app/share/utils/app_logger.dart';
 
+import '../db/secure_token_storage.dart';
 import 'local_notification_service.dart';
 
 class PushNotificationService {
@@ -41,6 +42,7 @@ class PushNotificationService {
   static Future<void> _setupListeners() async {
     // Lấy token
     final token = await _messaging.getToken();
+    if (token != null) await SecureTokenStorage().writeDeviceToken(token);
     AppLogger().info("FCM Token: $token");
 
     // Foreground messages

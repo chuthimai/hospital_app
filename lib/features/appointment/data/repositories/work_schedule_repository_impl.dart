@@ -16,7 +16,8 @@ class WorkScheduleRepositoryImpl implements WorkScheduleRepository {
   final WorkScheduleRemoteDataSource _remoteDataSource;
   final ShiftRepository _shiftRepo = ShiftRepositoryImpl(
       localDataSource: ShiftLocalDataSourceImpl(),
-      remoteDataSource: ShiftRemoteDataSourceImpl());
+      remoteDataSource: ShiftRemoteDataSourceImpl()
+  );
 
   WorkScheduleRepositoryImpl({
     required localDataSource,

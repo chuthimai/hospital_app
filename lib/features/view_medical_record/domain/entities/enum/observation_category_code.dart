@@ -10,6 +10,7 @@ enum ObservationCategoryCode {
   exam,
   therapy,
   activity,
+  unknow,
 }
 
 extension ObservationCategoryCodeExtension on ObservationCategoryCode {
@@ -33,6 +34,8 @@ extension ObservationCategoryCodeExtension on ObservationCategoryCode {
         return "Điều trị / liệu pháp";
       case ObservationCategoryCode.activity:
         return "Hoạt động bệnh nhân";
+      case ObservationCategoryCode.unknow:
+        return "Không có thông tin";
     }
   }
 
@@ -57,11 +60,13 @@ extension ObservationCategoryCodeExtension on ObservationCategoryCode {
         return 'therapy';
       case ObservationCategoryCode.activity:
         return 'activity';
+      case ObservationCategoryCode.unknow:
+        return 'unknow';
     }
   }
 
   /// Convert FHIR code (string) → enum
-  static ObservationCategoryCode fromCode(String code) {
+  static ObservationCategoryCode fromCode(String? code) {
     switch (code) {
       case 'social-history':
         return ObservationCategoryCode.socialHistory;
@@ -82,7 +87,7 @@ extension ObservationCategoryCodeExtension on ObservationCategoryCode {
       case 'activity':
         return ObservationCategoryCode.activity;
       default:
-        throw ArgumentError('Unknown ObservationCategoryCode: $code');
+        return ObservationCategoryCode.unknow;
     }
   }
 

@@ -4,14 +4,16 @@ import 'prescribed_medication.dart';
 
 class Prescription {
   final int id;
-  final DateTime createTime;
+  final DateTime createdTime;
   final List<PrescribedMedication> prescribedMedications;
   final Physician? performer;
+  final String? note;
 
   Prescription({
     required this.id,
-    required this.createTime,
+    required this.createdTime,
     this.prescribedMedications = const [],
     this.performer,
+    this.note
   });
 }

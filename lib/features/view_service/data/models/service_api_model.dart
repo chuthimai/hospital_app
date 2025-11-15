@@ -1,3 +1,4 @@
+import 'package:hospital_app/features/view_medical_record/data/models/assessment_item_api_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 import '../../domain/entities/service.dart';
 import 'location_api_model.dart';
@@ -6,44 +7,45 @@ part 'service_api_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class ServiceApiModel {
-  final int id;
+  final int identifier;
   final String name;
-  final String? extraDetails;
-  final LocationApiModel location;
-  final bool isCompleted;
+  final String? detailDescription;
+  final LocationApiModel? location;
+  final List<AssessmentItemApiModel> assessmentItems;
 
   ServiceApiModel({
-    required this.id,
+    required this.identifier,
     required this.name,
-    this.extraDetails,
-    required this.location,
-    this.isCompleted = true,
+    this.detailDescription,
+    this.location,
+    this.assessmentItems = const [],
   });
 
   // --- JSON Serializable ---
-  factory ServiceApiModel.fromJson(Map<String, dynamic> json) =>
-      _$ServiceApiModelFromJson(json);
+  factory ServiceApiModel.fromJson(Map<String, dynamic> json) {
+    return _$ServiceApiModelFromJson(json);
+  }
 
   Map<String, dynamic> toJson() => _$ServiceApiModelToJson(this);
 
   // --- Mapping ---
   Service toEntity() {
     return Service(
-      id: id,
+      id: identifier,
       name: name,
-      extraDetails: extraDetails,
-      location: location.toEntity(),
-      isCompleted: isCompleted,
+      extraDetails: detailDescription,
+      location: location?.toEntity(),
     );
   }
 
   static ServiceApiModel fromEntity(Service entity) {
     return ServiceApiModel(
-      id: entity.id,
+      identifier: entity.id,
       name: entity.name,
-      extraDetails: entity.extraDetails,
-      location: LocationApiModel.fromEntity(entity.location),
-      isCompleted: entity.isCompleted,
+      detailDescription: entity.extraDetails,
+      location: entity.location == null
+          ? null
+          : LocationApiModel.fromEntity(entity.location!),
     );
   }
 }

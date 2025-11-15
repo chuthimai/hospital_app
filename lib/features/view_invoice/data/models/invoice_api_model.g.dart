@@ -8,22 +8,23 @@ part of 'invoice_api_model.dart';
 
 InvoiceApiModel _$InvoiceApiModelFromJson(Map<String, dynamic> json) =>
     InvoiceApiModel(
-      id: (json['id'] as num).toInt(),
-      status: json['status'] as String,
+      identifier: (json['identifier'] as num).toInt(),
+      status: json['status'] as bool,
       createdTime: json['createdTime'] == null
           ? null
           : DateTime.parse(json['createdTime'] as String),
-      serviceInvoices: (json['serviceInvoices'] as List<dynamic>)
-          .map(
-              (e) => ServiceInvoiceApiModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      invoiceServices: (json['invoiceServices'] as List<dynamic>?)
+              ?.map((e) =>
+                  ServiceInvoiceApiModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$InvoiceApiModelToJson(InvoiceApiModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'identifier': instance.identifier,
       'status': instance.status,
       'createdTime': instance.createdTime?.toIso8601String(),
-      'serviceInvoices':
-          instance.serviceInvoices.map((e) => e.toJson()).toList(),
+      'invoiceServices':
+          instance.invoiceServices.map((e) => e.toJson()).toList(),
     };

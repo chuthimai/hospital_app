@@ -1,22 +1,23 @@
-import 'package:hospital_app/features/view_medical_record/domain/entities/measurement_indicator.dart';
+import 'package:hospital_app/features/view_medical_record/domain/entities/assessment_result.dart';
 import 'package:json_annotation/json_annotation.dart';
-import '../../domain/entities/assessment_item.dart';
+
+import '../../domain/entities/measurement_indicator.dart';
 import 'measurement_indicator_api_model.dart';
 
 part 'assessment_item_api_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class AssessmentItemApiModel {
-  final int id;
+  final int identifier;
   final String name;
-  final AssessmentItemApiModel? parentAssessmentItem;
-  final MeasurementIndicatorApiModel? measurementIndicator;
+  final int? parentIdentifier;
+  final MeasurementIndicatorApiModel? measurementItem;
 
   AssessmentItemApiModel({
-    required this.id,
+    required this.identifier,
     required this.name,
-    this.parentAssessmentItem,
-    this.measurementIndicator,
+    this.parentIdentifier,
+    this.measurementItem,
   });
 
   factory AssessmentItemApiModel.fromJson(Map<String, dynamic> json) =>
@@ -24,48 +25,21 @@ class AssessmentItemApiModel {
 
   Map<String, dynamic> toJson() => _$AssessmentItemApiModelToJson(this);
 
-  AssessmentItem toEntity() {
-    if (measurementIndicator != null) {
+  AssessmentResult toEntity() {
+    if (measurementItem != null) {
       return MeasurementIndicator(
-        id: id,
+        id: identifier,
         name: name,
-        type: measurementIndicator!.type,
-        unit: measurementIndicator!.unit,
-        minimum: measurementIndicator!.minimum,
-        maximum: measurementIndicator!.maximum,
+        type: measurementItem!.type,
+        unit: measurementItem!.unit,
+        minimum: measurementItem!.minimum,
+        maximum: measurementItem!.maximum,
       );
     }
 
-    return AssessmentItem(
-      id: id,
+    return AssessmentResult(
+      id: identifier,
       name: name,
-      parentAssessmentItem: parentAssessmentItem?.toEntity(),
-    );
-  }
-
-  factory AssessmentItemApiModel.fromEntity(AssessmentItem entity) {
-    if (entity is MeasurementIndicator) {
-      return AssessmentItemApiModel(
-        id: entity.id,
-        name: entity.name,
-        parentAssessmentItem: entity.parentAssessmentItem != null
-            ? AssessmentItemApiModel.fromEntity(entity.parentAssessmentItem!)
-            : null,
-        measurementIndicator: MeasurementIndicatorApiModel(
-          type: entity.type,
-          unit: entity.unit,
-          maximum: entity.maximum,
-          minimum: entity.minimum,
-        ),
-      );
-    }
-
-    return AssessmentItemApiModel(
-      id: entity.id,
-      name: entity.name,
-      parentAssessmentItem: entity.parentAssessmentItem != null
-          ? AssessmentItemApiModel.fromEntity(entity.parentAssessmentItem!)
-          : null,
     );
   }
 }

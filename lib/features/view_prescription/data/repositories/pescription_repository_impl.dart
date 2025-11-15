@@ -14,8 +14,7 @@ class PrescriptionRepositoryImpl implements PrescriptionRepository {
   PrescriptionRepositoryImpl({
     required localDataSource,
     required remoteDataSource,
-  })
-      : _remoteDataSource = remoteDataSource,
+  })  : _remoteDataSource = remoteDataSource,
         _localDataSource = localDataSource;
 
   @override
@@ -31,45 +30,56 @@ class PrescriptionRepositoryImpl implements PrescriptionRepository {
   @override
   Future<List<Prescription>> getAllPrescriptions() async {
     try {
-      final lastId = await _localDataSource.getLastId();
-      final prescriptionsRemote =
-      await _remoteDataSource.getPrescriptions(lastId: lastId);
-      await _localDataSource.savePrescriptions(prescriptionsRemote
-          .map((e) => PrescriptionDbModel.fromEntity(e.toEntity()))
-          .toList());
+      final prescriptionsRemote = await _remoteDataSource.getPrescriptions();
+      return prescriptionsRemote.map((e) => e.toEntity()).toList();
     } catch (e) {
-      AppLogger().error("Remote/Local data: $e");
+      AppLogger().error("Remote data: $e");
     }
 
     try {
       final prescriptionsLocal = await _localDataSource.getAllPrescriptions();
-      return prescriptionsLocal.map((e) => e.toEntity()).toList();
+
+      return await Future.wait(
+          prescriptionsLocal.map((e) => e.toEntity()).toList());
     } catch (e) {
       AppLogger().error("Local data: $e");
     }
     return [];
   }
 
-  /// Gọi dữ liệu từ local trước, local ko có mới gọi api
+  /// Gọi dữ liệu từ local trước, local ko có mới gọi api, lưu dữ liệu vào local
   @override
   Future<Prescription> getDetailPrescription(Prescription prescription) async {
     try {
       final prescriptionLocal = await _localDataSource
           .getDetailPrescription(PrescriptionDbModel.fromEntity(prescription));
-      if (prescriptionLocal.prescribedMedications.isNotEmpty) {
+      if (prescriptionLocal != null &&
+          prescriptionLocal.prescribedMedications.isNotEmpty) {
         return prescriptionLocal.toEntity();
       }
-    } catch(e) {
+    } catch (e) {
       AppLogger().error("Local data: $e");
     }
 
     try {
-      final prescriptionRemote = await _remoteDataSource.getDetailPrescription(
-          PrescriptionApiModel.fromEntity(prescription));
-      return prescriptionRemote.toEntity();
-    } catch(e) {
-      AppLogger().error("Remote data: $e");
+      final prescriptionRemote = await _remoteDataSource
+          .getDetailPrescription(PrescriptionApiModel.fromEntity(prescription));
+
+      final newPrescription = prescriptionRemote.toEntity();
+      await savePrescription(newPrescription);
+      return newPrescription;
+    } catch (e) {
+      AppLogger().error("Remote/Local data: $e");
     }
     return prescription;
+  }
+
+  @override
+  Future<void> savePrescription(Prescription prescription) async {
+    try {
+      _localDataSource.savePrescription(prescription);
+    } catch (e) {
+      AppLogger().error("Local data: $e");
+    }
   }
 }

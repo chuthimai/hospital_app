@@ -49,7 +49,8 @@ class ServiceRepositoryImpl implements ServiceRepository {
     try {
       final incompleteServicesRemote =
           await _localDataSource.getAllIncompleteServices();
-      return incompleteServicesRemote.map((e) => e.toEntity()).toList();
+
+      return await Future.wait(incompleteServicesRemote.map((e) => e.toEntity()).toList());
     } catch (e) {
       AppLogger().error("Local data: $e");
     }

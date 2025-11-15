@@ -1,46 +1,54 @@
-import 'package:hospital_app/features/view_medical_record/data/models/image_study_api_model.dart';
 import 'package:hospital_app/features/view_medical_record/domain/entities/diagnosis_report.dart';
 import 'package:hospital_app/features/view_medical_record/domain/entities/enum/condition_diagnosis_severity.dart';
 import 'package:hospital_app/features/view_medical_record/domain/entities/enum/observation_category_code.dart';
 import 'package:hospital_app/features/view_medical_record/domain/entities/enum/observation_method.dart';
 import 'package:hospital_app/features/view_medical_record/domain/entities/image_report.dart';
+import 'package:hospital_app/features/view_medical_record/domain/entities/laboratory_report.dart';
+import 'package:hospital_app/features/view_medical_record/domain/entities/measurement_indicator.dart';
 import 'package:json_annotation/json_annotation.dart';
+
 import '../../../view_doctor/data/models/physician_api_model.dart';
 import '../../../view_service/data/models/service_api_model.dart';
+import '../../domain/entities/assessment_result.dart';
 import '../../domain/entities/service_report.dart';
 import '../../domain/entities/enum/observation_status.dart';
+import 'assessment_item_api_model.dart';
 import 'assessment_result_api_model.dart';
 import 'diagnosis_report_api_model.dart';
 import 'imaging_report_api_model.dart';
+import 'laboratory_report_api_model.dart';
 
 part 'service_report_api_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class ServiceReportApiModel {
-  final int id;
-  final String category;
-  final String method;
-  final String status;
+  final int identifier;
+  final String? category;
+  final String? method;
+  final bool status;
   final DateTime? effectiveTime;
+  final DateTime? recordedTime;
   final ServiceApiModel service;
-  final PhysicianApiModel requester;
   final PhysicianApiModel? performer;
   final List<AssessmentResultApiModel> assessmentResults;
   final DiagnosisReportApiModel? diagnosisReport;
   final ImagingReportApiModel? imagingReport;
+  final LaboratoryReportApiModel? laboratoryReport;
 
-  ServiceReportApiModel(
-      {required this.id,
-      required this.category,
-      required this.method,
-      required this.status,
-      this.effectiveTime,
-      required this.service,
-      required this.requester,
-      this.performer,
-      this.assessmentResults = const [],
-      this.diagnosisReport,
-      this.imagingReport});
+  ServiceReportApiModel({
+    required this.identifier,
+    this.category = "",
+    this.method = "",
+    required this.status,
+    this.effectiveTime,
+    this.recordedTime,
+    required this.service,
+    this.performer,
+    this.assessmentResults = const [],
+    this.diagnosisReport,
+    this.imagingReport,
+    this.laboratoryReport,
+  });
 
   factory ServiceReportApiModel.fromJson(Map<String, dynamic> json) =>
       _$ServiceReportApiModelFromJson(json);
@@ -51,114 +59,116 @@ class ServiceReportApiModel {
   ServiceReport toEntity() {
     if (diagnosisReport != null) {
       return DiagnosisReport(
-        id: id,
+        id: identifier,
         category: ObservationCategoryCodeExtension.fromCode(category),
         method: ObservationMethodExtension.fromCode(method),
-        status: ObservationStatusExtension.fromCode(status),
+        status:
+        status ? ObservationStatus.final_ : ObservationStatus.registered,
         service: service.toEntity(),
-        requester: requester.toEntity(),
         performer: performer?.toEntity(),
-        assessmentResults: assessmentResults.map((r) => r.toEntity()).toList(),
-        type: diagnosisReport!.type,
-        conclusion: diagnosisReport!.conclusion,
+        assessmentResults: _toAssessmentResultEntities(),
+        type: diagnosisReport?.type ?? "",
+        conclusion: diagnosisReport?.conclusion ?? "",
         severity: ConditionDiagnosisSeverityExtension.fromCode(
-            diagnosisReport!.severity),
-        recordedTime: diagnosisReport!.recordedTime,
+            diagnosisReport?.severity ?? ""),
+        recordedTime: recordedTime,
       );
     }
 
     if (imagingReport != null) {
       return ImageReport(
-        id: id,
+        id: identifier,
         category: ObservationCategoryCodeExtension.fromCode(category),
         method: ObservationMethodExtension.fromCode(method),
-        status: ObservationStatusExtension.fromCode(status),
+        status:
+        status ? ObservationStatus.final_ : ObservationStatus.registered,
         service: service.toEntity(),
-        requester: requester.toEntity(),
         performer: performer?.toEntity(),
-        assessmentResults: assessmentResults.map((r) => r.toEntity()).toList(),
-        focus: imagingReport!.focus,
-        interpretation: imagingReport!.interpretation,
+        assessmentResults: _toAssessmentResultEntities(),
+        focus: imagingReport?.focus ?? "",
+        interpretation: imagingReport?.interpretation ?? "",
         imageStudies:
-            imagingReport!.imageStudies.map((e) => e.toEntity()).toList(),
+        imagingReport!.images.map((e) => e.toEntity()).toList(),
+        recordedTime: recordedTime,
       );
     }
+
+    if (laboratoryReport != null) {
+      return LaboratoryReport(
+        id: identifier,
+        category: ObservationCategoryCodeExtension.fromCode(category),
+        method: ObservationMethodExtension.fromCode(method),
+        status:
+        status ? ObservationStatus.final_ : ObservationStatus.registered,
+        service: service.toEntity(),
+        performer: performer?.toEntity(),
+        assessmentResults: _toAssessmentResultEntities(),
+        interpretation: imagingReport?.interpretation ?? "",
+        recordedTime: recordedTime,
+      );
+    }
+
     return ServiceReport(
-      id: id,
+      id: identifier,
       category: ObservationCategoryCodeExtension.fromCode(category),
       method: ObservationMethodExtension.fromCode(method),
-      status: ObservationStatusExtension.fromCode(status),
+      status: status ? ObservationStatus.final_ : ObservationStatus.registered,
       service: service.toEntity(),
-      requester: requester.toEntity(),
       performer: performer?.toEntity(),
-      assessmentResults: assessmentResults.map((r) => r.toEntity()).toList(),
+      assessmentResults: _toAssessmentResultEntities(),
+      recordedTime: recordedTime,
     );
   }
 
-  /// Convert Domain entity → API model
-  factory ServiceReportApiModel.fromEntity(ServiceReport entity) {
-    if (entity is DiagnosisReport) {
-      return ServiceReportApiModel(
-        id: entity.id,
-        category: entity.category.name,
-        method: entity.method.name,
-        status: entity.status.name,
-        effectiveTime: entity.effectiveTime,
-        service: ServiceApiModel.fromEntity(entity.service),
-        requester: PhysicianApiModel.fromEntity(entity.requester),
-        performer: entity.performer == null
-            ? null
-            : PhysicianApiModel.fromEntity(entity.performer!),
-        assessmentResults: entity.assessmentResults
-            .map((e) => AssessmentResultApiModel.fromEntity(e))
-            .toList(),
-        diagnosisReport: DiagnosisReportApiModel(
-          type: entity.type,
-          severity: entity.severity.name,
-          conclusion: entity.conclusion,
-        ),
-      );
+  List<AssessmentResult> _toAssessmentResultEntities() {
+    final List<AssessmentResult> assessmentResultEntities =
+    service.assessmentItems.map((e) {
+      if (e.measurementItem != null) {
+        return MeasurementIndicator(
+          id: e.identifier,
+          name: e.name,
+          type: e.measurementItem!.type,
+          unit: e.measurementItem!.unit,
+          minimum: e.measurementItem!.minimum,
+          maximum: e.measurementItem!.maximum,
+        );
+      }
+
+      return AssessmentResult(id: e.identifier, name: e.name);
+    }).toList();
+
+    final Map<int, AssessmentResult> mapIdToAssessmentResult = {
+      for (final assessmentResult in assessmentResultEntities)
+        assessmentResult.id: assessmentResult
+    };
+    // Ghép giá trị vào node assessmentResults
+    for (final item in assessmentResults) {
+      final assessmentResult = mapIdToAssessmentResult[item.assessmentItemIdentifier];
+      if (assessmentResult != null) assessmentResult.value = item.value;
     }
 
-    if (entity is ImageReport) {
-      return ServiceReportApiModel(
-        id: entity.id,
-        category: entity.category.name,
-        method: entity.method.name,
-        status: entity.status.name,
-        effectiveTime: entity.effectiveTime,
-        service: ServiceApiModel.fromEntity(entity.service),
-        requester: PhysicianApiModel.fromEntity(entity.requester),
-        performer: entity.performer == null
-            ? null
-            : PhysicianApiModel.fromEntity(entity.performer!),
-        assessmentResults: entity.assessmentResults
-            .map((e) => AssessmentResultApiModel.fromEntity(e))
-            .toList(),
-        imagingReport: ImagingReportApiModel(
-          focus: entity.focus,
-          interpretation: entity.interpretation,
-          imageStudies: entity.imageStudies
-              .map((e) => ImageStudyApiModel.fromEntity(e))
-              .toList(),
-        ),
-      );
-    }
-
-    return ServiceReportApiModel(
-      id: entity.id,
-      category: entity.category.name,
-      method: entity.method.name,
-      status: entity.status.name,
-      effectiveTime: entity.effectiveTime,
-      service: ServiceApiModel.fromEntity(entity.service),
-      requester: PhysicianApiModel.fromEntity(entity.requester),
-      performer: entity.performer == null
-          ? null
-          : PhysicianApiModel.fromEntity(entity.performer!),
-      assessmentResults: entity.assessmentResults
-          .map((e) => AssessmentResultApiModel.fromEntity(e))
-          .toList(),
-    );
+    return _buildAssessmentResultTrees(mapIdToAssessmentResult, service.assessmentItems);
   }
+
+  List<AssessmentResult> _buildAssessmentResultTrees(
+      Map<int, AssessmentResult> mapIdToAssessmentResult,
+      List<AssessmentItemApiModel> assessmentItems,
+      ) {
+    final List<AssessmentResult> roots = [];
+
+    for (final item in assessmentItems) {
+      final node = mapIdToAssessmentResult[item.identifier];
+      if (node == null) continue;
+
+      if (item.parentIdentifier == null) {
+        roots.add(node);
+      } else {
+        final parent = mapIdToAssessmentResult[item.parentIdentifier];
+        parent?.addChildAssessmentResult(node);
+      }
+    }
+
+    return roots;
+  }
+
 }

@@ -8,18 +8,20 @@ part 'patient_record_api_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class PatientRecordApiModel {
-  final int id;
-  final String status;
-  final DateTime createTime;
+  final int identifier;
+  final bool status;
+  final DateTime createdTime;
   final List<ServiceReportApiModel> serviceReports;
   final PrescriptionApiModel? prescription;
+  final String? exportFileName;
 
   PatientRecordApiModel({
-    required this.id,
+    required this.identifier,
     required this.status,
-    required this.createTime,
+    required this.createdTime,
     this.serviceReports = const [],
     this.prescription,
+    this.exportFileName,
   });
 
   factory PatientRecordApiModel.fromJson(Map<String, dynamic> json) =>
@@ -29,24 +31,24 @@ class PatientRecordApiModel {
 
   /// API → Domain
   PatientRecord toEntity() => PatientRecord(
-    id: id,
-    status: RecordStatusExtention.fromCode(status),
-    createTime: createTime,
-    serviceReports: serviceReports.map((r) => r.toEntity()).toList(),
-    prescription: prescription?.toEntity(),
-  );
+        id: identifier,
+        status: status ? RecordStatus.complete : RecordStatus.incomplete,
+        createdTime: createdTime,
+        serviceReports: serviceReports.map((r) => r.toEntity()).toList(),
+        prescription: prescription?.toEntity(),
+        pathUrl: exportFileName,
+      );
 
   /// Domain → API
-  factory PatientRecordApiModel.fromEntity(PatientRecord entity) =>
-      PatientRecordApiModel(
-        id: entity.id,
-        status: entity.status.toCode(),
-        createTime: entity.createTime,
-        serviceReports: entity.serviceReports
-            .map((e) => ServiceReportApiModel.fromEntity(e))
-            .toList(),
-        prescription: entity.prescription != null
-            ? PrescriptionApiModel.fromEntity(entity.prescription!)
-            : null,
-      );
+  factory PatientRecordApiModel.fromEntity(PatientRecord entity) {
+    return PatientRecordApiModel(
+      identifier: entity.id,
+      status: entity.status == RecordStatus.complete,
+      createdTime: entity.createdTime,
+      prescription: entity.prescription != null
+          ? PrescriptionApiModel.fromEntity(entity.prescription!)
+          : null,
+      exportFileName: entity.pathUrl,
+    );
+  }
 }

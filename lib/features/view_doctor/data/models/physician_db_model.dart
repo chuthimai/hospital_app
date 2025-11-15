@@ -53,7 +53,7 @@ class PhysicianDbModel {
       role: Roles.physician,
       birthDate: birthDate,
       photo: photo ?? AppDefault.imageLink,
-      specialty: specialty.value!.toEntity(),
+      specialty: specialty.value?.toEntity(),
     );
   }
 }

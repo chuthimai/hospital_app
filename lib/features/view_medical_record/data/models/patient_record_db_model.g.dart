@@ -23,8 +23,18 @@ const PatientRecordDbModelSchema = CollectionSchema(
       name: r'createTime',
       type: IsarType.dateTime,
     ),
-    r'status': PropertySchema(
+    r'pathFilePdf': PropertySchema(
       id: 1,
+      name: r'pathFilePdf',
+      type: IsarType.string,
+    ),
+    r'pathUrl': PropertySchema(
+      id: 2,
+      name: r'pathUrl',
+      type: IsarType.string,
+    ),
+    r'status': PropertySchema(
+      id: 3,
       name: r'status',
       type: IsarType.string,
     )
@@ -35,20 +45,7 @@ const PatientRecordDbModelSchema = CollectionSchema(
   deserializeProp: _patientRecordDbModelDeserializeProp,
   idName: r'id',
   indexes: {},
-  links: {
-    r'serviceReports': LinkSchema(
-      id: 5552644059414417515,
-      name: r'serviceReports',
-      target: r'ServiceReportDbModel',
-      single: false,
-    ),
-    r'prescription': LinkSchema(
-      id: -1149732698534851352,
-      name: r'prescription',
-      target: r'PrescriptionDbModel',
-      single: true,
-    )
-  },
+  links: {},
   embeddedSchemas: {},
   getId: _patientRecordDbModelGetId,
   getLinks: _patientRecordDbModelGetLinks,
@@ -62,6 +59,13 @@ int _patientRecordDbModelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.pathFilePdf.length * 3;
+  {
+    final value = object.pathUrl;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.status.length * 3;
   return bytesCount;
 }
@@ -73,7 +77,9 @@ void _patientRecordDbModelSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeDateTime(offsets[0], object.createTime);
-  writer.writeString(offsets[1], object.status);
+  writer.writeString(offsets[1], object.pathFilePdf);
+  writer.writeString(offsets[2], object.pathUrl);
+  writer.writeString(offsets[3], object.status);
 }
 
 PatientRecordDbModel _patientRecordDbModelDeserialize(
@@ -85,7 +91,9 @@ PatientRecordDbModel _patientRecordDbModelDeserialize(
   final object = PatientRecordDbModel(
     createTime: reader.readDateTime(offsets[0]),
     id: id,
-    status: reader.readString(offsets[1]),
+    pathFilePdf: reader.readString(offsets[1]),
+    pathUrl: reader.readStringOrNull(offsets[2]),
+    status: reader.readString(offsets[3]),
   );
   return object;
 }
@@ -101,6 +109,10 @@ P _patientRecordDbModelDeserializeProp<P>(
       return (reader.readDateTime(offset)) as P;
     case 1:
       return (reader.readString(offset)) as P;
+    case 2:
+      return (reader.readStringOrNull(offset)) as P;
+    case 3:
+      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -112,16 +124,12 @@ Id _patientRecordDbModelGetId(PatientRecordDbModel object) {
 
 List<IsarLinkBase<dynamic>> _patientRecordDbModelGetLinks(
     PatientRecordDbModel object) {
-  return [object.serviceReports, object.prescription];
+  return [];
 }
 
 void _patientRecordDbModelAttach(
     IsarCollection<dynamic> col, Id id, PatientRecordDbModel object) {
   object.id = id;
-  object.serviceReports.attach(
-      col, col.isar.collection<ServiceReportDbModel>(), r'serviceReports', id);
-  object.prescription.attach(
-      col, col.isar.collection<PrescriptionDbModel>(), r'prescription', id);
 }
 
 extension PatientRecordDbModelQueryWhereSort
@@ -320,6 +328,300 @@ extension PatientRecordDbModelQueryFilter on QueryBuilder<PatientRecordDbModel,
   }
 
   QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathFilePdfEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'pathFilePdf',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathFilePdfGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'pathFilePdf',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathFilePdfLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'pathFilePdf',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathFilePdfBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'pathFilePdf',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathFilePdfStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'pathFilePdf',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathFilePdfEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'pathFilePdf',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+          QAfterFilterCondition>
+      pathFilePdfContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'pathFilePdf',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+          QAfterFilterCondition>
+      pathFilePdfMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'pathFilePdf',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathFilePdfIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'pathFilePdf',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathFilePdfIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'pathFilePdf',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathUrlIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'pathUrl',
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathUrlIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'pathUrl',
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathUrlEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'pathUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathUrlGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'pathUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathUrlLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'pathUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathUrlBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'pathUrl',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathUrlStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'pathUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathUrlEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'pathUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+          QAfterFilterCondition>
+      pathUrlContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'pathUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+          QAfterFilterCondition>
+      pathUrlMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'pathUrl',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathUrlIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'pathUrl',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
+      QAfterFilterCondition> pathUrlIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'pathUrl',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
       QAfterFilterCondition> statusEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -462,83 +764,7 @@ extension PatientRecordDbModelQueryObject on QueryBuilder<PatientRecordDbModel,
     PatientRecordDbModel, QFilterCondition> {}
 
 extension PatientRecordDbModelQueryLinks on QueryBuilder<PatientRecordDbModel,
-    PatientRecordDbModel, QFilterCondition> {
-  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
-          QAfterFilterCondition>
-      serviceReports(FilterQuery<ServiceReportDbModel> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.link(q, r'serviceReports');
-    });
-  }
-
-  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
-      QAfterFilterCondition> serviceReportsLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'serviceReports', length, true, length, true);
-    });
-  }
-
-  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
-      QAfterFilterCondition> serviceReportsIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'serviceReports', 0, true, 0, true);
-    });
-  }
-
-  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
-      QAfterFilterCondition> serviceReportsIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'serviceReports', 0, false, 999999, true);
-    });
-  }
-
-  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
-      QAfterFilterCondition> serviceReportsLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'serviceReports', 0, true, length, include);
-    });
-  }
-
-  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
-      QAfterFilterCondition> serviceReportsLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'serviceReports', length, include, 999999, true);
-    });
-  }
-
-  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
-      QAfterFilterCondition> serviceReportsLengthBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(
-          r'serviceReports', lower, includeLower, upper, includeUpper);
-    });
-  }
-
-  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
-      QAfterFilterCondition> prescription(FilterQuery<PrescriptionDbModel> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.link(q, r'prescription');
-    });
-  }
-
-  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel,
-      QAfterFilterCondition> prescriptionIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'prescription', 0, true, 0, true);
-    });
-  }
-}
+    PatientRecordDbModel, QFilterCondition> {}
 
 extension PatientRecordDbModelQuerySortBy
     on QueryBuilder<PatientRecordDbModel, PatientRecordDbModel, QSortBy> {
@@ -553,6 +779,34 @@ extension PatientRecordDbModelQuerySortBy
       sortByCreateTimeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createTime', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel, QAfterSortBy>
+      sortByPathFilePdf() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'pathFilePdf', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel, QAfterSortBy>
+      sortByPathFilePdfDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'pathFilePdf', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel, QAfterSortBy>
+      sortByPathUrl() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'pathUrl', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel, QAfterSortBy>
+      sortByPathUrlDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'pathUrl', Sort.desc);
     });
   }
 
@@ -602,6 +856,34 @@ extension PatientRecordDbModelQuerySortThenBy
   }
 
   QueryBuilder<PatientRecordDbModel, PatientRecordDbModel, QAfterSortBy>
+      thenByPathFilePdf() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'pathFilePdf', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel, QAfterSortBy>
+      thenByPathFilePdfDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'pathFilePdf', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel, QAfterSortBy>
+      thenByPathUrl() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'pathUrl', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel, QAfterSortBy>
+      thenByPathUrlDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'pathUrl', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel, QAfterSortBy>
       thenByStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'status', Sort.asc);
@@ -626,6 +908,20 @@ extension PatientRecordDbModelQueryWhereDistinct
   }
 
   QueryBuilder<PatientRecordDbModel, PatientRecordDbModel, QDistinct>
+      distinctByPathFilePdf({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'pathFilePdf', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel, QDistinct>
+      distinctByPathUrl({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'pathUrl', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, PatientRecordDbModel, QDistinct>
       distinctByStatus({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'status', caseSensitive: caseSensitive);
@@ -645,6 +941,20 @@ extension PatientRecordDbModelQueryProperty on QueryBuilder<
       createTimeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createTime');
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, String, QQueryOperations>
+      pathFilePdfProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'pathFilePdf');
+    });
+  }
+
+  QueryBuilder<PatientRecordDbModel, String?, QQueryOperations>
+      pathUrlProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'pathUrl');
     });
   }
 

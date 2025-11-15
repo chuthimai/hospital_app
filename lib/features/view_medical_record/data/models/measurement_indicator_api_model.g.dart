@@ -11,8 +11,8 @@ MeasurementIndicatorApiModel _$MeasurementIndicatorApiModelFromJson(
     MeasurementIndicatorApiModel(
       type: json['type'] as String,
       unit: json['unit'] as String,
-      minimum: (json['minimum'] as num?)?.toDouble(),
-      maximum: (json['maximum'] as num?)?.toDouble(),
+      minimum: json['minimum'] as String?,
+      maximum: json['maximum'] as String?,
     );
 
 Map<String, dynamic> _$MeasurementIndicatorApiModelToJson(

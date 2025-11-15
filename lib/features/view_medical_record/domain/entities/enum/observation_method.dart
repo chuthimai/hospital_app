@@ -37,8 +37,8 @@ extension ObservationMethodExtension on ObservationMethod {
     }
   }
 
-  static ObservationMethod fromCode(String code) {
-    switch (code.toLowerCase()) {
+  static ObservationMethod fromCode(String? code) {
+    switch (code?.toLowerCase()) {
       case "inspection":
         return ObservationMethod.inspection;
       case "automated-count":

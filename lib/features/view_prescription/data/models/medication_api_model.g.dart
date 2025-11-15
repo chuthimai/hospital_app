@@ -8,14 +8,16 @@ part of 'medication_api_model.dart';
 
 MedicationApiModel _$MedicationApiModelFromJson(Map<String, dynamic> json) =>
     MedicationApiModel(
-      id: (json['id'] as num).toInt(),
+      identifier: (json['identifier'] as num).toInt(),
       name: json['name'] as String,
       doseForm: json['doseForm'] as String,
+      code: json['code'] as String,
     );
 
 Map<String, dynamic> _$MedicationApiModelToJson(MedicationApiModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'identifier': instance.identifier,
       'name': instance.name,
       'doseForm': instance.doseForm,
+      'code': instance.code,
     };

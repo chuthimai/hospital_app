@@ -9,9 +9,9 @@ part of 'patient_record_api_model.dart';
 PatientRecordApiModel _$PatientRecordApiModelFromJson(
         Map<String, dynamic> json) =>
     PatientRecordApiModel(
-      id: (json['id'] as num).toInt(),
-      status: json['status'] as String,
-      createTime: DateTime.parse(json['createTime'] as String),
+      identifier: (json['identifier'] as num).toInt(),
+      status: json['status'] as bool,
+      createdTime: DateTime.parse(json['createdTime'] as String),
       serviceReports: (json['serviceReports'] as List<dynamic>?)
               ?.map((e) =>
                   ServiceReportApiModel.fromJson(e as Map<String, dynamic>))
@@ -21,14 +21,16 @@ PatientRecordApiModel _$PatientRecordApiModelFromJson(
           ? null
           : PrescriptionApiModel.fromJson(
               json['prescription'] as Map<String, dynamic>),
+      exportFileName: json['exportFileName'] as String?,
     );
 
 Map<String, dynamic> _$PatientRecordApiModelToJson(
         PatientRecordApiModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'identifier': instance.identifier,
       'status': instance.status,
-      'createTime': instance.createTime.toIso8601String(),
+      'createdTime': instance.createdTime.toIso8601String(),
       'serviceReports': instance.serviceReports.map((e) => e.toJson()).toList(),
       'prescription': instance.prescription?.toJson(),
+      'exportFileName': instance.exportFileName,
     };

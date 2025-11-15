@@ -4,14 +4,9 @@ import 'package:hospital_app/features/appointment/data/models/work_schedule_db_m
 import 'package:hospital_app/features/notification/data/models/notification_db_model.dart';
 import 'package:hospital_app/features/view_doctor/data/models/medical_specialty_db_model.dart';
 import 'package:hospital_app/features/view_doctor/data/models/physician_db_model.dart';
-import 'package:hospital_app/features/view_medical_record/data/models/assessment_item_db_model.dart';
-import 'package:hospital_app/features/view_medical_record/data/models/assessment_result_db_model.dart';
-import 'package:hospital_app/features/view_medical_record/data/models/diagnosis_report_db_model.dart';
-import 'package:hospital_app/features/view_medical_record/data/models/image_report_db_model.dart';
-import 'package:hospital_app/features/view_medical_record/data/models/image_study_db_model.dart';
-import 'package:hospital_app/features/view_medical_record/data/models/measurement_indicator_db_model.dart';
+import 'package:hospital_app/features/view_invoice/data/models/invoice_db_model.dart';
+import 'package:hospital_app/features/view_invoice/data/models/service_invoice_db_model.dart';
 import 'package:hospital_app/features/view_medical_record/data/models/patient_record_db_model.dart';
-import 'package:hospital_app/features/view_medical_record/data/models/service_report_db_model.dart';
 import 'package:hospital_app/features/view_prescription/data/models/medication_db_model.dart';
 import 'package:hospital_app/features/view_prescription/data/models/prescribed_medication_db_model.dart';
 import 'package:hospital_app/features/view_prescription/data/models/prescription_db_model.dart';
@@ -28,12 +23,15 @@ class IsarService {
     final dir = await getApplicationDocumentsDirectory();
     _isar = await Isar.open(
       [
+        // Đơn thuốc
         PrescriptionDbModelSchema,
         PrescribedMedicationDbModelSchema,
         MedicationDbModelSchema,
 
+        // Thông báo
         NotificationDbModelSchema,
 
+        // Đặt lịch
         LocationDbModelSchema,
         ServiceDbModelSchema,
         PhysicianDbModelSchema,
@@ -42,14 +40,12 @@ class IsarService {
         ShiftDbModelSchema,
         WorkScheduleDbModelSchema,
 
-        AssessmentItemDbModelSchema,
-        AssessmentResultDbModelSchema,
-        DiagnosisReportDbModelSchema,
-        ImageReportDbModelSchema,
-        ImageStudyDbModelSchema,
-        MeasurementIndicatorDbModelSchema,
+        // Bệnh án
         PatientRecordDbModelSchema,
-        ServiceReportDbModelSchema,
+
+        // Hoá đơn
+        InvoiceDbModelSchema,
+        ServiceInvoiceDbModelSchema,
       ],
       directory: dir.path,
       inspector: true,

@@ -5,6 +5,7 @@ enum ConditionDiagnosisSeverity {
   severe,
   moderate,
   mild,
+  unknow,
 }
 
 extension ConditionDiagnosisSeverityExtension on ConditionDiagnosisSeverity {
@@ -16,6 +17,8 @@ extension ConditionDiagnosisSeverityExtension on ConditionDiagnosisSeverity {
         return "Trung bình";
       case ConditionDiagnosisSeverity.mild:
         return "Nhẹ";
+      case ConditionDiagnosisSeverity.unknow:
+        return "Chưa xác định";
     }
   }
 
@@ -28,6 +31,8 @@ extension ConditionDiagnosisSeverityExtension on ConditionDiagnosisSeverity {
         return "6736007";
       case ConditionDiagnosisSeverity.mild:
         return "255604002";
+      case ConditionDiagnosisSeverity.unknow:
+        return "unknow";
     }
   }
 
@@ -36,12 +41,18 @@ extension ConditionDiagnosisSeverityExtension on ConditionDiagnosisSeverity {
     switch (code) {
       case "24484000":
         return ConditionDiagnosisSeverity.severe;
+      case "severe":
+        return ConditionDiagnosisSeverity.severe;
       case "6736007":
+        return ConditionDiagnosisSeverity.moderate;
+      case "moderate":
         return ConditionDiagnosisSeverity.moderate;
       case "255604002":
         return ConditionDiagnosisSeverity.mild;
+      case "mild":
+        return ConditionDiagnosisSeverity.mild;
       default:
-        throw ArgumentError("Invalid ConditionDiagnosisSeverity code: $code");
+        return ConditionDiagnosisSeverity.unknow;
     }
   }
 }

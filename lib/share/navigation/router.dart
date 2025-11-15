@@ -20,6 +20,9 @@ import 'package:hospital_app/features/view_invoice/domain/entities/invoice.dart'
 import 'package:hospital_app/features/view_invoice/presentation/view/qr_code_payment_screen.dart';
 import 'package:hospital_app/features/view_invoice/presentation/view/view_invoice_detail_screen.dart';
 import 'package:hospital_app/features/view_invoice/presentation/view/view_invoices_screen.dart';
+import 'package:hospital_app/features/view_medical_record/domain/entities/patient_record.dart';
+import 'package:hospital_app/features/view_medical_record/domain/entities/service_report.dart';
+import 'package:hospital_app/features/view_medical_record/presentation/view/view_detail_service_report_screen.dart';
 import 'package:hospital_app/features/view_medical_record/presentation/view/view_medical_record_detail_screen.dart';
 import 'package:hospital_app/features/view_medical_record/presentation/view/view_medical_records_screen.dart';
 import 'package:hospital_app/features/view_prescription/domain/entities/prescription.dart';
@@ -93,32 +96,39 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/appointments-history',
       builder: (context, state) {
-        return const ViewAppointmentsScreen();
+        return ViewAppointmentsScreen();
       },
     ),
     GoRoute(
       path: '/services',
       builder: (context, state) {
-        return const ViewServicesScreen();
+        return ViewServicesScreen();
       },
     ),
     GoRoute(
       path: '/medical-records',
       builder: (context, state) {
-        return const ViewMedicalRecordsScreen();
+        return ViewMedicalRecordsScreen();
       },
     ),
     GoRoute(
       path: '/medical-records/:id',
       builder: (context, state) {
-        // final medicalRecordId = state.pathParameters['id']!;
-        return const ViewMedicalRecordDetailScreen();
+        final patientRecord = state.extra as PatientRecord;
+        return ViewMedicalRecordDetailScreen(patientRecord);
+      },
+    ),
+    GoRoute(
+      path: '/medical-records/:id/service-reports/:serviceReportId',
+      builder: (context, state) {
+        final serviceReport = state.extra as ServiceReport;
+        return ViewDetailServiceReportScreen(serviceReport);
       },
     ),
     GoRoute(
       path: '/prescriptions',
       builder: (context, state) {
-        return const ViewPrescriptionsScreen();
+        return ViewPrescriptionsScreen();
       },
     ),
     GoRoute(
@@ -144,7 +154,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/invoices',
       builder: (context, state) {
-        return const ViewInvoicesScreen();
+        return ViewInvoicesScreen();
       },
     ),
     GoRoute(

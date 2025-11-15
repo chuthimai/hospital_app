@@ -34,7 +34,11 @@ class PrescribedMedicationDbModel {
     return model;
   }
 
-  PrescribedMedication toEntity() {
+  Future<PrescribedMedication> toEntity() async {
+    Future.wait([
+      medication.load(),
+    ]);
+
     return PrescribedMedication(
       id: id,
       medication: medication.value?.toEntity() ??

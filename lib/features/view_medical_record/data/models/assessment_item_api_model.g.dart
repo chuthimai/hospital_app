@@ -9,23 +9,20 @@ part of 'assessment_item_api_model.dart';
 AssessmentItemApiModel _$AssessmentItemApiModelFromJson(
         Map<String, dynamic> json) =>
     AssessmentItemApiModel(
-      id: (json['id'] as num).toInt(),
+      identifier: (json['identifier'] as num).toInt(),
       name: json['name'] as String,
-      parentAssessmentItem: json['parentAssessmentItem'] == null
-          ? null
-          : AssessmentItemApiModel.fromJson(
-              json['parentAssessmentItem'] as Map<String, dynamic>),
-      measurementIndicator: json['measurementIndicator'] == null
+      parentIdentifier: (json['parentIdentifier'] as num?)?.toInt(),
+      measurementItem: json['measurementItem'] == null
           ? null
           : MeasurementIndicatorApiModel.fromJson(
-              json['measurementIndicator'] as Map<String, dynamic>),
+              json['measurementItem'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$AssessmentItemApiModelToJson(
         AssessmentItemApiModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'identifier': instance.identifier,
       'name': instance.name,
-      'parentAssessmentItem': instance.parentAssessmentItem?.toJson(),
-      'measurementIndicator': instance.measurementIndicator?.toJson(),
+      'parentIdentifier': instance.parentIdentifier,
+      'measurementItem': instance.measurementItem?.toJson(),
     };

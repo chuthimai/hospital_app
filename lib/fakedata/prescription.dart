@@ -7,7 +7,7 @@ import 'package:hospital_app/features/view_prescription/domain/entities/prescrip
 List<Prescription> fakePrescriptions = [
   Prescription(
     id: 1,
-    createTime: DateTime(2025, 9, 15, 9, 30),
+    createdTime: DateTime(2025, 9, 15, 9, 30),
     performer: fakePhysicians[0], // BS. Nguyễn Văn A
     prescribedMedications: [
       PrescribedMedication(
@@ -27,7 +27,7 @@ List<Prescription> fakePrescriptions = [
   ),
   Prescription(
     id: 2,
-    createTime: DateTime(2025, 9, 16, 14, 15),
+    createdTime: DateTime(2025, 9, 16, 14, 15),
     performer: fakePhysicians[1], // BS. Trần Thị B
     prescribedMedications: [
       PrescribedMedication(
@@ -46,7 +46,7 @@ List<Prescription> fakePrescriptions = [
   ),
   Prescription(
     id: 3,
-    createTime: DateTime(2025, 9, 18, 10, 45),
+    createdTime: DateTime(2025, 9, 18, 10, 45),
     performer: fakePhysicians[2], // BS. Lê Văn C
     prescribedMedications: [
       PrescribedMedication(

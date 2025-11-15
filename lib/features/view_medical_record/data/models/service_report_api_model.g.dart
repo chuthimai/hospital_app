@@ -9,17 +9,18 @@ part of 'service_report_api_model.dart';
 ServiceReportApiModel _$ServiceReportApiModelFromJson(
         Map<String, dynamic> json) =>
     ServiceReportApiModel(
-      id: (json['id'] as num).toInt(),
-      category: json['category'] as String,
-      method: json['method'] as String,
-      status: json['status'] as String,
+      identifier: (json['identifier'] as num).toInt(),
+      category: json['category'] as String? ?? "",
+      method: json['method'] as String? ?? "",
+      status: json['status'] as bool,
       effectiveTime: json['effectiveTime'] == null
           ? null
           : DateTime.parse(json['effectiveTime'] as String),
+      recordedTime: json['recordedTime'] == null
+          ? null
+          : DateTime.parse(json['recordedTime'] as String),
       service:
           ServiceApiModel.fromJson(json['service'] as Map<String, dynamic>),
-      requester:
-          PhysicianApiModel.fromJson(json['requester'] as Map<String, dynamic>),
       performer: json['performer'] == null
           ? null
           : PhysicianApiModel.fromJson(
@@ -37,21 +38,26 @@ ServiceReportApiModel _$ServiceReportApiModelFromJson(
           ? null
           : ImagingReportApiModel.fromJson(
               json['imagingReport'] as Map<String, dynamic>),
+      laboratoryReport: json['laboratoryReport'] == null
+          ? null
+          : LaboratoryReportApiModel.fromJson(
+              json['laboratoryReport'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ServiceReportApiModelToJson(
         ServiceReportApiModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'identifier': instance.identifier,
       'category': instance.category,
       'method': instance.method,
       'status': instance.status,
       'effectiveTime': instance.effectiveTime?.toIso8601String(),
+      'recordedTime': instance.recordedTime?.toIso8601String(),
       'service': instance.service.toJson(),
-      'requester': instance.requester.toJson(),
       'performer': instance.performer?.toJson(),
       'assessmentResults':
           instance.assessmentResults.map((e) => e.toJson()).toList(),
       'diagnosisReport': instance.diagnosisReport?.toJson(),
       'imagingReport': instance.imagingReport?.toJson(),
+      'laboratoryReport': instance.laboratoryReport?.toJson(),
     };

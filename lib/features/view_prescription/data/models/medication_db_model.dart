@@ -6,7 +6,7 @@ part 'medication_db_model.g.dart';
 
 @collection
 class MedicationDbModel {
-  Id id = 0;
+  Id id;
   late String name;
   late String doseForm;
 

@@ -8,8 +8,8 @@ part 'measurement_indicator_api_model.g.dart';
 class MeasurementIndicatorApiModel {
   final String type;
   final String unit;
-  final double? minimum;
-  final double? maximum;
+  final String? minimum;
+  final String? maximum;
 
   MeasurementIndicatorApiModel({
     required this.type,

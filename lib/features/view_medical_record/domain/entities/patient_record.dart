@@ -6,15 +6,30 @@ import 'service_report.dart';
 class PatientRecord {
   final int id;
   final RecordStatus status;
-  final DateTime createTime;
+  final DateTime createdTime;
   final List<ServiceReport> serviceReports;
   final Prescription? prescription;
+  final String? pathUrl;
+  String? pathFilePdf;
 
   PatientRecord({
     required this.id,
     this.status = RecordStatus.incomplete,
-    required this.createTime,
+    required this.createdTime,
     this.serviceReports = const [],
-    this.prescription
+    this.prescription,
+    this.pathUrl,
+    this.pathFilePdf,
   });
+
+  @override
+  String toString() {
+    return 'PatientRecord{\n'
+        'id: $id, \n'
+        'status: $status, \n'
+        'pathUrl: $pathUrl, \n'
+        'pathFilePdf: $pathFilePdf, \n'
+        'serviceReports: ${serviceReports.length}\n'
+        '}';
+  }
 }
