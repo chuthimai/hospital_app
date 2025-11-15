@@ -11,6 +11,7 @@ class SecureTokenStorage {
   // Key
   static const String _accessTokenKey = 'ACCESS_TOKEN';
   static const String _refreshTokenKey = 'REFRESH_TOKEN';
+  static const String _deviceTokenKey = 'DEVICE_TOKEN';
 
   // Ghi token
   Future<void> writeAccessToken(String token) async {
@@ -19,6 +20,10 @@ class SecureTokenStorage {
 
   Future<void> writeRefreshToken(String token) async {
     await _storage.write(key: _refreshTokenKey, value: token);
+  }
+
+  Future<void> writeDeviceToken(String token) async {
+    await _storage.write(key: _deviceTokenKey, value: token);
   }
 
   // Đọc token
@@ -30,9 +35,14 @@ class SecureTokenStorage {
     return await _storage.read(key: _refreshTokenKey);
   }
 
+  Future<String?> readDeviceToken() async {
+    return await _storage.read(key: _deviceTokenKey);
+  }
+
   // Xóa token
   Future<void> deleteTokens() async {
     await _storage.delete(key: _accessTokenKey);
     await _storage.delete(key: _refreshTokenKey);
+    await _storage.delete(key: _deviceTokenKey);
   }
 }

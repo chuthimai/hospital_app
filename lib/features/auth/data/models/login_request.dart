@@ -8,6 +8,7 @@ part 'login_request.g.dart';
 class LoginRequest {
   final int identifier;
   final String password;
+  final String? deviceToken;
 
   @JsonKey(defaultValue: "patient")
   final String role;
@@ -16,10 +17,15 @@ class LoginRequest {
     required this.identifier,
     required this.password,
     this.role = "patient",
+    this.deviceToken,
   });
 
   factory LoginRequest.fromParams(LoginParams params) {
-    return LoginRequest(identifier: params.id, password: params.password);
+    return LoginRequest(
+      identifier: params.id,
+      password: params.password,
+      deviceToken: params.deviceToken,
+    );
   }
 
   factory LoginRequest.fromJson(Map<String, dynamic> json) =>

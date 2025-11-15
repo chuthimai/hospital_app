@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hospital_app/share/db/secure_token_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hospital_app/share/widgets/app_snack_bar.dart';
 import 'package:hospital_app/share/widgets/custom_button.dart';
@@ -180,13 +181,15 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _onClickLogin(BuildContext context) {
+  void _onClickLogin(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       FocusScope.of(context).unfocus();
 
+      final deviceToken = await SecureTokenStorage().readDeviceToken();
       final request = LoginParams(
         id: int.parse(_idController.text),
         password: _passwordController.text,
+        deviceToken: deviceToken,
       );
 
       context.read<AuthCubit>().login(request);
