@@ -24,9 +24,7 @@ class DoctorCard extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          subtitle: Text(
-              "Giới tính: ${doctor.gender == null ? "Chưa có thông tin" : doctor.gender! ? "Nam" : "Nữ"}\n"
-                  "Chuyên khoa: ${doctor.specialty?.name ?? "Chưa có thông tin"}"),
+          subtitle: Text("Chuyên khoa: ${doctor.specialty?.name ?? "Chưa có thông tin"}"),
           trailing: const Icon(Icons.arrow_forward_ios),
         ),
         onTap: () => context.push(
