@@ -6,6 +6,7 @@ import '../../domain/entities/qualification.dart';
 
 class QualificationCard extends StatelessWidget {
   final Qualification qualification;
+
   const QualificationCard(this.qualification, {super.key});
 
   @override
@@ -18,7 +19,8 @@ class QualificationCard extends StatelessWidget {
             title: Text(qualification.name),
             subtitle: Text(
                 "${qualification.specialty} - ${qualification.issuer}\n"
-                    "Hiệu lực: ${DateFormatter.format(qualification.effectiveDate)}"),
+                "Hiệu lực từ: ${DateFormatter.format(qualification.effectiveDate)}\n"
+                "Ngày hết hạn: ${qualification.expiredDate != null ? DateFormatter.format(qualification.expiredDate!) : "Không có thông tin"}"),
           ),
         ),
         Positioned(
@@ -42,5 +44,4 @@ class QualificationCard extends StatelessWidget {
       ],
     );
   }
-
 }
