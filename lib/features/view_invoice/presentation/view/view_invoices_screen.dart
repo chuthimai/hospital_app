@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hospital_app/features/view_invoice/presentation/cubit/invoice_state.dart';
 
 import '../../data/datasource/invoice_local_data_source.dart';
 import '../../data/datasource/invoice_remote_data_source.dart';
@@ -26,8 +27,17 @@ class ViewInvoicesScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Hoá đơn'),
         ),
-        body: const SafeArea(
-          child: InvoicesListView(),
+        body: SafeArea(
+          child: BlocBuilder<InvoiceCubit, InvoiceState>(
+            builder: (context, state) {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  context.read<InvoiceCubit>().getAllInvoices();
+                },
+                child: const InvoicesListView(),
+              );
+            }
+          ),
         ),
       ),
     );
