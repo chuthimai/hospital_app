@@ -1,6 +1,6 @@
 import 'location.dart';
 
-class Service {
+class Service implements Comparable<Service>{
   final int _id;
   final String _name;
   String? extraDetails;
@@ -24,4 +24,23 @@ class Service {
   String get name => _name;
   double? get price => _price;
   bool get isCompleted => _isCompleted;
+
+  @override
+  int compareTo(Service other) {
+    final thisKey = _reverseFullAddress(location);
+    final otherKey = _reverseFullAddress(other.location);
+
+    return thisKey.compareTo(otherKey);
+  }
+
+  String _reverseFullAddress(Location? loc) {
+    if (loc == null) return '';
+
+    final parts = loc.fullAddress.split(',')
+        .map((p) => p.trim())
+        .toList();
+
+    return parts.reversed.join(', ');
+  }
+
 }

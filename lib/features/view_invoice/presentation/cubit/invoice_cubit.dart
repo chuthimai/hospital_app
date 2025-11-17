@@ -13,6 +13,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
     emit(InvoiceInitial());
     try {
       final invoices = await _repo.getAllInvoices();
+      invoices.sort();
       emit(InvoiceGetAllSuccess(invoices));
     } catch(e) {
       emit(InvoiceGetAllFailure(e.toString()));

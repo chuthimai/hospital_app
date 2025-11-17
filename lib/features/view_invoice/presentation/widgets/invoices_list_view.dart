@@ -40,8 +40,6 @@ class _InvoicesListViewState extends State<InvoicesListView> {
         );
       }
 
-      invoices.sort();
-
       return ListView.builder(
         itemCount: invoices.length,
         itemBuilder: (context, index) {

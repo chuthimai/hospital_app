@@ -13,6 +13,7 @@ class PrescriptionCubit extends Cubit<PrescriptionState> {
     emit(PrescriptionInitial());
     try {
       final prescriptions = await _repo.getAllPrescriptions();
+      prescriptions.sort();
       emit(PrescriptionGetAllSuccess(prescriptions));
     } catch(e) {
       emit(PrescriptionGetAllFailure(e.toString()));

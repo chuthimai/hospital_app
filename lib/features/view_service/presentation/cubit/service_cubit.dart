@@ -13,6 +13,7 @@ class ServiceCubit extends Cubit<ServiceState> {
     emit(ServiceInitial());
     try {
       final services = await _repo.getAllIncompleteServices();
+      services.sort();
       emit(ServiceGetSuccess(services));
     } catch (e) {
       emit(ServiceGetFailure(e.toString()));
