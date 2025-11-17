@@ -7,6 +7,8 @@ import 'package:hospital_app/features/view_medical_record/domain/repositories/me
 import 'package:hospital_app/features/view_medical_record/presentation/cubit/patient_record_cubit.dart';
 import 'package:hospital_app/features/view_medical_record/presentation/widgets/medical_records_list_view.dart';
 
+import '../cubit/patient_record_state.dart';
+
 class ViewMedicalRecordsScreen extends StatelessWidget {
   ViewMedicalRecordsScreen({super.key});
 
@@ -25,8 +27,17 @@ class ViewMedicalRecordsScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Hồ sơ sức khoẻ'),
         ),
-        body: const SafeArea(
-          child: MedicalRecordListView()
+        body: SafeArea(
+          child: BlocBuilder<PatientRecordCubit, PatientRecordState>(
+            builder: (context, state) {
+              return RefreshIndicator(
+                  onRefresh: () async {
+                    context.read<PatientRecordCubit>().getAllPatientRecords();
+                  },
+                  child: const MedicalRecordListView()
+              );
+            }
+          )
         ),
       ),
     );

@@ -124,7 +124,7 @@ class _InvoiceDetailViewState extends State<InvoiceDetailView> {
                       DataCell(
                         Center(
                           child: Text(
-                            MoneyFormatter.format(widget.invoice.totalGross),
+                            MoneyFormatter.format(invoice.totalGross),
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),

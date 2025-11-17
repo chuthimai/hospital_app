@@ -1,17 +1,27 @@
 import 'medication.dart';
 
 class PrescribedMedication {
-  final int id;
-  final int quantity;
-  final String dosageInstruction;
-  final String? note;
-  final Medication medication;
+  final int _id;
+  final int _quantity;
+  final String _dosageInstruction;
+  final String? _note;
+  final Medication _medication;
 
   PrescribedMedication({
-    required this.id,
-    required this.quantity,
-    required this.dosageInstruction,
-    this.note,
-    required this.medication,
-  });
+    required int id,
+    required int quantity,
+    required String dosageInstruction,
+    String? note,
+    required Medication medication,
+  }) : _id = id,
+        _quantity = quantity,
+        _dosageInstruction = dosageInstruction,
+        _note = note,
+        _medication = medication;
+
+  int get id => _id;
+  int get quantity => _quantity;
+  String get dosageInstruction => _dosageInstruction;
+  String? get note => _note;
+  Medication get medication => _medication;
 }

@@ -1,5 +1,7 @@
 class RegisterParams {
-  final int id;
+  final int _id;
 
-  RegisterParams({required this.id});
+  RegisterParams({required int id}) : _id = id;
+
+  int get id => _id;
 }

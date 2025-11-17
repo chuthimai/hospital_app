@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hospital_app/fakedata/physician.dart';
 import 'package:hospital_app/features/view_doctor/presentation/widgets/qualification_card.dart';
 import 'package:hospital_app/share/constants/app_default.dart';
@@ -32,10 +33,32 @@ class ViewDoctorDetailScreen extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    radius: 40,
-                    backgroundImage: doctor1.photo == null
-                        ? AssetImage(AppDefault.imageLink) as ImageProvider
-                        : NetworkImage(doctor1.photo!) as ImageProvider,
+                    radius: 40.sp,
+                    backgroundColor: Theme.of(context).cardColor,
+                    child: ClipOval(
+                      child: doctor1.photo == null
+                          ? Image.asset(
+                              AppDefault.imageLink,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                            )
+                          : Image.network(
+                              doctor1.photo!,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                              errorBuilder: (context, error, stackTrace) {
+                                // Khi load ảnh lỗi → dùng ảnh mặc định
+                                return Image.asset(
+                                  AppDefault.imageLink,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                );
+                              },
+                            ),
+                    ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(

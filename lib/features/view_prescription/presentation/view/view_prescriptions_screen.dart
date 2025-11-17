@@ -7,6 +7,7 @@ import '../../data/datasources/prescription_remote_data_source.dart';
 import '../../data/repositories/pescription_repository_impl.dart';
 import '../../domain/repositories/pescription_repository.dart';
 import '../cubit/prescription_cubit.dart';
+import '../cubit/prescription_state.dart';
 
 class ViewPrescriptionsScreen extends StatelessWidget {
   ViewPrescriptionsScreen({super.key});
@@ -26,8 +27,16 @@ class ViewPrescriptionsScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Đơn thuốc'),
         ),
-        body: const SafeArea(
-          child: PrescriptionsListView(),
+        body: SafeArea(
+          child: BlocBuilder<PrescriptionCubit, PrescriptionState>(
+              builder: (context, state) {
+            return RefreshIndicator(
+              onRefresh: () async {
+                context.read<PrescriptionCubit>().getAllPrescriptions();
+              },
+              child: const PrescriptionsListView(),
+            );
+          }),
         ),
       ),
     );

@@ -1,22 +1,32 @@
 import 'shift.dart';
 
 class WorkSchedule {
-  final int id;
-  final DateTime date;
-  Shift? shift;
+  final int _id;
+  final DateTime _date;
+  Shift? _shift;
 
   WorkSchedule({
-    required this.id,
-    required this.date,
-    this.shift,
-  });
+    required int id,
+    required DateTime date,
+    Shift? shift,
+  })  : _id = id,
+        _date = date,
+        _shift = shift;
+
+  int get id => _id;
+  DateTime get date => _date;
+  Shift? get shift => _shift;
 
   void setShift(Shift newShift) {
-    shift = newShift;
+    _shift = newShift;
   }
 
   @override
   String toString() {
-    return 'WorkSchedule{\nid: $id, \ndate: $date, \nshift: $shift}';
+    return 'WorkSchedule{\n'
+        'id: $_id,\n'
+        'date: $_date,\n'
+        'shift: $_shift\n'
+        '}';
   }
 }

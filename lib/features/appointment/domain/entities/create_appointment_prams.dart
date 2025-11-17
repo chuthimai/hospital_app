@@ -1,11 +1,17 @@
 class CreateAppointmentParams {
-  final int workScheduleIdentifier;
-  final int? physicianIdentifier;
-  final int userIdentifier;
+  final int _workScheduleIdentifier;
+  final int? _physicianIdentifier;
+  final int _userIdentifier;
 
   CreateAppointmentParams({
-    required this.workScheduleIdentifier,
-    this.physicianIdentifier,
-    required this.userIdentifier,
-  });
+    required int workScheduleIdentifier,
+    int? physicianIdentifier,
+    required int userIdentifier,
+  })  : _workScheduleIdentifier = workScheduleIdentifier,
+        _physicianIdentifier = physicianIdentifier,
+        _userIdentifier = userIdentifier;
+
+  int get workScheduleIdentifier => _workScheduleIdentifier;
+  int? get physicianIdentifier => _physicianIdentifier;
+  int get userIdentifier => _userIdentifier;
 }

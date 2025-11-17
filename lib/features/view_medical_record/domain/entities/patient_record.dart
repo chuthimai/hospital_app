@@ -4,32 +4,50 @@ import 'package:hospital_app/features/view_prescription/domain/entities/prescrip
 import 'service_report.dart';
 
 class PatientRecord {
-  final int id;
-  final RecordStatus status;
-  final DateTime createdTime;
-  final List<ServiceReport> serviceReports;
-  final Prescription? prescription;
-  final String? pathUrl;
-  String? pathFilePdf;
+  final int _id;
+  final RecordStatus _status;
+  final DateTime _createdTime;
+  final List<ServiceReport> _serviceReports;
+  final Prescription? _prescription;
+  final String? _pathUrl;
+  String? _pathFilePdf;
 
   PatientRecord({
-    required this.id,
-    this.status = RecordStatus.incomplete,
-    required this.createdTime,
-    this.serviceReports = const [],
-    this.prescription,
-    this.pathUrl,
-    this.pathFilePdf,
-  });
+    required int id,
+    RecordStatus status = RecordStatus.incomplete,
+    required DateTime createdTime,
+    List<ServiceReport> serviceReports = const [],
+    Prescription? prescription,
+    String? pathUrl,
+    String? pathFilePdf,
+  }) : _id = id,
+        _status = status,
+        _createdTime = createdTime,
+        _serviceReports = serviceReports,
+        _prescription = prescription,
+        _pathUrl = pathUrl,
+        _pathFilePdf = pathFilePdf;
+
+  int get id => _id;
+  RecordStatus get status => _status;
+  DateTime get createdTime => _createdTime;
+  List<ServiceReport> get serviceReports => _serviceReports;
+  Prescription? get prescription => _prescription;
+  String? get pathUrl => _pathUrl;
+  String? get pathFilePdf => _pathFilePdf;
+
+  set pathFilePdf(String? newPathFilePdf) {
+    _pathFilePdf = newPathFilePdf;
+  }
 
   @override
   String toString() {
     return 'PatientRecord{\n'
-        'id: $id, \n'
-        'status: $status, \n'
-        'pathUrl: $pathUrl, \n'
-        'pathFilePdf: $pathFilePdf, \n'
-        'serviceReports: ${serviceReports.length}\n'
+        'id: $_id, \n'
+        'status: $_status, \n'
+        'pathUrl: $_pathUrl, \n'
+        'pathFilePdf: $_pathFilePdf, \n'
+        'serviceReports: ${_serviceReports.length}\n'
         '}';
   }
 }

@@ -1,17 +1,23 @@
 class AssessmentResult {
-  final int id;
-  final String name;
+  final int _id;
+  final String _name;
   String? value;
-  final List<AssessmentResult> assessmentResults;
+  final List<AssessmentResult> _assessmentResults;
 
   AssessmentResult({
-    required this.id,
-    required this.name,
+    required int id,
+    required String name,
     this.value,
     List<AssessmentResult>? assessmentResults,
-  }) : assessmentResults = assessmentResults ?? [];
+  }) : _id = id,
+        _name = name,
+        _assessmentResults = assessmentResults ?? [];
+
+  int get id => _id;
+  String get name => _name;
+  List<AssessmentResult> get assessmentResults => _assessmentResults;
 
   void addChildAssessmentResult(AssessmentResult assessmentResult) {
-    assessmentResults.add(assessmentResult);
+    _assessmentResults.add(assessmentResult);
   }
 }
