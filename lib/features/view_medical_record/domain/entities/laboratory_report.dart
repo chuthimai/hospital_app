@@ -1,7 +1,7 @@
 import 'service_report.dart';
 
 class LaboratoryReport extends ServiceReport {
-  final String interpretation;
+  final String _interpretation;
 
   LaboratoryReport({
     required super.id,
@@ -13,6 +13,8 @@ class LaboratoryReport extends ServiceReport {
     super.assessmentResults,
     super.effectiveTime,
     super.recordedTime,
-    required this.interpretation,
-  });
+    required String interpretation,
+  }) : _interpretation = interpretation;
+
+  String get interpretation => _interpretation;
 }

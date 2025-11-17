@@ -1,18 +1,25 @@
 import 'package:hospital_app/features/view_service/domain/entities/service.dart';
-import 'package:isar/isar.dart';
 
 import 'invoice.dart';
 
 class ServiceInvoice {
-  final int id;
-  final Invoice? invoice;
-  final Service? service;
-  final double price;
+  final int _id;
+  final Invoice? _invoice;
+  final Service? _service;
+  final double _price;
 
   ServiceInvoice({
-    required this.id,
-    this.invoice,
-    this.service,
-    this.price=0.0,
-  });
+    required int id,
+    Invoice? invoice,
+    Service? service,
+    double price = 0.0,
+  }) : _id = id,
+        _invoice = invoice,
+        _service = service,
+        _price = price;
+
+  int get id => _id;
+  Invoice? get invoice => _invoice;
+  Service? get service => _service;
+  double get price => _price;
 }

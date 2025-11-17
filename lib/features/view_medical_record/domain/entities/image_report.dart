@@ -3,9 +3,9 @@ import 'package:hospital_app/features/view_medical_record/domain/entities/servic
 import 'image_study.dart';
 
 class ImageReport extends ServiceReport {
-  final String focus;
-  final List<ImageStudy> imageStudies;
-  final String interpretation;
+  final String _focus;
+  final List<ImageStudy> _imageStudies;
+  final String _interpretation;
 
   ImageReport({
     required super.id,
@@ -17,8 +17,14 @@ class ImageReport extends ServiceReport {
     super.assessmentResults,
     super.recordedTime,
     super.effectiveTime,
-    required this.focus,
-    this.imageStudies = const [],
-    required this.interpretation,
-  });
+    required String focus,
+    List<ImageStudy> imageStudies = const [],
+    required String interpretation,
+  }) : _focus = focus,
+        _imageStudies = imageStudies,
+        _interpretation = interpretation;
+
+  String get focus => _focus;
+  List<ImageStudy> get imageStudies => _imageStudies;
+  String get interpretation => _interpretation;
 }

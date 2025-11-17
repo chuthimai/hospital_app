@@ -1,21 +1,27 @@
-import 'package:isar/isar.dart';
-
 import 'location.dart';
 
 class Service {
-  final int id;
-  final String name;
+  final int _id;
+  final String _name;
   String? extraDetails;
-  final float? price;
+  final double? _price;
   Location? location;
-  final bool isCompleted;
+  final bool _isCompleted;
 
   Service({
-    required this.id,
-    required this.name,
+    required int id,
+    required String name,
     this.extraDetails,
-    this.price = 0.0,
+    double? price = 0.0,
     this.location,
-    this.isCompleted = true,
-  });
+    bool isCompleted = true,
+  }) : _id = id,
+        _name = name,
+        _price = price,
+        _isCompleted = isCompleted;
+
+  int get id => _id;
+  String get name => _name;
+  double? get price => _price;
+  bool get isCompleted => _isCompleted;
 }

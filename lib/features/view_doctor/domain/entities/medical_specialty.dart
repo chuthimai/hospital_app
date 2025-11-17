@@ -1,9 +1,13 @@
 class MedicalSpecialty {
-  final int id;
-  final String name;
+  final int _id;
+  final String _name;
 
   MedicalSpecialty({
-    required this.id,
-    required this.name,
-  });
+    required int id,
+    required String name,
+  }) : _id = id,
+        _name = name;
+
+  int get id => _id;
+  String get name => _name;
 }

@@ -3,21 +3,30 @@ import 'enum/invoice_status.dart';
 import 'service_invoice.dart';
 
 class Invoice implements Comparable<Invoice> {
-  final int id;
-  final Currencies currency;
-  final InvoiceStatus status;
-  final DateTime? createdTime;
+  final int _id;
+  final Currencies _currency;
+  final InvoiceStatus _status;
+  final DateTime? _createdTime;
   List<ServiceInvoice> _serviceInvoices;
 
   Invoice({
-    required this.id,
-    this.currency = Currencies.VND,
-    this.status = InvoiceStatus.issued,
-    this.createdTime,
+    required int id,
+    Currencies currency = Currencies.VND,
+    InvoiceStatus status = InvoiceStatus.issued,
+    DateTime? createdTime,
     List<ServiceInvoice>? serviceInvoices,
-  }) : _serviceInvoices = serviceInvoices ?? [];
+  }) : _id = id,
+        _currency = currency,
+        _status = status,
+        _createdTime = createdTime,
+        _serviceInvoices = serviceInvoices ?? [];
 
+  int get id => _id;
+  Currencies get currency => _currency;
+  InvoiceStatus get status => _status;
+  DateTime? get createdTime => _createdTime;
   List<ServiceInvoice> get serviceInvoices => _serviceInvoices;
+
   set serviceInvoices(List<ServiceInvoice>? invoices) {
     _serviceInvoices = invoices ?? [];
   }
@@ -27,14 +36,12 @@ class Invoice implements Comparable<Invoice> {
 
   @override
   int compareTo(Invoice other) {
-    if (status == InvoiceStatus.issued && other.status != InvoiceStatus.issued) {
+    if (_status == InvoiceStatus.issued && other._status != InvoiceStatus.issued) {
       return -1;
     }
-    if (status != InvoiceStatus.issued && other.status == InvoiceStatus.issued) {
+    if (_status != InvoiceStatus.issued && other._status == InvoiceStatus.issued) {
       return 1;
     }
-    return other.id.compareTo(id);
+    return other._id.compareTo(_id);
   }
-
-  
 }
