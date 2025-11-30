@@ -13,6 +13,7 @@ class PatientRecordCubit extends Cubit<PatientRecordState> {
     emit(PatientRecordInitial());
     try {
       final patientRecords = await _repo.getAllPatientRecords();
+      patientRecords.sort();
       emit(PatientRecordGetAllSuccess(patientRecords));
     } catch (e) {
       emit(PatientRecordGetAllFailure(e.toString()));

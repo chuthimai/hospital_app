@@ -2,7 +2,7 @@ import 'package:hospital_app/features/view_doctor/domain/entities/physician.dart
 
 import 'prescribed_medication.dart';
 
-class Prescription {
+class Prescription implements Comparable<Prescription>{
   final int _id;
   final DateTime _createdTime;
   final List<PrescribedMedication> _prescribedMedications;
@@ -26,4 +26,10 @@ class Prescription {
   List<PrescribedMedication> get prescribedMedications => _prescribedMedications;
   Physician? get performer => _performer;
   String? get note => _note;
+
+  @override
+  int compareTo(Prescription other) {
+    return other.createdTime.compareTo(createdTime);
+  }
+
 }

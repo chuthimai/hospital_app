@@ -3,7 +3,7 @@ import 'package:hospital_app/features/view_prescription/domain/entities/prescrip
 
 import 'service_report.dart';
 
-class PatientRecord {
+class PatientRecord implements Comparable<PatientRecord> {
   final int _id;
   final RecordStatus _status;
   final DateTime _createdTime;
@@ -50,4 +50,17 @@ class PatientRecord {
         'serviceReports: ${_serviceReports.length}\n'
         '}';
   }
+
+  @override
+  int compareTo(PatientRecord other) {
+    if (_status == RecordStatus.incomplete && other._status != RecordStatus.incomplete) {
+      return -1;
+    }
+    if (_status != RecordStatus.incomplete && other._status == RecordStatus.incomplete) {
+      return 1;
+    }
+    return other._id.compareTo(_id);
+  }
+
+
 }

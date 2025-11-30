@@ -25,6 +25,7 @@ class AppointmentCubit extends Cubit<AppointmentState> {
     emit(AppointmentInitial());
     try {
       final appointments = await repo.getAppointments(user);
+      appointments.sort();
       emit(AppointmentGetSuccess(appointments));
     } catch (e) {
       emit(AppointmentGetFailure(e.toString()));

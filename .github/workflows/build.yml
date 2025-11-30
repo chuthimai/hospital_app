@@ -60,3 +60,22 @@ jobs:
         with:
           name: app-release
           path: build/app/outputs/flutter-apk/app-release.apk
+
+      # -----------------------
+      # Firebase App Distribution
+      # -----------------------
+      - name: Set up Firebase CLI
+        uses: w9jds/firebase-action@v2.3.0
+        with:
+          args: firebase --version
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+
+      - name: Distribute APK via Firebase App Distribution
+        run: |
+          firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
+            --app ${{ secrets.FIREBASE_APP_ID_ANDROID }} \
+            --groups "testers" \
+            --release-notes "Automated build from GitHub Actions"
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
