@@ -65,7 +65,7 @@ jobs:
       # Firebase App Distribution
       # -----------------------
       - name: Set up Firebase CLI
-        uses: w9jds/firebase-action@v2.3.0
+        uses: w9jds/firebase-action@v2.2.0
         with:
           args: firebase --version
         env:
