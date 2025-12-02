@@ -29,17 +29,12 @@ import '../../domain/repositories/appointment_repository.dart';
 import '../../domain/repositories/shift_repository.dart';
 import '../../domain/repositories/work_schedule_repository.dart';
 import '../cubit/appointment_cubit.dart';
-import '../cubit/shift_cubit.dart';
 import '../cubit/work_schedule_cubit.dart';
 import '../widgets/booking_appointment_view.dart';
 
 class BookingAppointmentScreen extends StatelessWidget {
   final Physician? doctor;
   BookingAppointmentScreen({super.key, this.doctor});
-
-  final ShiftRepository _shiftRepo = ShiftRepositoryImpl(
-      localDataSource: ShiftLocalDataSourceImpl(),
-      remoteDataSource: ShiftRemoteDataSourceImpl());
 
   final WorkScheduleRepository _workScheduleRepo = WorkScheduleRepositoryImpl(
       localDataSource: WorkScheduleLocalDataSourceImpl(),
@@ -64,7 +59,6 @@ class BookingAppointmentScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AppointmentCubit(_appointmentRepo)),
-        BlocProvider(create: (context) => ShiftCubit(_shiftRepo)),
         BlocProvider(create: (context) => WorkScheduleCubit(_workScheduleRepo)),
         BlocProvider(create: (context) => SpecialtyCubit(_specialtyRepo)),
         BlocProvider(create: (context) => PhysicianCubit(_physicianRepo)),
