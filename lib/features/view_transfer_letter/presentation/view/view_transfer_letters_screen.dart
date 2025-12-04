@@ -9,7 +9,10 @@ class ViewTransferLettersScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('ViewTransfersLetterScreen'),
+          title: const Text('Giấy chuyển viện'),
+        ),
+        body: const Center(
+          child: Text('Không có dữ liệu'),
         ),
       ),
     );
