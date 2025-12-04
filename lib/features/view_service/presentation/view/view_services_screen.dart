@@ -22,15 +22,16 @@ class ViewServicesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dịch vụ cần làm'),
-        actions: [
-          IconButton(
-            onPressed: () => {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (ctx) => ServiceListScreen()))
-            },
-            icon: const Icon(Icons.add),
-          ),
-        ],
+        // TODO: Trang sửa để có UI mới
+        // actions: [
+        //   IconButton(
+        //     onPressed: () => {
+        //       Navigator.of(context).push(
+        //           MaterialPageRoute(builder: (ctx) => ServiceListScreen()))
+        //     },
+        //     icon: const Icon(Icons.add),
+        //   ),
+        // ],
       ),
       body: SafeArea(
         child: MultiBlocProvider(

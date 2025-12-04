@@ -7,6 +7,8 @@ class ServiceListScreen extends StatelessWidget {
     Service(id: 2, name: 'Counting Operations', isCompleted: true),
   ];
 
+  ServiceListScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
