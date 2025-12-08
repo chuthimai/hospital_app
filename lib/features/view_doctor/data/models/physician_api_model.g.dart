@@ -8,7 +8,7 @@ part of 'physician_api_model.dart';
 
 PhysicianApiModel _$PhysicianApiModelFromJson(Map<String, dynamic> json) =>
     PhysicianApiModel(
-      identifier: (json['identifier'] as num).toInt(),
+      identifier: json['identifier'] as String,
       name: json['name'] as String,
       gender: json['gender'] as bool?,
       role: json['role'] as String?,

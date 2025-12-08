@@ -8,7 +8,7 @@ part 'physician_api_model.g.dart';
 
 @JsonSerializable()
 class PhysicianApiModel {
-  final int identifier;
+  final String identifier;
   final String name;
   final bool? gender;
   final String? role;
@@ -34,7 +34,7 @@ class PhysicianApiModel {
   Map<String, dynamic> toJson() => _$PhysicianApiModelToJson(this);
 
   Physician toEntity() => Physician(
-        id: identifier,
+        id: int.parse(identifier),
         name: name,
         gender: gender,
         role: Roles.physician,
@@ -45,7 +45,7 @@ class PhysicianApiModel {
       );
 
   factory PhysicianApiModel.fromEntity(Physician entity) => PhysicianApiModel(
-        identifier: entity.id,
+        identifier: entity.id.toString(),
         name: entity.name,
         gender: entity.gender ?? true,
         role: entity.role.name,

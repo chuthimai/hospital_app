@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hospital_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:hospital_app/share/constants/app_config.dart';
@@ -46,6 +47,14 @@ class RemoteService {
           SecureTokenStorage(),
           Dio(BaseOptions(baseUrl: AppConfig.baseUrl)),
         ) {
+
+    // TODO:️ bypass SSL self-signed (DEV only)
+    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      client.badCertificateCallback = (cert, host, port) => true;
+      return client;
+    };
+
     // Logging (chỉ khi debug)
     if (kDebugMode) {
       _dio.interceptors.add(LogInterceptor(
