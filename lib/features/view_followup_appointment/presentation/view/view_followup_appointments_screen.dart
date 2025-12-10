@@ -6,12 +6,12 @@ class ViewFollowupAppointmentsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Giấy hẹn tái khám'),
-        ),
-        body: const Center(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Giấy hẹn tái khám'),
+      ),
+      body: const SafeArea(
+        child: Center(
           child: Text('Không có dữ liệu'),
         ),
       ),
