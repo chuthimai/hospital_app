@@ -89,8 +89,6 @@ Sử dụng tổ chức code theo kiến trúc Clean Architecture kết hợp v�
 ├── web/           # Code hỗ trợ chạy trên Web
 └── windows/       # Code native cho Windows desktop
 ```
-## CSDL
-
 
 ## Nhánh build
 Các bước thực hiện triển khai:
