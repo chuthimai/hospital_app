@@ -20,9 +20,22 @@ Dưới đây là một số nguồn tài liệu tham khảo:
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
 ---
+## Usecase tổng quan
+<img src="readme_assets/tổng quan hệ thống khám bệnh.jpg" width="500"/>
+
+## Sơ đồ lớp của mobile
+<img src="readme_assets/Class Diagram1.jpg" width="800"/>
+
+## CSDL trên server
+<img src="readme_assets/Entity Relationship Diagram2.jpg" width="800"/>
+
 ## Cấu trúc thư mục
 
 Sử dụng tổ chức code theo kiến trúc Clean Architecture kết hợp với MVVM, chia theo từng chức năng của app.
+
+| Cấu trúc tổng quan                                | Cấu trúc layer trong mỗi tính năng                         |
+|---------------------------------------------------|------------------------------------------------------------|
+| <img src="readme_assets/mobile.jpg" width="400"/> | <img src="readme_assets/featureA mobile.jpg" width="300"/> |
 
 ```text
 ├── .gitignore                      # Quy định file/thư mục bỏ qua khi commit Git
@@ -76,7 +89,42 @@ Sử dụng tổ chức code theo kiến trúc Clean Architecture kết hợp v�
 ├── web/           # Code hỗ trợ chạy trên Web
 └── windows/       # Code native cho Windows desktop
 ```
+## CSDL
+
 
 ## Nhánh build
-- Khi push code lên nhánh build-app/android, github action sẽ chạy luồng **Flutter Android build** tự động build file app-release.apk. Xem trong Actions > Flutter Android build > workflow mới nhất > Artifacts để download về.
+Các bước thực hiện triển khai:
+- Bước 1: Lấy toàn bộ mã nguồn của repo GitHub vào môi trường runner
+- Bước 2: Cài Flutter SDK
+- Bước 3: Cài đặt các thư viện phụ thuộc (dependency) cho dự án
+- Bước 4: Tạo lại file firebase_options.dart từ GitHub Secrets
+- Bước 5: Phân tích code (hiển thị warning nhưng ko dừng)
+- Bước 6: Chạy testcase (nếu có)
+- Bước 7: Build file APK
+- Bước 8: Lưu file APK ra artifacts để tải về và gửi link tải app đến email tài khoản test đã đăng ký. 
+
+## Sơ đồ triển khai
+<img src="readme_assets/Deployment%20Diagram%20-%20HIS.jpg" /> 
+
+## Kết quả sau khi chạy
+| Trang Login                                  | Trang chủ                                    |
+|----------------------------------------------|----------------------------------------------|
+| <img src="readme_assets/1.png" width="200"/> | <img src="readme_assets/2.png" width="200"/> | 
+
+| Đặt lịch                                     | Đặt lịch                                     | Danh sách lịch khám                          | 
+|----------------------------------------------|----------------------------------------------|----------------------------------------------|
+| <img src="readme_assets/3.png" width="200"/> | <img src="readme_assets/4.png" width="200"/> | <img src="readme_assets/5.png" width="200"/> |
+
+| Danh sách bác sĩ                             | Thông tin bác sĩ chi tiết                    | Danh sách hoá đơn                              | Hoá đơn chi tiết                               | Mã QR thanh toán                             |
+|----------------------------------------------|----------------------------------------------|------------------------------------------------|------------------------------------------------|----------------------------------------------|
+| <img src="readme_assets/6.png" width="200"/> | <img src="readme_assets/7.png" width="200"/> | <img src="readme_assets/8.0.png" width="200"/> | <img src="readme_assets/8.1.png" width="200"/> | <img src="readme_assets/8.png" width="200"/> |
+
+
+| Xem bệnh án đang khám                        | Xem dịch vụ có hình ảnh                       | Xem dịch vụ có bảng                           | Xem dịch vụ văn bản                           | Bệnh án đã đóng (PDF)                         |
+|----------------------------------------------|-----------------------------------------------|-----------------------------------------------|-----------------------------------------------|-----------------------------------------------|
+| <img src="readme_assets/9.png" width="200"/> | <img src="readme_assets/10.png" width="200"/> | <img src="readme_assets/11.png" width="200"/> | <img src="readme_assets/12.png" width="200"/> | <img src="readme_assets/15.png" width="200"/> |
+
+| Xem đơn thuốc chi tiết                        |
+|-----------------------------------------------|
+| <img src="readme_assets/14.png" width="200"/> |
 
